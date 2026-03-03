@@ -13,46 +13,46 @@ body {
 .container {
   width:734px;
   margin:auto;
-  padding:15px;
+  padding:10px;
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:15px;
   box-sizing:border-box;
 }
 
 /* KPI */
 .kpi-row {
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 .kpi-card {
   flex:1;
   background:#fff;
-  border-radius:10px;
-  padding:15px;
+  border-radius:8px;
+  padding:10px;
   text-align:center;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
-.kpi-title { font-size:12px; color:#555; margin-bottom:6px; }
-.kpi-value { font-size:20px; font-weight:bold; }
+.kpi-title { font-size:11px; color:#555; margin-bottom:4px; }
+.kpi-value { font-size:18px; font-weight:bold; }
 
 /* Dividend Card */
 .dividend-card {
   background:#fff;
-  border-radius:10px;
-  padding:20px;
+  border-radius:8px;
+  padding:15px;
   text-align:center;
   display:flex;
   flex-direction:column;
   align-items:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
   position:relative;
 }
-.div-title { font-size:16px; font-weight:bold; margin-bottom:10px; }
-.div-values { font-size:24px; font-weight:bold; margin:4px 0; }
+.div-title { font-size:14px; font-weight:bold; margin-bottom:8px; }
+.div-values { font-size:20px; font-weight:bold; margin:3px 0; }
 .div-subvalues {
-  font-size:12px; color:#555;
-  margin-bottom:8px;
+  font-size:11px; color:#555;
+  margin-bottom:6px;
   display:flex;
   justify-content:space-between;
   width:100%;
@@ -60,76 +60,77 @@ body {
 }
 .div-bar {
   position:relative;
-  height:24px;
+  height:20px;
   background:#f0f2f5;
-  border-radius:6px;
-  margin-top:10px;
+  border-radius:5px;
+  margin-top:8px;
   width:100%;
   max-width:700px;
 }
 .div-marker, .div-lower, .div-upper {
-  position:absolute; top:0; width:3px; height:100%;
+  position:absolute; top:0; width:2px; height:100%;
 }
 .div-lower { background:#64b5f6; }
 .div-upper { background:#1565c0; }
 .div-marker { background:#2e7d32; }
-.legend { display:flex; gap:10px; margin-top:8px; font-size:11px; color:#555; flex-wrap:wrap; }
-.legend span { display:flex; align-items:center; gap:4px; }
-.legend .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.legend { display:flex; gap:8px; margin-top:6px; font-size:10px; color:#555; flex-wrap:wrap; }
+.legend span { display:flex; align-items:center; gap:3px; }
+.legend .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
 
 /* Main Panels */
 .input-panel {
   width:100%;
   display:flex;
   flex-direction:column;
-  gap:15px;
+  gap:10px;
 }
 
-/* Верхние колонки — теперь блоки вместе по ширине */
+/* Верхние колонки */
 .input-columns {
   display:flex;
-  gap:15px;
+  gap:10px;
   width:100%;
 }
 /* Каждая колонка */
 .input-column {
   flex:1;
   background:#fff;
-  padding:12px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  padding:8px;
+  border-radius:8px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.05);
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:6px;
 }
+.input-column h3 { font-size:12px; margin-bottom:4px; }
 .field-row {
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 .field-row label {
-  font-size:12px;
+  font-size:11px;
   color:#555;
-  flex:0 0 140px;
+  flex:0 0 120px;
 }
 .field-row input {
   flex:1;
-  padding:6px 8px;
-  font-size:12px;
+  padding:4px 6px;
+  font-size:11px;
   border:1px solid #ccc;
-  border-radius:4px;
+  border-radius:3px;
   transition:0.2s;
 }
 .field-row input:focus {
   border-color:#1976d2;
   outline:none;
-  box-shadow:0 0 4px rgba(25,118,210,0.2);
+  box-shadow:0 0 3px rgba(25,118,210,0.2);
 }
 .input-column.full-width {
   flex:1 1 100%;
 }
 .input-column.full-width .field-row {
-  gap:8px;
+  gap:6px;
 }
 </style>
 </head>
@@ -147,8 +148,8 @@ body {
 <div class="dividend-card" id="dividendCard">
   <div class="div-title">Рекомендуемые дивиденды</div>
   <div class="div-subvalues">
-    <div>Нижняя граница: <span id="lowerVal">0</span></div>
-    <div>Верхняя граница: <span id="upperVal">0</span></div>
+    <div>Нижняя: <span id="lowerVal">0</span></div>
+    <div>Верхняя: <span id="upperVal">0</span></div>
   </div>
   <div class="div-values" id="recDividendVal">0</div>
   <div class="div-subvalues" id="divWarning"></div>
@@ -158,9 +159,9 @@ body {
     <div class="div-upper" id="upperMarker"></div>
   </div>
   <div class="legend">
-    <span><span class="dot" style="background:#64b5f6"></span>Нижняя граница</span>
-    <span><span class="dot" style="background:#2e7d32"></span>Рекомендованный дивиденд</span>
-    <span><span class="dot" style="background:#1565c0"></span>Верхняя граница</span>
+    <span><span class="dot" style="background:#64b5f6"></span>Нижняя</span>
+    <span><span class="dot" style="background:#2e7d32"></span>Рекомендованный</span>
+    <span><span class="dot" style="background:#1565c0"></span>Верхняя</span>
   </div>
 </div>
 
@@ -169,32 +170,32 @@ body {
   <div class="input-columns">
     <!-- Финансовые показатели -->
     <div class="input-column">
-      <h3>Финансовые показатели</h3>
-      <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
-      <div class="field-row"><label for="cost">Себестоимость (C)</label><input type="number" id="cost"></div>
-      <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
-      <div class="field-row"><label for="tax">Ставка налога (T)</label><input type="number" id="tax"></div>
+      <h3>Фин. показатели</h3>
+      <div class="field-row"><label for="revenue">Выручка</label><input type="number" id="revenue"></div>
+      <div class="field-row"><label for="cost">Себестоимость</label><input type="number" id="cost"></div>
+      <div class="field-row"><label for="depr">Амортизация</label><input type="number" id="depr"></div>
+      <div class="field-row"><label for="tax">Налог</label><input type="number" id="tax"></div>
     </div>
 
     <!-- Балансовые драйверы -->
     <div class="input-column">
       <h3>Балансовые драйверы</h3>
-      <div class="field-row"><label for="faStart">Внеоборотные активы (начало)</label><input type="number" id="faStart"></div>
-      <div class="field-row"><label for="faEnd">Внеоборотные активы (конец)</label><input type="number" id="faEnd"></div>
-      <div class="field-row"><label for="wcStart">Рабочий капитал (начало)</label><input type="number" id="wcStart"></div>
-      <div class="field-row"><label for="wcEnd">Рабочий капитал (конец)</label><input type="number" id="wcEnd"></div>
-      <div class="field-row"><label for="cash">Денежные средства</label><input type="number" id="cash"></div>
-      <div class="field-row"><label for="liqFloor">Норматив ликвидности</label><input type="number" id="liqFloor"></div>
+      <div class="field-row"><label for="faStart">Внеобр. активы (н)</label><input type="number" id="faStart"></div>
+      <div class="field-row"><label for="faEnd">Внеобр. активы (к)</label><input type="number" id="faEnd"></div>
+      <div class="field-row"><label for="wcStart">Раб. кап. (н)</label><input type="number" id="wcStart"></div>
+      <div class="field-row"><label for="wcEnd">Раб. кап. (к)</label><input type="number" id="wcEnd"></div>
+      <div class="field-row"><label for="cash">Деньги</label><input type="number" id="cash"></div>
+      <div class="field-row"><label for="liqFloor">Ликвидн.</label><input type="number" id="liqFloor"></div>
     </div>
   </div>
 
   <!-- Политика -->
   <div class="input-column full-width">
     <h3>Политика</h3>
-    <div class="field-row"><label for="invPercent">Обязательные инвестиции (%)</label><input type="number" id="invPercent"></div>
-    <div class="field-row"><label for="debtPercent">Долговая нагрузка (%)</label><input type="number" id="debtPercent"></div>
+    <div class="field-row"><label for="invPercent">Инвестиции (%)</label><input type="number" id="invPercent"></div>
+    <div class="field-row"><label for="debtPercent">Долги (%)</label><input type="number" id="debtPercent"></div>
     <div class="field-row"><label for="minDividendPercent">Мин. дивиденд (%)</label><input type="number" id="minDividendPercent"></div>
-    <div class="field-row"><label for="kCoef">Коэфф. распределения (k)</label><input type="number" id="kCoef"></div>
+    <div class="field-row"><label for="kCoef">Коэфф. (k)</label><input type="number" id="kCoef"></div>
   </div>
 </div>
 
