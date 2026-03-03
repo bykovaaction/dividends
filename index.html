@@ -56,7 +56,7 @@ body {
   display:flex;
   justify-content:space-between;
   width:100%;
-  max-width:450px;
+  max-width:700px;
 }
 .div-bar {
   position:relative;
@@ -65,7 +65,7 @@ body {
   border-radius:6px;
   margin-top:10px;
   width:100%;
-  max-width:550px;
+  max-width:700px;
 }
 .div-marker, .div-lower, .div-upper {
   position:absolute; top:0; width:3px; height:100%;
@@ -78,29 +78,29 @@ body {
 .legend .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
 
 /* Main Panels */
-.main-panels { display:flex; gap:15px; }
-/* Left panel */
 .input-panel {
-  flex:0 0 360px;
+  width:100%;
   display:flex;
   flex-direction:column;
   gap:15px;
 }
-/* Верхние колонки */
+
+/* Верхние колонки — теперь блоки вместе по ширине */
 .input-columns {
   display:flex;
-  gap:10px;
+  gap:15px;
+  width:100%;
 }
 /* Каждая колонка */
 .input-column {
   flex:1;
   background:#fff;
-  padding:15px;
+  padding:12px;
   border-radius:10px;
   box-shadow:0 2px 6px rgba(0,0,0,0.05);
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
 }
 .field-row {
   display:flex;
@@ -131,12 +131,6 @@ body {
 .input-column.full-width .field-row {
   gap:8px;
 }
-
-/* Right Analytics Panel */
-.analytics-panel { flex:1; display:flex; flex-direction:column; gap:15px; }
-.stacked-bar { position:relative; height:24px; background:#f0f2f5; border-radius:6px; overflow:hidden; }
-.bar-segment { height:100%; float:left; position:relative; transition:width 0.3s; }
-
 </style>
 </head>
 <body>
@@ -171,49 +165,36 @@ body {
 </div>
 
 <!-- Main Panels -->
-<div class="main-panels">
-  <!-- Left Input Panel -->
-  <div class="input-panel">
-    <div class="input-columns">
-      <!-- Финансовые показатели -->
-      <div class="input-column">
-        <h3>Финансовые показатели</h3>
-        <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
-        <div class="field-row"><label for="cost">Себестоимость (C)</label><input type="number" id="cost"></div>
-        <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
-        <div class="field-row"><label for="tax">Ставка налога (T)</label><input type="number" id="tax"></div>
-      </div>
-
-      <!-- Балансовые драйверы -->
-      <div class="input-column">
-        <h3>Балансовые драйверы</h3>
-        <div class="field-row"><label for="faStart">Внеоборотные активы (начало)</label><input type="number" id="faStart"></div>
-        <div class="field-row"><label for="faEnd">Внеоборотные активы (конец)</label><input type="number" id="faEnd"></div>
-        <div class="field-row"><label for="wcStart">Рабочий капитал (начало)</label><input type="number" id="wcStart"></div>
-        <div class="field-row"><label for="wcEnd">Рабочий капитал (конец)</label><input type="number" id="wcEnd"></div>
-        <div class="field-row"><label for="cash">Денежные средства</label><input type="number" id="cash"></div>
-        <div class="field-row"><label for="liqFloor">Норматив ликвидности</label><input type="number" id="liqFloor"></div>
-      </div>
+<div class="input-panel">
+  <div class="input-columns">
+    <!-- Финансовые показатели -->
+    <div class="input-column">
+      <h3>Финансовые показатели</h3>
+      <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
+      <div class="field-row"><label for="cost">Себестоимость (C)</label><input type="number" id="cost"></div>
+      <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
+      <div class="field-row"><label for="tax">Ставка налога (T)</label><input type="number" id="tax"></div>
     </div>
 
-    <!-- Политика -->
-    <div class="input-column full-width">
-      <h3>Политика</h3>
-      <div class="field-row"><label for="invPercent">Обязательные инвестиции (%)</label><input type="number" id="invPercent"></div>
-      <div class="field-row"><label for="debtPercent">Долговая нагрузка (%)</label><input type="number" id="debtPercent"></div>
-      <div class="field-row"><label for="minDividendPercent">Мин. дивиденд (%)</label><input type="number" id="minDividendPercent"></div>
-      <div class="field-row"><label for="kCoef">Коэфф. распределения (k)</label><input type="number" id="kCoef"></div>
+    <!-- Балансовые драйверы -->
+    <div class="input-column">
+      <h3>Балансовые драйверы</h3>
+      <div class="field-row"><label for="faStart">Внеоборотные активы (начало)</label><input type="number" id="faStart"></div>
+      <div class="field-row"><label for="faEnd">Внеоборотные активы (конец)</label><input type="number" id="faEnd"></div>
+      <div class="field-row"><label for="wcStart">Рабочий капитал (начало)</label><input type="number" id="wcStart"></div>
+      <div class="field-row"><label for="wcEnd">Рабочий капитал (конец)</label><input type="number" id="wcEnd"></div>
+      <div class="field-row"><label for="cash">Денежные средства</label><input type="number" id="cash"></div>
+      <div class="field-row"><label for="liqFloor">Норматив ликвидности</label><input type="number" id="liqFloor"></div>
     </div>
   </div>
 
-  <!-- Right Analytics Panel -->
-  <div class="analytics-panel">
-    <div class="stacked-bar">
-      <div id="invBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
-      <div id="debtBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
-      <div id="liqBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
-      <div id="retBar" class="bar-segment" style="width:0%; background:#2e7d32;"></div>
-    </div>
+  <!-- Политика -->
+  <div class="input-column full-width">
+    <h3>Политика</h3>
+    <div class="field-row"><label for="invPercent">Обязательные инвестиции (%)</label><input type="number" id="invPercent"></div>
+    <div class="field-row"><label for="debtPercent">Долговая нагрузка (%)</label><input type="number" id="debtPercent"></div>
+    <div class="field-row"><label for="minDividendPercent">Мин. дивиденд (%)</label><input type="number" id="minDividendPercent"></div>
+    <div class="field-row"><label for="kCoef">Коэфф. распределения (k)</label><input type="number" id="kCoef"></div>
   </div>
 </div>
 
@@ -250,14 +231,6 @@ function updateDashboard(){
   if(recDividend<lowerBound || recDividend>upperBound) { color="#c62828"; warningText="Дивиденд вне границ"; }
   document.getElementById("dividendCard").style.borderColor=color;
   document.getElementById("divWarning").innerText=warningText;
-  const total = Math.max(capex+mandatoryInvestments+debtLoad+liquidityReserve+retained+recDividend,1);
-  document.getElementById("invBar").style.width=(mandatoryInvestments/total*100)+"%";
-  document.getElementById("debtBar").style.width=(debtLoad/total*100)+"%";
-  document.getElementById("liqBar").style.width=(liquidityReserve/total*100)+"%";
-  document.getElementById("retBar").style.width=(retained/total*100)+"%";
-  document.getElementById("lowerMarker").style.left = (lowerBound/total*100)+"%";
-  document.getElementById("recMarker").style.left = (recDividend/total*100)+"%";
-  document.getElementById("upperMarker").style.left = (upperBound/total*100)+"%";
 }
 document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateDashboard));
 </script>
