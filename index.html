@@ -223,14 +223,34 @@ body {
 </div>
 
 <script>
-function formatNum(num){ return num.toLocaleString('ru-RU',{maximumFractionDigits:2}); }
+function formatNum(num){ 
+  return num.toLocaleString('ru-RU',{maximumFractionDigits:2}); 
+}
+
 function updateDashboard(){
   const get=id=>parseFloat(document.getElementById(id).value)||0;
-  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), tax=get("tax");
-  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd");
-  const cash=get("cash"), liqFloor=get("liqFloor");
-  const invPercent=get("invPercent"), debtPercent=get("debtPercent");
-  const minDividendPercent=get("minDividendPercent"), kCoef=get("kCoef");
+
+  // Финансовые показатели
+  const revenue=get("revenue"),
+        cost=get("cost"),
+        depr=get("depr"),
+        tax=get("tax");
+
+  // Балансовые драйверы
+  const faStart=get("faStart"),
+        faEnd=get("faEnd"),
+        wcStart=get("wcStart"),
+        wcEnd=get("wcEnd"),
+        cash=get("cash"),
+        liqFloor=get("liqFloor");
+
+  // Политика
+  const invPercent=get("invPercent"),
+        debtPercent=get("debtPercent"),
+        minDividendPercent=get("minDividendPercent"),
+        kCoef=get("kCoef");
+
+  // Расчеты
   const profitBeforeTax = revenue - cost - depr;
   const netProfit = profitBeforeTax*(1-tax);
   const deltaWC = wcEnd - wcStart;
@@ -243,19 +263,35 @@ function updateDashboard(){
   const lowerBound = netProfit*minDividendPercent;
   const upperBound = fcfAvailable;
   const recDividend = Math.max(Math.min(fcfAvailable, fcfAvailable*kCoef), lowerBound);
-  const retained = fcfAvailable - recDividend;
+
+  // Обновление цифр в дашборде
   document.getElementById("netProfitVal").innerText = formatNum(netProfit);
   document.getElementById("fcfVal").innerText = formatNum(fcf);
   document.getElementById("fcfAvailVal").innerText = formatNum(fcfAvailable);
   document.getElementById("recDividendVal").innerText = formatNum(recDividend);
   document.getElementById("lowerVal").innerText = formatNum(lowerBound);
   document.getElementById("upperVal").innerText = formatNum(upperBound);
+
+  // Предупреждение, если дивиденд вне границ
   let warningText="";
   let color="#2e7d32";
-  if(recDividend<lowerBound || recDividend>upperBound) { color="#c62828"; warningText="Дивиденд вне границ"; }
+  if(recDividend<lowerBound || recDividend>upperBound) { 
+    color="#c62828"; 
+    warningText="Дивиденд вне границ"; 
+  }
   document.getElementById("dividendCard").style.borderColor=color;
   document.getElementById("divWarning").innerText=warningText;
+
+  // === Визуализация маркеров на баре ===
+  const bar = document.getElementById("divBar");
+  const safeUpper = upperBound || 1; // защита от деления на 0
+
+  document.getElementById("lowerMarker").style.left = `${(lowerBound / safeUpper) * 100}%`;
+  document.getElementById("recMarker").style.left   = `${(recDividend / safeUpper) * 100}%`;
+  document.getElementById("upperMarker").style.left = `100%`;
 }
+
+// Привязка обновления к каждому input
 document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateDashboard));
 </script>
 </body>
