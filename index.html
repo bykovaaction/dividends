@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Дивидендный дашборд CFO</title>
+<style>
+body {
+  margin:0;
+  font-family:"Roboto", sans-serif;
+  background:#f4f5f7;
+  color:#333;
+}
+.container {
+  max-width:1400px;
+  margin:auto;
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+}
+
+/* KPI */
+.kpi-row {
+  display:flex;
+  gap:20px;
+}
+.kpi-card {
+  flex:1;
+  background:#fff;
+  border-radius:10px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+.kpi-title { font-size:14px; color:#555; margin-bottom:8px; }
+.kpi-value { font-size:26px; font-weight:bold; }
+
+/* Dividend Card */
+.dividend-card {
+  background:#fff;
+  border-radius:10px;
+  padding:25px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  position:relative;
+}
+.div-title { font-size:18px; font-weight:bold; margin-bottom:15px; }
+.div-values { font-size:30px; font-weight:bold; margin:5px 0; }
+.div-subvalues {
+  font-size:14px; color:#555;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+  max-width:450px;
+}
+.div-bar {
+  position:relative;
+  height:28px;
+  background:#f0f2f5;
+  border-radius:8px;
+  margin-top:15px;
+  width:100%;
+  max-width:550px;
+}
+.div-marker, .div-lower, .div-upper {
+  position:absolute; top:0; width:3px; height:100%;
+}
+.div-lower { background:#64b5f6; }
+.div-upper { background:#1565c0; }
+.div-marker { background:#2e7d32; }
+.legend { display:flex; gap:15px; margin-top:10px; font-size:13px; color:#555; }
+.legend span { display:flex; align-items:center; gap:5px; }
+.legend .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+
+/* Main Panels */
+.main-panels { display:flex; gap:25px; }
+/* Left panel */
+.input-panel {
+  flex:0 0 480px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+/* Верхние колонки */
+.input-columns {
+  display:flex;
+  gap:20px;
+}
+/* Каждая колонка */
+.input-column {
+  flex:1;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+/* Поля */
+.field-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.field-row label {
+  font-size:14px;
+  color:#555;
+  flex:0 0 200px;
+}
+.field-row input {
+  flex:1;
+  padding:8px 12px;
+  font-size:14px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  transition:0.2s;
+}
+.field-row input:focus {
+  border-color:#1976d2;
+  outline:none;
+  box-shadow:0 0 5px rgba(25,118,210,0.2);
+}
+/* Политика на всю ширину */
+.input-column.full-width {
+  flex:1 1 100%;
+}
+.input-column.full-width .field-row {
+  gap:15px;
+}
+
+/* Right Analytics Panel */
+.analytics-panel { flex:1; display:flex; flex-direction:column; gap:25px; }
+.stacked-bar { position:relative; height:32px; background:#f0f2f5; border-radius:8px; overflow:hidden; }
+.bar-segment { height:100%; float:left; position:relative; transition:width 0.3s; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- KPI -->
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-title">Чистая прибыль</div><div id="netProfitVal" class="kpi-value">0</div></div>
+  <div class="kpi-card"><div class="kpi-title">FCF</div><div id="fcfVal" class="kpi-value">0</div></div>
+  <div class="kpi-card"><div class="kpi-title">Доступный FCF</div><div id="fcfAvailVal" class="kpi-value">0</div></div>
+</div>
+
+<!-- Dividend Card -->
+<div class="dividend-card" id="dividendCard">
+  <div class="div-title">Рекомендуемые дивиденды</div>
+  <div class="div-subvalues">
+    <div>Нижняя граница: <span id="lowerVal">0</span></div>
+    <div>Верхняя граница: <span id="upperVal">0</span></div>
+  </div>
+  <div class="div-values" id="recDividendVal">0</div>
+  <div class="div-subvalues" id="divWarning"></div>
+  <div class="div-bar" id="divBar">
+    <div class="div-lower" id="lowerMarker"></div>
+    <div class="div-marker" id="recMarker"></div>
+    <div class="div-upper" id="upperMarker"></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#64b5f6"></span>Нижняя граница</span>
+    <span><span class="dot" style="background:#2e7d32"></span>Рекомендованный дивиденд</span>
+    <span><span class="dot" style="background:#1565c0"></span>Верхняя граница</span>
+  </div>
+</div>
+
+<!-- Main Panels -->
+<div class="main-panels">
+  <!-- Left Input Panel -->
+  <div class="input-panel">
+    <div class="input-columns">
+      <!-- Финансовые показатели -->
+      <div class="input-column">
+        <h3>Финансовые показатели</h3>
+        <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
+        <div class="field-row"><label for="cost">Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
+        <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
+        <div class="field-row"><label for="tax">Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
+      </div>
+
+      <!-- Балансовые драйверы -->
+      <div class="input-column">
+        <h3>Балансовые драйверы</h3>
+        <div class="field-row"><label for="faStart">Внеоборотные активы (начало)</label><input type="number" id="faStart"></div>
+        <div class="field-row"><label for="faEnd">Внеоборотные активы (конец)</label><input type="number" id="faEnd"></div>
+        <div class="field-row"><label for="wcStart">Рабочий капитал (начало)</label><input type="number" id="wcStart"></div>
+        <div class="field-row"><label for="wcEnd">Рабочий капитал (конец)</label><input type="number" id="wcEnd"></div>
+        <div class="field-row"><label for="cash">Денежные средства (факт)</label><input type="number" id="cash"></div>
+        <div class="field-row"><label for="liqFloor">Норматив ликвидности</label><input type="number" id="liqFloor"></div>
+      </div>
+    </div>
+
+    <!-- Политика -->
+    <div class="input-column full-width">
+      <h3>Политика</h3>
+      <div class="field-row"><label for="invPercent">Обязательные инвестиции (% от CAPEX)</label><input type="number" id="invPercent"></div>
+      <div class="field-row"><label for="debtPercent">Долговая нагрузка (% от FCF)</label><input type="number" id="debtPercent"></div>
+      <div class="field-row"><label for="minDividendPercent">Минимальный дивиденд (% от ЧП)</label><input type="number" id="minDividendPercent"></div>
+      <div class="field-row"><label for="kCoef">Коэфф. распределения (k)</label><input type="number" id="kCoef"></div>
+    </div>
+  </div>
+
+  <!-- Right Analytics Panel -->
+  <div class="analytics-panel">
+    <div class="stacked-bar">
+      <div id="invBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
+      <div id="debtBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
+      <div id="liqBar" class="bar-segment" style="width:0%; background:#b0b0b0;"></div>
+      <div id="retBar" class="bar-segment" style="width:0%; background:#2e7d32;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function formatNum(num){ return num.toLocaleString('ru-RU',{maximumFractionDigits:2}); }
+function updateDashboard(){
+  const get=id=>parseFloat(document.getElementById(id).value)||0;
+  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), tax=get("tax");
+  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd");
+  const cash=get("cash"), liqFloor=get("liqFloor");
+  const invPercent=get("invPercent"), debtPercent=get("debtPercent");
+  const minDividendPercent=get("minDividendPercent"), kCoef=get("kCoef");
+  const profitBeforeTax = revenue - cost - depr;
+  const netProfit = profitBeforeTax*(1-tax);
+  const deltaWC = wcEnd - wcStart;
+  const capex = faEnd - faStart;
+  const fcf = netProfit + depr - deltaWC - capex;
+  const liquidityReserve = Math.max(0, liqFloor - cash);
+  const mandatoryInvestments = Math.abs(capex)*invPercent;
+  const debtLoad = fcf*debtPercent;
+  const fcfAvailable = fcf - liquidityReserve - mandatoryInvestments - debtLoad;
+  const lowerBound = netProfit*minDividendPercent;
+  const upperBound = fcfAvailable;
+  const recDividend = Math.max(Math.min(fcfAvailable, fcfAvailable*kCoef), lowerBound);
+  const retained = fcfAvailable - recDividend;
+  document.getElementById("netProfitVal").innerText = formatNum(netProfit);
+  document.getElementById("fcfVal").innerText = formatNum(fcf);
+  document.getElementById("fcfAvailVal").innerText = formatNum(fcfAvailable);
+  document.getElementById("recDividendVal").innerText = formatNum(recDividend);
+  document.getElementById("lowerVal").innerText = formatNum(lowerBound);
+  document.getElementById("upperVal").innerText = formatNum(upperBound);
+  let warningText="";
+  let color="#2e7d32";
+  if(recDividend<lowerBound || recDividend>upperBound) { color="#c62828"; warningText="Дивиденд вне границ"; }
+  document.getElementById("dividendCard").style.borderColor=color;
+  document.getElementById("divWarning").innerText=warningText;
+  const total = Math.max(capex+mandatoryInvestments+debtLoad+liquidityReserve+retained+recDividend,1);
+  document.getElementById("invBar").style.width=(mandatoryInvestments/total*100)+"%";
+  document.getElementById("debtBar").style.width=(debtLoad/total*100)+"%";
+  document.getElementById("liqBar").style.width=(liquidityReserve/total*100)+"%";
+  document.getElementById("retBar").style.width=(retained/total*100)+"%";
+  document.getElementById("lowerMarker").style.left = (lowerBound/total*100)+"%";
+  document.getElementById("recMarker").style.left = (recDividend/total*100)+"%";
+  document.getElementById("upperMarker").style.left = (upperBound/total*100)+"%";
+}
+document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateDashboard));
+</script>
+</body>
+</html>
