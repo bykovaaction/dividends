@@ -25,7 +25,6 @@ body{
 }
 
 /* LEFT PANEL */
-
 .left-panel{
   width:50%;
   height:300px; /* фиксированная высота */
@@ -37,11 +36,6 @@ body{
   flex-direction:column;
   justify-content:space-between;
   box-sizing:border-box;
-}
-
-.left-content{
-  display:flex;
-  flex-direction:column;
 }
 
 .left-title{
@@ -110,14 +104,19 @@ button.secondary{
 }
 
 /* RIGHT PANEL */
-
 .right-panel{
   width:50%;
   height:300px; /* фиксированная высота */
   display:flex;
   flex-direction:column;
-  gap:14px;
   box-sizing:border-box;
+}
+
+.right-top{
+  flex:1; /* занимает все свободное пространство */
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 
 .result-card{
@@ -157,8 +156,8 @@ button.secondary{
   border-radius:50%;
 }
 
-.dot.lower{ background:#1565c0; }
-.dot.upper{ background:#c62828; }
+.dot.lower{ background:#1565c0; } /* синяя нижняя граница */
+.dot.upper{ background:#c62828; } /* красная верхняя граница */
 
 .range-bar{
   height:6px;
@@ -206,13 +205,14 @@ button.secondary{
   text-align:left;
 }
 
+/* кнопка точно внизу */
 .download-btn{
   background:#2e7d32;
   color:#fff;
   font-size:12px;
   padding:8px;
   border-radius:6px;
-  margin-top:auto;
+  margin-top:auto; /* прижимаем к низу */
 }
 </style>
 </head>
@@ -223,7 +223,6 @@ button.secondary{
 
 <!-- LEFT -->
 <div class="left-panel">
-<div class="left-content">
 
 <div class="left-title">Исходные данные</div>
 
@@ -266,11 +265,10 @@ button.secondary{
 </div>
 
 </div>
-</div>
 
 <!-- RIGHT -->
 <div class="right-panel">
-
+<div class="right-top">
 <div class="result-card">
 <div class="title">Рекомендуемый размер дивидендов</div>
 <div id="recDividendVal" class="result-main">0</div>
@@ -306,6 +304,7 @@ button.secondary{
 <div class="kpi">
 <div class="kpi-title">Доступный FCF</div>
 <div id="fcfAvailVal" class="kpi-value">0</div>
+</div>
 </div>
 </div>
 
