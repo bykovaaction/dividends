@@ -148,8 +148,8 @@ body {
 <div class="dividend-card" id="dividendCard">
   <div class="div-title">Рекомендуемые дивиденды</div>
   <div class="div-subvalues">
-    <div>Нижняя: <span id="lowerVal">0</span></div>
-    <div>Верхняя: <span id="upperVal">0</span></div>
+    <div>Нижняя граница: <span id="lowerVal">0</span></div>
+    <div>Верхняя граница: <span id="upperVal">0</span></div>
   </div>
   <div class="div-values" id="recDividendVal">0</div>
   <div class="div-subvalues" id="divWarning"></div>
@@ -159,9 +159,9 @@ body {
     <div class="div-upper" id="upperMarker"></div>
   </div>
   <div class="legend">
-    <span><span class="dot" style="background:#64b5f6"></span>Нижняя</span>
-    <span><span class="dot" style="background:#2e7d32"></span>Рекомендованный</span>
-    <span><span class="dot" style="background:#1565c0"></span>Верхняя</span>
+    <span><span class="dot" style="background:#64b5f6"></span>Нижняя граница</span>
+    <span><span class="dot" style="background:#2e7d32"></span>Рекомендованные дивиденды</span>
+    <span><span class="dot" style="background:#1565c0"></span>Верхняя граница</span>
   </div>
 </div>
 
@@ -171,31 +171,31 @@ body {
     <!-- Финансовые показатели -->
     <div class="input-column">
       <h3>Фин. показатели</h3>
-      <div class="field-row"><label for="revenue">Выручка</label><input type="number" id="revenue"></div>
-      <div class="field-row"><label for="cost">Себестоимость</label><input type="number" id="cost"></div>
-      <div class="field-row"><label for="depr">Амортизация</label><input type="number" id="depr"></div>
-      <div class="field-row"><label for="tax">Налог</label><input type="number" id="tax"></div>
+      <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
+      <div class="field-row"><label for="cost">Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
+      <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
+      <div class="field-row"><label for="tax">Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
     </div>
 
     <!-- Балансовые драйверы -->
     <div class="input-column">
       <h3>Балансовые драйверы</h3>
-      <div class="field-row"><label for="faStart">Внеобр. активы (н)</label><input type="number" id="faStart"></div>
-      <div class="field-row"><label for="faEnd">Внеобр. активы (к)</label><input type="number" id="faEnd"></div>
-      <div class="field-row"><label for="wcStart">Раб. кап. (н)</label><input type="number" id="wcStart"></div>
-      <div class="field-row"><label for="wcEnd">Раб. кап. (к)</label><input type="number" id="wcEnd"></div>
-      <div class="field-row"><label for="cash">Деньги</label><input type="number" id="cash"></div>
-      <div class="field-row"><label for="liqFloor">Ликвидн.</label><input type="number" id="liqFloor"></div>
+      <div class="field-row"><label for="faStart">Внеоборотные активы (на начало периода)</label><input type="number" id="faStart"></div>
+      <div class="field-row"><label for="faEnd">Внеоборотные активы (на конец периода)</label><input type="number" id="faEnd"></div>
+      <div class="field-row"><label for="wcStart">Рабочий капитал (на начало периода)</label><input type="number" id="wcStart"></div>
+      <div class="field-row"><label for="wcEnd">Рабочий капитал (на конец периода)</label><input type="number" id="wcEnd"></div>
+      <div class="field-row"><label for="cash">Денежные средства (факт)</label><input type="number" id="cash"></div>
+      <div class="field-row"><label for="liqFloor">Норматив ликвидности (сумма)</label><input type="number" id="liqFloor"></div>
     </div>
   </div>
 
   <!-- Политика -->
   <div class="input-column full-width">
     <h3>Политика</h3>
-    <div class="field-row"><label for="invPercent">Инвестиции (%)</label><input type="number" id="invPercent"></div>
-    <div class="field-row"><label for="debtPercent">Долги (%)</label><input type="number" id="debtPercent"></div>
-    <div class="field-row"><label for="minDividendPercent">Мин. дивиденд (%)</label><input type="number" id="minDividendPercent"></div>
-    <div class="field-row"><label for="kCoef">Коэфф. (k)</label><input type="number" id="kCoef"></div>
+    <div class="field-row"><label for="invPercent">Обязательные инвестиции (% от CAPEX)</label><input type="number" id="invPercent"></div>
+    <div class="field-row"><label for="debtPercent">Долговая нагрузка (% от FCF)</label><input type="number" id="debtPercent"></div>
+    <div class="field-row"><label for="minDividendPercent">Минимальный дивиденд (% от ЧП)</label><input type="number" id="minDividendPercent"></div>
+    <div class="field-row"><label for="kCoef">Коэффициент распределения (k)</label><input type="number" id="kCoef"></div>
   </div>
 </div>
 
