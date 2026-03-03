@@ -11,35 +11,36 @@ body {
   color:#333;
 }
 .container {
-  max-width:1400px;
+  width:734px;
   margin:auto;
-  padding:25px;
+  padding:15px;
   display:flex;
   flex-direction:column;
-  gap:30px;
+  gap:20px;
+  box-sizing:border-box;
 }
 
 /* KPI */
 .kpi-row {
   display:flex;
-  gap:20px;
+  gap:10px;
 }
 .kpi-card {
   flex:1;
   background:#fff;
   border-radius:10px;
-  padding:20px;
+  padding:15px;
   text-align:center;
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
-.kpi-title { font-size:14px; color:#555; margin-bottom:8px; }
-.kpi-value { font-size:26px; font-weight:bold; }
+.kpi-title { font-size:12px; color:#555; margin-bottom:6px; }
+.kpi-value { font-size:20px; font-weight:bold; }
 
 /* Dividend Card */
 .dividend-card {
   background:#fff;
   border-radius:10px;
-  padding:25px;
+  padding:20px;
   text-align:center;
   display:flex;
   flex-direction:column;
@@ -47,11 +48,11 @@ body {
   box-shadow:0 3px 10px rgba(0,0,0,0.08);
   position:relative;
 }
-.div-title { font-size:18px; font-weight:bold; margin-bottom:15px; }
-.div-values { font-size:30px; font-weight:bold; margin:5px 0; }
+.div-title { font-size:16px; font-weight:bold; margin-bottom:10px; }
+.div-values { font-size:24px; font-weight:bold; margin:4px 0; }
 .div-subvalues {
-  font-size:14px; color:#555;
-  margin-bottom:10px;
+  font-size:12px; color:#555;
+  margin-bottom:8px;
   display:flex;
   justify-content:space-between;
   width:100%;
@@ -59,10 +60,10 @@ body {
 }
 .div-bar {
   position:relative;
-  height:28px;
+  height:24px;
   background:#f0f2f5;
-  border-radius:8px;
-  margin-top:15px;
+  border-radius:6px;
+  margin-top:10px;
   width:100%;
   max-width:550px;
 }
@@ -72,71 +73,70 @@ body {
 .div-lower { background:#64b5f6; }
 .div-upper { background:#1565c0; }
 .div-marker { background:#2e7d32; }
-.legend { display:flex; gap:15px; margin-top:10px; font-size:13px; color:#555; }
-.legend span { display:flex; align-items:center; gap:5px; }
-.legend .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+.legend { display:flex; gap:10px; margin-top:8px; font-size:11px; color:#555; flex-wrap:wrap; }
+.legend span { display:flex; align-items:center; gap:4px; }
+.legend .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
 
 /* Main Panels */
-.main-panels { display:flex; gap:25px; }
+.main-panels { display:flex; gap:15px; }
 /* Left panel */
 .input-panel {
-  flex:0 0 480px;
+  flex:0 0 360px;
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:15px;
 }
 /* Верхние колонки */
 .input-columns {
   display:flex;
-  gap:20px;
+  gap:10px;
 }
 /* Каждая колонка */
 .input-column {
   flex:1;
   background:#fff;
-  padding:20px;
+  padding:15px;
   border-radius:10px;
   box-shadow:0 2px 6px rgba(0,0,0,0.05);
   display:flex;
   flex-direction:column;
-  gap:15px;
+  gap:10px;
 }
-/* Поля */
 .field-row {
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 .field-row label {
-  font-size:14px;
+  font-size:12px;
   color:#555;
-  flex:0 0 200px;
+  flex:0 0 140px;
 }
 .field-row input {
   flex:1;
-  padding:8px 12px;
-  font-size:14px;
+  padding:6px 8px;
+  font-size:12px;
   border:1px solid #ccc;
-  border-radius:6px;
+  border-radius:4px;
   transition:0.2s;
 }
 .field-row input:focus {
   border-color:#1976d2;
   outline:none;
-  box-shadow:0 0 5px rgba(25,118,210,0.2);
+  box-shadow:0 0 4px rgba(25,118,210,0.2);
 }
-/* Политика на всю ширину */
 .input-column.full-width {
   flex:1 1 100%;
 }
 .input-column.full-width .field-row {
-  gap:15px;
+  gap:8px;
 }
 
 /* Right Analytics Panel */
-.analytics-panel { flex:1; display:flex; flex-direction:column; gap:25px; }
-.stacked-bar { position:relative; height:32px; background:#f0f2f5; border-radius:8px; overflow:hidden; }
+.analytics-panel { flex:1; display:flex; flex-direction:column; gap:15px; }
+.stacked-bar { position:relative; height:24px; background:#f0f2f5; border-radius:6px; overflow:hidden; }
 .bar-segment { height:100%; float:left; position:relative; transition:width 0.3s; }
+
 </style>
 </head>
 <body>
@@ -179,9 +179,9 @@ body {
       <div class="input-column">
         <h3>Финансовые показатели</h3>
         <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
-        <div class="field-row"><label for="cost">Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
+        <div class="field-row"><label for="cost">Себестоимость (C)</label><input type="number" id="cost"></div>
         <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
-        <div class="field-row"><label for="tax">Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
+        <div class="field-row"><label for="tax">Ставка налога (T)</label><input type="number" id="tax"></div>
       </div>
 
       <!-- Балансовые драйверы -->
@@ -191,7 +191,7 @@ body {
         <div class="field-row"><label for="faEnd">Внеоборотные активы (конец)</label><input type="number" id="faEnd"></div>
         <div class="field-row"><label for="wcStart">Рабочий капитал (начало)</label><input type="number" id="wcStart"></div>
         <div class="field-row"><label for="wcEnd">Рабочий капитал (конец)</label><input type="number" id="wcEnd"></div>
-        <div class="field-row"><label for="cash">Денежные средства (факт)</label><input type="number" id="cash"></div>
+        <div class="field-row"><label for="cash">Денежные средства</label><input type="number" id="cash"></div>
         <div class="field-row"><label for="liqFloor">Норматив ликвидности</label><input type="number" id="liqFloor"></div>
       </div>
     </div>
@@ -199,9 +199,9 @@ body {
     <!-- Политика -->
     <div class="input-column full-width">
       <h3>Политика</h3>
-      <div class="field-row"><label for="invPercent">Обязательные инвестиции (% от CAPEX)</label><input type="number" id="invPercent"></div>
-      <div class="field-row"><label for="debtPercent">Долговая нагрузка (% от FCF)</label><input type="number" id="debtPercent"></div>
-      <div class="field-row"><label for="minDividendPercent">Минимальный дивиденд (% от ЧП)</label><input type="number" id="minDividendPercent"></div>
+      <div class="field-row"><label for="invPercent">Обязательные инвестиции (%)</label><input type="number" id="invPercent"></div>
+      <div class="field-row"><label for="debtPercent">Долговая нагрузка (%)</label><input type="number" id="debtPercent"></div>
+      <div class="field-row"><label for="minDividendPercent">Мин. дивиденд (%)</label><input type="number" id="minDividendPercent"></div>
       <div class="field-row"><label for="kCoef">Коэфф. распределения (k)</label><input type="number" id="kCoef"></div>
     </div>
   </div>
