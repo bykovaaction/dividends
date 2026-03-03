@@ -112,7 +112,7 @@ button.secondary{
   flex:1;
   display:flex;
   flex-direction:column;
-  gap:25px; /* расстояние между блоками по 25px */
+  gap:12px; /* расстояние между result-card и KPI */
 }
 
 .result-card{
@@ -120,6 +120,7 @@ button.secondary{
   border-radius:8px;
   padding:15px;
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  min-height:150px; /* фиксируем прежнюю высоту */
 }
 
 .result-card .title{
@@ -156,11 +157,11 @@ button.secondary{
 .dot.upper{ background:#c62828; } /* красная верхняя граница */
 
 .range-bar{
-  height:6px;
+  height:12px; /* толщина полосы */
   background:#e0e0e0;
-  border-radius:4px;
+  border-radius:6px;
   position:relative;
-  margin-top:14px;
+  margin-top:25px; /* увеличенный отступ до range-bar */
 }
 
 .marker{
