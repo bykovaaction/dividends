@@ -111,7 +111,8 @@ body {
 .field-row label {
   font-size:11px;
   color:#555;
-  flex:0 0 120px;
+  flex:0 0 180px; /* ширина блока для названия */
+  margin-right:5px;
 }
 .field-row input {
   flex:1;
@@ -119,7 +120,9 @@ body {
   font-size:11px;
   border:1px solid #ccc;
   border-radius:3px;
-  transition:0.2s;
+  width:140px; /* здесь задаётся длина поля ввода */
+  max-width:140px; /* фиксируем максимальную длину */
+  box-sizing:border-box;
 }
 .field-row input:focus {
   border-color:#1976d2;
