@@ -98,17 +98,28 @@ button{
   padding:7px 14px;
   font-size:12px;
   font-weight:600;
+  border:none;              /* убрали обводку */
   border-radius:8px;
+  cursor:pointer;
   transition:all 0.15s ease;
+  font-family:'Inter', sans-serif;
 }
 
 button.primary{
   background:#1976d2;
   color:#fff;
+  box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
 button.primary:hover{
   background:#1565c0;
+  box-shadow:0 4px 10px rgba(25,118,210,0.35);
+  transform:translateY(-1px);
+}
+
+button.primary:active{
+  transform:translateY(0);
+  box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
 button.secondary{
@@ -118,6 +129,10 @@ button.secondary{
 
 button.secondary:hover{
   background:#d1d5db;
+}
+
+button.secondary:active{
+  background:#cbd5e1;
 }
 
 /* RIGHT PANEL */
