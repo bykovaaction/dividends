@@ -184,6 +184,11 @@ button.secondary:active{
   margin-bottom:4px;
 }
 
+  .range-fill{
+  height:100%;
+  border-radius:6px;
+}
+
 .dot{
   width:8px;
   height:8px;
@@ -194,18 +199,22 @@ button.secondary:active{
 .dot.upper{ background:#c62828; } /* красная верхняя граница */
 
 .range-bar{
-  height:12px; /* толщина полосы */
-  background:#e0e0e0;
-  border-radius:6px;
   position:relative;
-  margin-top:25px; /* увеличенный отступ до range-bar */
+  height:6px;
+  background:#e5e7eb;
+  border-radius:6px;
+  overflow:hidden; /* ← удерживает маркеры внутри */
 }
 
 .marker{
   position:absolute;
-  top:-5px;
-  width:5px;
-  height:16px;
+  top:50%;
+  transform:translate(-50%, -50%);
+  width:14px;
+  height:14px;
+  background:#fff;
+  border:2px solid #1976d2;
+  border-radius:50%;   /* ← небольшой radius */
 }
 
 .marker.lower{ background:#1565c0; }
@@ -343,6 +352,18 @@ function nextStep(n){
 document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
 document.getElementById("step"+n).classList.add("active");
 }
+
+function clampPercent(p){
+  return Math.min(98, Math.max(2, p));
+}
+
+document.getElementById("lowerMarker").style.left =
+  clampPercent(lowerBound/safeUpper*100) + "%";
+
+document.getElementById("recMarker").style.left =
+  clampPercent(recDividend/safeUpper*100) + "%";
+
+document.getElementById("upperMarker").style.left = "98%";
 
 function get(id){return parseFloat(document.getElementById(id).value)||0;}
 function format(n){return n.toLocaleString("ru-RU",{maximumFractionDigits:2});}
