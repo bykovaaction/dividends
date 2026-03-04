@@ -349,60 +349,85 @@ button.secondary:active{
 
 <script>
 function nextStep(n){
-document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
-document.getElementById("step"+n).classList.add("active");
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.getElementById("step"+n).classList.add("active");
 }
 
+function get(id){
+  return parseFloat(document.getElementById(id).value)||0;
+}
+
+function format(n){
+  return n.toLocaleString("ru-RU",{maximumFractionDigits:2});
+}
+
+/* Ограничиваем маркеры внутри шкалы */
 function clampPercent(p){
   return Math.min(98, Math.max(2, p));
 }
 
-document.getElementById("lowerMarker").style.left =
-  clampPercent(lowerBound/safeUpper*100) + "%";
-
-document.getElementById("recMarker").style.left =
-  clampPercent(recDividend/safeUpper*100) + "%";
-
-document.getElementById("upperMarker").style.left = "98%";
-
-function get(id){return parseFloat(document.getElementById(id).value)||0;}
-function format(n){return n.toLocaleString("ru-RU",{maximumFractionDigits:2});}
-
 function updateDashboard(){
 
-const revenue=get("revenue"),cost=get("cost"),depr=get("depr"),tax=get("tax");
-const faStart=get("faStart"),faEnd=get("faEnd"),wcStart=get("wcStart"),wcEnd=get("wcEnd"),cash=get("cash"),liqFloor=get("liqFloor");
-const invPercent=get("invPercent"),debtPercent=get("debtPercent"),minDividendPercent=get("minDividendPercent"),kCoef=get("kCoef");
+  const revenue=get("revenue"),
+        cost=get("cost"),
+        depr=get("depr"),
+        tax=get("tax");
 
-const profitBeforeTax=revenue-cost-depr;
-const netProfit=profitBeforeTax*(1-tax);
-const deltaWC=wcEnd-wcStart;
-const capex=faEnd-faStart;
-const fcf=netProfit+depr-deltaWC-capex;
-const liquidityReserve=Math.max(0,liqFloor-cash);
-const mandatoryInvestments=Math.abs(capex)*invPercent;
-const debtLoad=fcf*debtPercent;
-const fcfAvailable=fcf-liquidityReserve-mandatoryInvestments-debtLoad;
-const lowerBound=netProfit*minDividendPercent;
-const upperBound=fcfAvailable;
-const recDividend=Math.max(Math.min(fcfAvailable,fcfAvailable*kCoef),lowerBound);
+  const faStart=get("faStart"),
+        faEnd=get("faEnd"),
+        wcStart=get("wcStart"),
+        wcEnd=get("wcEnd"),
+        cash=get("cash"),
+        liqFloor=get("liqFloor");
 
-document.getElementById("netProfitVal").innerText=format(netProfit);
-document.getElementById("fcfVal").innerText=format(fcf);
-document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
-document.getElementById("recDividendVal").innerText=format(recDividend);
-document.getElementById("lowerVal").innerText=format(lowerBound);
-document.getElementById("upperVal").innerText=format(upperBound);
+  const invPercent=get("invPercent"),
+        debtPercent=get("debtPercent"),
+        minDividendPercent=get("minDividendPercent"),
+        kCoef=get("kCoef");
 
-const safeUpper=upperBound||1;
+  const profitBeforeTax=revenue-cost-depr;
+  const netProfit=profitBeforeTax*(1-tax);
 
-document.getElementById("lowerMarker").style.left=(lowerBound/safeUpper*100)+"%";
-document.getElementById("recMarker").style.left=(recDividend/safeUpper*100)+"%";
-document.getElementById("upperMarker").style.left="100%";
+  const deltaWC=wcEnd-wcStart;
+  const capex=faEnd-faStart;
+
+  const fcf=netProfit+depr-deltaWC-capex;
+
+  const liquidityReserve=Math.max(0,liqFloor-cash);
+  const mandatoryInvestments=Math.abs(capex)*invPercent;
+  const debtLoad=fcf*debtPercent;
+
+  const fcfAvailable=fcf-liquidityReserve-mandatoryInvestments-debtLoad;
+
+  const lowerBound=netProfit*minDividendPercent;
+  const upperBound=fcfAvailable;
+
+  const recDividend=Math.max(
+    Math.min(fcfAvailable, fcfAvailable*kCoef),
+    lowerBound
+  );
+
+  document.getElementById("netProfitVal").innerText=format(netProfit);
+  document.getElementById("fcfVal").innerText=format(fcf);
+  document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
+  document.getElementById("recDividendVal").innerText=format(recDividend);
+  document.getElementById("lowerVal").innerText=format(lowerBound);
+  document.getElementById("upperVal").innerText=format(upperBound);
+
+  const safeUpper = upperBound || 1;
+
+  document.getElementById("lowerMarker").style.left =
+    clampPercent(lowerBound/safeUpper*100) + "%";
+
+  document.getElementById("recMarker").style.left =
+    clampPercent(recDividend/safeUpper*100) + "%";
+
+  document.getElementById("upperMarker").style.left = "98%";
 }
 
+/* Автообновление при вводе */
 document.querySelectorAll("input").forEach(el=>{
-el.addEventListener("input",updateDashboard);
+  el.addEventListener("input",updateDashboard);
 });
 </script>
 
