@@ -203,7 +203,8 @@ button.secondary:active{
   height:6px;
   background:#e5e7eb;
   border-radius:6px;
-  overflow:hidden; /* ← удерживает маркеры внутри */
+  overflow:hidden;
+  margin-top:25px; /* ← новый отступ сверху */
 }
 
 .marker{
@@ -212,9 +213,9 @@ button.secondary:active{
   transform:translate(-50%, -50%);
   width:14px;
   height:14px;
-  background:#fff;
-  border:2px solid #1976d2;
-  border-radius:50%;   /* ← небольшой radius */
+  background:#fff;       /* цвет маркера */
+  /* border:2px solid #1976d2; ← убираем обводку */
+  border-radius:50%;     /* радиус */
 }
 
 .marker.lower{ background:#1565c0; }
