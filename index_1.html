@@ -10,7 +10,7 @@ body{
   margin:0;
   font-family:'Inter', sans-serif;
   background:#f4f5f7;
-  color:#1f2937; /* более глубокий серый вместо #333 */
+  color:#1f2937;
   -webkit-font-smoothing:antialiased;
 }
 
@@ -33,7 +33,7 @@ body{
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
   display:flex;
   flex-direction:column;
-  justify-content:flex-start; /* выравнивание по верхнему краю */
+  justify-content:flex-start;
   box-sizing:border-box;
 }
 
@@ -71,7 +71,7 @@ body{
 .field-row label{
   font-size:12px;
   font-weight:500;
-  color:#4b5563; /* спокойный серый */
+  color:#4b5563;
 }
 
 .field-row input{
@@ -98,7 +98,7 @@ button{
   padding:7px 14px;
   font-size:12px;
   font-weight:600;
-  border:none;              /* убрали обводку */
+  border:none;
   border-radius:8px;
   cursor:pointer;
   transition:all 0.15s ease;
@@ -147,7 +147,7 @@ button.secondary:active{
   flex:1;
   display:flex;
   flex-direction:column;
-  gap:12px; /* расстояние между result-card и KPI */
+  gap:12px;
 }
 
 .result-card{
@@ -155,7 +155,7 @@ button.secondary:active{
   border-radius:8px;
   padding:15px;
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  min-height:150px; /* фиксируем прежнюю высоту */
+  min-height:150px;
 }
 
 .result-card .title{
@@ -184,7 +184,7 @@ button.secondary:active{
   margin-bottom:4px;
 }
 
-  .range-fill{
+.range-fill{
   height:100%;
   border-radius:6px;
 }
@@ -195,8 +195,8 @@ button.secondary:active{
   border-radius:50%;
 }
 
-.dot.lower{ background:#1565c0; } /* синяя нижняя граница */
-.dot.upper{ background:#c62828; } /* красная верхняя граница */
+.dot.lower{ background:#1565c0; }
+.dot.upper{ background:#c62828; }
 
 .range-bar{
   position:relative;
@@ -204,7 +204,7 @@ button.secondary:active{
   background:#e5e7eb;
   border-radius:4px;
   overflow:hidden;
-  margin-top:25px; /* ← новый отступ сверху */
+  margin-top:25px; /* увеличенный отступ сверху */
 }
 
 .marker{
@@ -213,14 +213,21 @@ button.secondary:active{
   transform:translate(-50%, -50%);
   width:14px;
   height:14px;
-  background:#fff;       /* цвет маркера */
-  /* border:2px solid #1976d2; ← убираем обводку */
-  border-radius:0%;     /* радиус */
+  background:#fff;
+  border-radius:0%; /* без радиуса */
 }
 
 .marker.lower{ background:#1565c0; }
-.marker.upper{ background:#c62828; }
 .marker.rec{ background:#2e7d32; }
+
+/* верхний маркер с отступом справа 2% */
+.marker.upper{
+  background:#c62828;
+  right:2%;
+  left:auto;
+  transform:translate(50%, -50%);
+  position:absolute;
+}
 
 .kpi-row{
   display:flex;
@@ -237,7 +244,7 @@ button.secondary:active{
   flex-direction:column;
   min-height:70px;
 }
-  
+
 .kpi-title{
   font-size:12px;
   font-weight:500;
@@ -260,7 +267,6 @@ button.secondary:active{
 
 <!-- LEFT -->
 <div class="left-panel">
-
 <div class="left-title">Исходные данные</div>
 
 <div id="step1" class="step active">
@@ -300,7 +306,6 @@ button.secondary:active{
 <button class="primary">Готово</button>
 </div>
 </div>
-
 </div>
 
 <!-- RIGHT -->
@@ -423,7 +428,8 @@ function updateDashboard(){
   document.getElementById("recMarker").style.left =
     clampPercent(recDividend/safeUpper*100) + "%";
 
-  document.getElementById("upperMarker").style.left = "98%";
+  // верхний маркер справа через CSS, left удаляем
+  document.getElementById("upperMarker").style.left = "";
 }
 
 /* Автообновление при вводе */
