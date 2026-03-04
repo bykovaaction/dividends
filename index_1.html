@@ -173,7 +173,7 @@ button.secondary:active{
 }
 
 .range-block{
-  margin-top:14px;
+  margin-top:25px; /* увеличенный отступ перед полосой */
   font-size:12px;
 }
 
@@ -204,7 +204,6 @@ button.secondary:active{
   background:#e5e7eb;
   border-radius:4px;
   overflow:hidden;
-  margin-top:25px; /* увеличенный отступ сверху */
 }
 
 .marker{
@@ -214,20 +213,16 @@ button.secondary:active{
   width:14px;
   height:14px;
   background:#fff;
-  border-radius:0%; /* без радиуса */
+  border-radius:0%;
 }
 
 .marker.lower{ background:#1565c0; }
-.marker.rec{ background:#2e7d32; }
-
-/* верхний маркер с отступом справа 2% */
 .marker.upper{
   background:#c62828;
-  right:2%;
   left:auto;
-  transform:translate(50%, -50%);
-  position:absolute;
+  right:2%;  /* фиксируем 2% от правого края */
 }
+.marker.rec{ background:#2e7d32; }
 
 .kpi-row{
   display:flex;
@@ -244,7 +239,7 @@ button.secondary:active{
   flex-direction:column;
   min-height:70px;
 }
-
+  
 .kpi-title{
   font-size:12px;
   font-weight:500;
@@ -262,95 +257,92 @@ button.secondary:active{
 </head>
 
 <body>
-
 <div class="wrapper">
 
-<!-- LEFT -->
+<!-- LEFT PANEL -->
 <div class="left-panel">
-<div class="left-title">Исходные данные</div>
+  <div class="left-title">Исходные данные</div>
 
-<div id="step1" class="step active">
-<h3>Финансовые показатели</h3>
-<div class="field-row"><label>Выручка (S)</label><input type="number" id="revenue"></div>
-<div class="field-row"><label>Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
-<div class="field-row"><label>Амортизация (DP)</label><input type="number" id="depr"></div>
-<div class="field-row"><label>Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
-<div class="nav-buttons">
-<button class="secondary" disabled>Назад</button>
-<button class="primary" onclick="nextStep(2)">Вперед</button>
-</div>
+  <div id="step1" class="step active">
+    <h3>Финансовые показатели</h3>
+    <div class="field-row"><label>Выручка (S)</label><input type="number" id="revenue"></div>
+    <div class="field-row"><label>Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
+    <div class="field-row"><label>Амортизация (DP)</label><input type="number" id="depr"></div>
+    <div class="field-row"><label>Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
+    <div class="nav-buttons">
+      <button class="secondary" disabled>Назад</button>
+      <button class="primary" onclick="nextStep(2)">Вперед</button>
+    </div>
+  </div>
+
+  <div id="step2" class="step">
+    <h3>Балансовые драйверы</h3>
+    <div class="field-row"><label>Внеоборотные активы<br>(на начало периода)</label><input type="number" id="faStart"></div>
+    <div class="field-row"><label>Внеоборотные активы<br>(на конец периода)</label><input type="number" id="faEnd"></div>
+    <div class="field-row"><label>Рабочий капитал<br>(на начало периода)</label><input type="number" id="wcStart"></div>
+    <div class="field-row"><label>Рабочий капитал<br>(на конец периода)</label><input type="number" id="wcEnd"></div>
+    <div class="field-row"><label>Денежные средства<br>(факт)</label><input type="number" id="cash"></div>
+    <div class="field-row"><label>Норматив ликвидности<br>(сумма)</label><input type="number" id="liqFloor"></div>
+    <div class="nav-buttons">
+      <button class="secondary" onclick="nextStep(1)">Назад</button>
+      <button class="primary" onclick="nextStep(3)">Вперед</button>
+    </div>
+  </div>
+
+  <div id="step3" class="step">
+    <h3>Политика</h3>
+    <div class="field-row"><label>Обязательные инвестиции<br>(% от CAPEX)</label><input type="number" id="invPercent" step="0.1"></div>
+    <div class="field-row"><label>Долговая нагрузка<br>(% от FCF)</label><input type="number" id="debtPercent" step="0.1"></div>
+    <div class="field-row"><label>Минимальный дивиденд<br>(% от ЧП)</label><input type="number" id="minDividendPercent" step="0.1"></div>
+    <div class="field-row"><label>Коэффициент распределения (k)</label><input type="number" id="kCoef" step="0.1"></div>
+    <div class="nav-buttons">
+      <button class="secondary" onclick="nextStep(2)">Назад</button>
+      <button class="primary">Готово</button>
+    </div>
+  </div>
 </div>
 
-<div id="step2" class="step">
-<h3>Балансовые драйверы</h3>
-<div class="field-row"><label>Внеоборотные активы<br>(на начало периода)</label><input type="number" id="faStart"></div>
-<div class="field-row"><label>Внеоборотные активы<br>(на конец периода)</label><input type="number" id="faEnd"></div>
-<div class="field-row"><label>Рабочий капитал<br>(на начало периода)</label><input type="number" id="wcStart"></div>
-<div class="field-row"><label>Рабочий капитал<br>(на конец периода)</label><input type="number" id="wcEnd"></div>
-<div class="field-row"><label>Денежные средства<br>(факт)</label><input type="number" id="cash"></div>
-<div class="field-row"><label>Норматив ликвидности<br>(сумма)</label><input type="number" id="liqFloor"></div>
-<div class="nav-buttons">
-<button class="secondary" onclick="nextStep(1)">Назад</button>
-<button class="primary" onclick="nextStep(3)">Вперед</button>
-</div>
-</div>
-
-<div id="step3" class="step">
-<h3>Политика</h3>
-<div class="field-row"><label>Обязательные инвестиции<br>(% от CAPEX)</label><input type="number" id="invPercent" step="0.1"></div>
-<div class="field-row"><label>Долговая нагрузка<br>(% от FCF)</label><input type="number" id="debtPercent" step="0.1"></div>
-<div class="field-row"><label>Минимальный дивиденд<br>(% от ЧП)</label><input type="number" id="minDividendPercent" step="0.1"></div>
-<div class="field-row"><label>Коэффициент распределения (k)</label><input type="number" id="kCoef" step="0.1"></div>
-<div class="nav-buttons">
-<button class="secondary" onclick="nextStep(2)">Назад</button>
-<button class="primary">Готово</button>
-</div>
-</div>
-</div>
-
-<!-- RIGHT -->
+<!-- RIGHT PANEL -->
 <div class="right-panel">
-<div class="right-top">
-<div class="result-card">
-<div class="title">Рекомендуемый размер дивидендов</div>
-<div id="recDividendVal" class="result-main">0</div>
+  <div class="right-top">
+    <div class="result-card">
+      <div class="title">Рекомендуемый размер дивидендов</div>
+      <div id="recDividendVal" class="result-main">0</div>
 
-<div class="range-block">
-<div class="range-line">
-<div class="dot lower"></div>
-<div>Нижняя граница: <span id="lowerVal">0</span></div>
-</div>
-<div class="range-line">
-<div class="dot upper"></div>
-<div>Верхняя граница: <span id="upperVal">0</span></div>
+      <div class="range-block">
+        <div class="range-line">
+          <div class="dot lower"></div>
+          <div>Нижняя граница: <span id="lowerVal">0</span></div>
+        </div>
+        <div class="range-line">
+          <div class="dot upper"></div>
+          <div>Верхняя граница: <span id="upperVal">0</span></div>
+        </div>
+        <div class="range-bar">
+          <div id="lowerMarker" class="marker lower"></div>
+          <div id="recMarker" class="marker rec"></div>
+          <div id="upperMarker" class="marker upper"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-title">Чистая прибыль</div>
+        <div id="netProfitVal" class="kpi-value">0</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-title">FCF</div>
+        <div id="fcfVal" class="kpi-value">0</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-title">Доступный FCF</div>
+        <div id="fcfAvailVal" class="kpi-value">0</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="range-bar">
-<div id="lowerMarker" class="marker lower"></div>
-<div id="recMarker" class="marker rec"></div>
-<div id="upperMarker" class="marker upper"></div>
-</div>
-
-</div>
-</div>
-
-<div class="kpi-row">
-<div class="kpi">
-<div class="kpi-title">Чистая прибыль</div>
-<div id="netProfitVal" class="kpi-value">0</div>
-</div>
-<div class="kpi">
-<div class="kpi-title">FCF</div>
-<div id="fcfVal" class="kpi-value">0</div>
-</div>
-<div class="kpi">
-<div class="kpi-title">Доступный FCF</div>
-<div id="fcfAvailVal" class="kpi-value">0</div>
-</div>
-</div>
-</div>
-
-</div>
 </div>
 
 <script>
@@ -359,37 +351,14 @@ function nextStep(n){
   document.getElementById("step"+n).classList.add("active");
 }
 
-function get(id){
-  return parseFloat(document.getElementById(id).value)||0;
-}
-
-function format(n){
-  return n.toLocaleString("ru-RU",{maximumFractionDigits:2});
-}
-
-/* Ограничиваем маркеры внутри шкалы */
-function clampPercent(p){
-  return Math.min(98, Math.max(2, p));
-}
+function get(id){ return parseFloat(document.getElementById(id).value)||0; }
+function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:2}); }
+function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-
-  const revenue=get("revenue"),
-        cost=get("cost"),
-        depr=get("depr"),
-        tax=get("tax");
-
-  const faStart=get("faStart"),
-        faEnd=get("faEnd"),
-        wcStart=get("wcStart"),
-        wcEnd=get("wcEnd"),
-        cash=get("cash"),
-        liqFloor=get("liqFloor");
-
-  const invPercent=get("invPercent"),
-        debtPercent=get("debtPercent"),
-        minDividendPercent=get("minDividendPercent"),
-        kCoef=get("kCoef");
+  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), tax=get("tax");
+  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
+  const invPercent=get("invPercent"), debtPercent=get("debtPercent"), minDividendPercent=get("minDividendPercent"), kCoef=get("kCoef");
 
   const profitBeforeTax=revenue-cost-depr;
   const netProfit=profitBeforeTax*(1-tax);
@@ -408,10 +377,7 @@ function updateDashboard(){
   const lowerBound=netProfit*minDividendPercent;
   const upperBound=fcfAvailable;
 
-  const recDividend=Math.max(
-    Math.min(fcfAvailable, fcfAvailable*kCoef),
-    lowerBound
-  );
+  const recDividend=Math.max(Math.min(fcfAvailable, fcfAvailable*kCoef), lowerBound);
 
   document.getElementById("netProfitVal").innerText=format(netProfit);
   document.getElementById("fcfVal").innerText=format(fcf);
@@ -422,17 +388,12 @@ function updateDashboard(){
 
   const safeUpper = upperBound || 1;
 
-  document.getElementById("lowerMarker").style.left =
-    clampPercent(lowerBound/safeUpper*100) + "%";
-
-  document.getElementById("recMarker").style.left =
-    clampPercent(recDividend/safeUpper*100) + "%";
-
-  // верхний маркер справа через CSS, left удаляем
-  document.getElementById("upperMarker").style.left = "";
+  document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100) + "%";
+  document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100) + "%";
+  document.getElementById("upperMarker").style.left = "auto";      // фиксируем через right
+  document.getElementById("upperMarker").style.right = "2%";
 }
 
-/* Автообновление при вводе */
 document.querySelectorAll("input").forEach(el=>{
   el.addEventListener("input",updateDashboard);
 });
