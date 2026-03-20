@@ -278,6 +278,40 @@ button.secondary::before{
   margin-top:auto;
   letter-spacing:-0.2px;
 }
+  /* Для шага 3 */
+#step3 {
+  max-height:400px;
+  overflow-y:auto;
+  padding-right:5px;
+  position:relative;
+}
+
+/* Плавающая кнопка Готово */
+#step3 .nav-buttons {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+/* Стрелка вниз внизу шага */
+#step3::after {
+  content: '↓';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #1976d2;
+  animation: bounce 1.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
 </style>
 </head>
 
