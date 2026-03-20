@@ -485,25 +485,30 @@ function createExcelInputs() {
   const wb = XLSX.utils.book_new();
   
   const wsInputs = XLSX.utils.aoa_to_sheet([
-    ["Параметр","Значение"],
-    ["Выручка (тыс. руб.)", get("revenue")],
-    ["Полная себестоимость без амортизации (тыс. руб.)", get("cost")],
-    ["Амортизация (тыс. руб.)", get("depr")],
-    ["Эффективная ставка налога на прибыль (%)", get("taxPercent")/100],
-    ["Внеоборотные активы на начало периода (тыс. руб.)", get("faStart")],
-    ["Внеоборотные активы на конец периода (тыс. руб.)", get("faEnd")],
-    ["Рабочий капитал на начало периода (тыс. руб.)", get("wcStart")],
-    ["Рабочий капитал на конец периода (тыс. руб.)", get("wcEnd")],
-    ["Прогнозный остаток денежных средств (тыс. руб.)", get("cash")],
-    ["Норматив резерва ликвидности (тыс. руб.)", get("liqFloor")],
-    ["Плановые инвестиции за счет собственных средств (тыс. руб.)", get("invPlan")],
-    ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100],
-    ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100],
-    ["Дивиденды по привилегированным акциям (тыс. руб.)", get("prefDividends")],
-    ["Резерв на покрытие налоговых/судебных рисков (тыс. руб.)", get("taxRiskReserve")],
-    ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100],
-    ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
-  ]);
+// Жирный заголовок
+if (wsInputs['A1']) {
+  wsInputs['A1'].s = { font: { bold: true } };
+}
+  ["Исходные данные"], // ← новый заголовок
+  ["Параметр","Значение"],
+  ["Выручка (тыс. руб.)", get("revenue")],
+  ["Полная себестоимость без амортизации (тыс. руб.)", get("cost")],
+  ["Амортизация (тыс. руб.)", get("depr")],
+  ["Эффективная ставка налога на прибыль (%)", get("taxPercent")/100],
+  ["Внеоборотные активы на начало периода (тыс. руб.)", get("faStart")],
+  ["Внеоборотные активы на конец периода (тыс. руб.)", get("faEnd")],
+  ["Рабочий капитал на начало периода (тыс. руб.)", get("wcStart")],
+  ["Рабочий капитал на конец периода (тыс. руб.)", get("wcEnd")],
+  ["Прогнозный остаток денежных средств (тыс. руб.)", get("cash")],
+  ["Норматив резерва ликвидности (тыс. руб.)", get("liqFloor")],
+  ["Плановые инвестиции за счет собственных средств (тыс. руб.)", get("invPlan")],
+  ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100],
+  ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100],
+  ["Дивиденды по привилегированным акциям (тыс. руб.)", get("prefDividends")],
+  ["Резерв на покрытие налоговых/судебных рисков (тыс. руб.)", get("taxRiskReserve")],
+  ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100],
+  ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
+]);
 
   XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
   return wb;
@@ -511,6 +516,19 @@ function createExcelInputs() {
 
 function createCalculationsSheet(wb) {
   const wsCalc = XLSX.utils.aoa_to_sheet([
+
+      // --- ДЕЛАЕМ ЖИРНЫЕ ЗАГОЛОВКИ БЛОКОВ ---
+const boldRows = [0, 9, 18]; 
+// 0 = "Расчет FCF"
+// 9 = "Расчет резервов"
+// 18 = "Расчет дивидендов"
+
+boldRows.forEach(r => {
+  const cell = XLSX.utils.encode_cell({ r: r, c: 0 });
+  if (wsCalc[cell]) {
+    wsCalc[cell].s = { font: { bold: true } };
+  }
+});
 
     // ===== БЛОК 1 =====
     ["Расчет FCF, тыс. руб."],
@@ -562,10 +580,31 @@ function createCalculationsSheet(wb) {
 function downloadExcelFull() {
   const wb = createExcelInputs();
   createCalculationsSheet(wb);
+
+  // автоширина для всех листов
+  wb.SheetNames.forEach(name => {
+    autoWidth(wb.Sheets[name]);
+  });
+
   XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
 }
 
 document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
+
+function autoWidth(ws) {
+  const cols = [];
+
+  Object.keys(ws).forEach(cell => {
+    if(cell[0] === '!') return;
+
+    const col = cell.match(/[A-Z]+/)[0];
+    const value = ws[cell].v ? ws[cell].v.toString() : "";
+
+    cols[col] = Math.max(cols[col] || 10, value.length + 2);
+  });
+
+  ws['!cols'] = Object.keys(cols).map(c => ({ wch: cols[c] }));
+}
 </script>
 
 </body>
