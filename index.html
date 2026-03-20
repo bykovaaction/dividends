@@ -59,7 +59,7 @@ display:flex;
 #step3{
 max-height:400px;
 overflow-y:auto;
-padding-right:5px; /* чтобы скролл не заходил на контент */
+padding-right:5px;
 }
 
 .step h3{
@@ -92,7 +92,7 @@ margin-top:2px;
 }
 
 .field-row input{
-width:150px; /* увеличено для длинных чисел */
+width:150px;
 padding:6px 8px;
 font-size:12px;
 border:1px solid #d1d5db;
@@ -235,7 +235,7 @@ border-radius:50%;
 
 .range-bar{
 position:relative;
-height:16px; /* чуть выше для удобства */
+height:16px;
 background:#e5e7eb;
 border-radius:6px;
 overflow:hidden;
@@ -286,7 +286,7 @@ font-weight:700;
 margin-top:auto;
 letter-spacing:-0.2px;
 }
-/* Для шага 3 */
+
 #step3 {
 max-height:400px;
 overflow-y:auto;
@@ -294,7 +294,6 @@ padding-right:5px;
 position:relative;
 }
 
-/* Плавающая кнопка Готово */
 #step3 .nav-buttons {
 position: sticky;
 bottom: 0;
@@ -303,7 +302,6 @@ padding-top: 10px;
 padding-bottom: 5px;
 }
 
-/* Стрелка вниз внизу шага */
 #step3::after {
 content: '↓';
 position: absolute;
@@ -473,154 +471,77 @@ document.getElementById("lowerVal").innerText=format(lowerBound);
 document.getElementById("upperVal").innerText=format(upperBound);
 
 const safeUpper = upperBound || 1;
-document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100) + "%";
-document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100) + "%";
-document.getElementById("upperMarker").style.left = "auto";
-document.getElementById("upperMarker").style.right = "2%";
+document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
+document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
+document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
 }
 
-document.querySelectorAll("input").forEach(el=>{
-  el.addEventListener("input",()=>{
-    updateDashboard();
-    updateProgress();
-  });
-});
-function updateProgress(){
-  const fields = [
-    "revenue","cost","depr","taxPercent",
-    "faStart","faEnd","wcStart","wcEnd","cash",
-    "liqFloor","invPlan","invPercent","debtPercent",
-    "prefDividends","taxRiskReserve","minDividendPercent","kCoef"
-  ];
-  
-  let filled = 0;
-  fields.forEach(id => {
-    if(document.getElementById(id).value.trim() !== "") filled++;
-  });
-  
-  const percent = Math.round((filled / fields.length) * 100);
-  document.getElementById("progressFill").style.width = percent + "%";
-  
-  // Показать надпись "Готово!", если заполнено всё
-  document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
-}
-    /*
-function downloadExcel() {
-  // Список полей, которые хотим сохранить
-  const fields = [
-    {id:"revenue", name:"Выручка (тыс. руб.)"},
-    {id:"cost", name:"Полная себестоимость без амортизации (тыс. руб.)"},
-    {id:"depr", name:"Амортизация (тыс. руб.)"},
-    {id:"taxPercent", name:"Эффективная ставка налога на прибыль (%)"},
-    {id:"faStart", name:"Внеоборотные активы на начало периода (тыс. руб.)"},
-    {id:"faEnd", name:"Внеоборотные активы на конец периода (тыс. руб.)"},
-    {id:"wcStart", name:"Рабочий капитал на начало периода (тыс. руб.)"},
-    {id:"wcEnd", name:"Рабочий капитал на конец периода (тыс. руб.)"},
-    {id:"cash", name:"Прогнозный остаток денежных средств (тыс. руб.)"},
-    {id:"liqFloor", name:"Норматив резерва ликвидности (тыс. руб.)"},
-    {id:"invPlan", name:"Плановые инвестиции (тыс. руб.)"},
-    {id:"invPercent", name:"Доля обязательных инвестиций (%)"},
-    {id:"debtPercent", name:"Величина резерва на погашение кредитов (%)"},
-    {id:"prefDividends", name:"Дивиденды по привилегированным акциям (тыс. руб.)"},
-    {id:"taxRiskReserve", name:"Резерв на покрытие налоговых/судебных рисков (тыс. руб.)"},
-    {id:"minDividendPercent", name:"Минимальный размер дивидендов (%)"},
-    {id:"kCoef", name:"Коэффициент распределения свободного денежного потока (%)"},
-    {id:"netProfitVal", name:"Чистая прибыль"},
-    {id:"fcfVal", name:"FCF"},
-    {id:"fcfAvailVal", name:"Доступный FCF"},
-    {id:"recDividendVal", name:"Рекомендуемый размер дивидендов"},
-    {id:"lowerVal", name:"Нижняя граница"},
-    {id:"upperVal", name:"Верхняя граница"}
-  ];
+// Обновление при вводе
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input", updateDashboard));
+updateDashboard();
 
-  const data = fields.map(f => ({
-    "Показатель": f.name,
-    "Значение": document.getElementById(f.id).value || document.getElementById(f.id).innerText || 0
-  }));
-
-  // Создаем лист и книгу
-  const ws = XLSX.utils.json_to_sheet(data);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Расчеты");
-
-  // Генерируем файл и инициируем скачивание
-  XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
-}
-
-document.getElementById("downloadBtn").addEventListener("click", downloadExcel);
-*/
-
-    // --- Шаг 3.1: Создание листа исходных данных ---
+// --- Шаг 3: Скачать Excel ---
 function createExcelInputs() {
   const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet([
-    ["Исходные данные"],
+  
+  const wsInputs = XLSX.utils.aoa_to_sheet([
     ["Параметр","Значение"],
-    ["Выручка", get("revenue")],
-    ["Полная себестоимость без амортизации", get("cost")],
-    ["Амортизация", get("depr")],
-    ["Эффективная ставка налога на прибыль", get("taxPercent")/100], // %
-    ["Внеоборотные активы на начало периода", get("faStart")],
-    ["Внеоборотные активы на конец периода", get("faEnd")],
-    ["Рабочий капитал на начало периода", get("wcStart")],
-    ["Рабочий капитал на конец периода", get("wcEnd")],
-    ["Прогнозный остаток денежных средств на дату выплаты дивидендов", get("cash")],
-    ["Норматив резерва ликвидности", get("liqFloor")],
-    ["Плановые инвестиции за счет собственных средств", get("invPlan")],
-    ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100], // %
-    ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100], // %
-    ["Дивиденды по привилегированным акциям", get("prefDividends")],
-    ["Резерв на покрытие налоговых/судебных рисков", get("taxRiskReserve")],
-    ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100], // %
-    ["Коэффициент распределения свободного денежного потока", get("kCoef")/100] // %
+    ["Выручка (тыс. руб.)", get("revenue")],
+    ["Полная себестоимость без амортизации (тыс. руб.)", get("cost")],
+    ["Амортизация (тыс. руб.)", get("depr")],
+    ["Эффективная ставка налога на прибыль (%)", get("taxPercent")/100],
+    ["Внеоборотные активы на начало периода (тыс. руб.)", get("faStart")],
+    ["Внеоборотные активы на конец периода (тыс. руб.)", get("faEnd")],
+    ["Рабочий капитал на начало периода (тыс. руб.)", get("wcStart")],
+    ["Рабочий капитал на конец периода (тыс. руб.)", get("wcEnd")],
+    ["Прогнозный остаток денежных средств (тыс. руб.)", get("cash")],
+    ["Норматив резерва ликвидности (тыс. руб.)", get("liqFloor")],
+    ["Плановые инвестиции за счет собственных средств (тыс. руб.)", get("invPlan")],
+    ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100],
+    ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100],
+    ["Дивиденды по привилегированным акциям (тыс. руб.)", get("prefDividends")],
+    ["Резерв на покрытие налоговых/судебных рисков (тыс. руб.)", get("taxRiskReserve")],
+    ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100],
+    ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
   ]);
 
-  // Формат процентов
-  const percentCells = ["B6","B14","B15","B18","B19"];
-  percentCells.forEach(cell => {
-    if(ws[cell]) ws[cell].z = '0.00%';
-  });
-
-  XLSX.utils.book_append_sheet(wb, ws, "Исходные данные");
-  return {wb, ws};
+  XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
+  return wb;
 }
 
-// --- Шаг 3.2: Добавление промежуточных расчетов ---
-function addIntermediateCalculations(ws) {
-  // Расчет FCF
-  ws['B23'] = { f: 'B3-B4-B5' };        // Прибыль до налогообложения
-  ws['B24'] = { f: 'B23*B6' };          // Налог на прибыль
-  ws['B25'] = { f: 'B23-B24' };         // Чистая прибыль
-  ws['B26'] = { f: 'B5' };              // Амортизация
-  ws['B27'] = { f: 'B10-B9' };          // ΔWC
-  ws['B28'] = { f: 'B8-B7' };           // Инвестиции (CAPEX)
-  ws['B29'] = { f: 'B25+B26-B27-B28' };// FCF
+function createCalculationsSheet(wb) {
+  const wsCalc = XLSX.utils.aoa_to_sheet([
+    ["Показатель","Значение"],
+    ["Прибыль до налогообложения", {f: "'Исходные данные'!B2-'Исходные данные'!B3-'Исходные данные'!B4"}],
+    ["Налог на прибыль", {f: "B2*'Исходные данные'!B5"}],
+    ["Чистая прибыль", {f: "B2-B3"}],
+    ["Амортизация", {f: "'Исходные данные'!B4"}],
+    ["ΔWC", {f: "'Исходные данные'!B9-'Исходные данные'!B8"}],
+    ["CAPEX", {f: "'Исходные данные'!B7-'Исходные данные'!B6"}],
+    ["FCF", {f: "B4+B5-B6-B7"}],
+    ["Резерв ликвидности", {f: "MAX(0,'Исходные данные'!B11-'Исходные данные'!B10)"}],
+    ["Обязательные инвестиции", {f: "'Исходные данные'!B12*'Исходные данные'!B13"}],
+    ["Долговая нагрузка", {f: "B8*'Исходные данные'!B14"}],
+    ["Дивиденды по привилегированным акциям", {f: "'Исходные данные'!B15"}],
+    ["Резерв на налоговые/судебные риски", {f: "'Исходные данные'!B16"}],
+    ["Итого резервы", {f: "B9+B10+B11+B12+B13"}],
+    ["FCF доступный", {f: "B7-B14"}],
+    ["Нижняя граница", {f: "B3*'Исходные данные'!B17"}],
+    ["Верхняя граница", {f: "B15"}],
+    ["Компромиссная сумма", {f: "MAX(B16,B7*'Исходные данные'!B18)"}],
+    ["Рекомендуемый размер дивидендов", {f: "B17"}],
+    ["Остаток в бизнесе", {f: "B15-B18"}]
+  ]);
 
-  // Резервы
-  ws['B33'] = { f: 'MAX(0,B12-B11)' };   // Резерв ликвидности
-  ws['B34'] = { f: 'B13*B14' };          // Обязательные инвестиции
-  ws['B35'] = { f: 'B29*B15' };          // Долговая нагрузка
-  ws['B36'] = { f: 'B16' };              // Дивиденды по привилегированным акциям
-  ws['B37'] = { f: 'B17' };              // Резерв на налоговые/судебные риски
-  ws['B38'] = { f: 'B33+B34+B35+B36+B37' }; // ИТОГО резервы
-
-  // Сумма дивидендов
-  ws['B42'] = { f: 'B29-B38' };          // FCF доступный
-  ws['B43'] = { f: 'B25*B18' };          // Нижняя граница
-  ws['B44'] = { f: 'B42' };              // Верхняя граница
-  ws['B45'] = { f: 'MAX(B43,B42*B19)' };// Компромиссная сумма
-  ws['B46'] = { f: 'B45' };              // Рекомендуемая сумма дивидендов
-  ws['B47'] = { f: 'B42-B46' };          // Остаток в бизнесе
+  XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
 
-// --- Шаг 3.3: Скачивание Excel ---
 function downloadExcelFull() {
-  const {wb, ws} = createExcelInputs();
-  addIntermediateCalculations(ws);
+  const wb = createExcelInputs();
+  createCalculationsSheet(wb);
   XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
 }
 
-// Привязка кнопки
 document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
 </script>
 
