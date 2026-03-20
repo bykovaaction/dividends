@@ -363,7 +363,7 @@ button.secondary::before{
 <br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01"></div>
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(2)">Назад</button>
-      <button class="primary">Готово</button>
+      <button class="primary" onclick="updateDashboard(); document.getElementById('recDividendVal').scrollIntoView({behavior:'smooth'});">Готово</button>
     </div>
   </div>
 </div>
