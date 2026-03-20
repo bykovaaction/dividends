@@ -463,26 +463,27 @@ function updateDashboard(){
   document.getElementById("upperMarker").style.right = "2%";
 }
 
-// Для всех числовых полей
+// Заблокировать ввод минуса и e, очищать поле, если число отрицательное
 document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
-  // Блокируем ввод минуса и e
+  
   input.addEventListener("keydown", function(e) {
-    if (e.key === '-' || e.key.toLowerCase() === 'e') e.preventDefault();
+    if (e.key === '-' || e.key.toLowerCase() === 'e') {
+      e.preventDefault(); // блокируем ввод минуса и e
+    }
   });
 
-  // Очистка поля, если число отрицательное
   input.addEventListener("input", function() {
-    let val = parseFloat(this.value);
+    const val = parseFloat(this.value);
     if (isNaN(val) || val < 0) {
       this.value = ''; // оставляем поле пустым
     }
   });
 });
 
-// Функция получения значения для расчетов
+// Функция для расчетов
 function get(id){
-  let val = parseFloat(document.getElementById(id).value);
-  return isNaN(val) ? 0 : val; // пустое поле считается 0
+  const val = parseFloat(document.getElementById(id).value);
+  return isNaN(val) ? 0 : val; // пустое поле = 0
 }
 </script>
 
