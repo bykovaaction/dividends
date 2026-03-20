@@ -7,242 +7,242 @@
 
 <style>
 body{
-  margin:0;
-  font-family:'Inter', sans-serif;
-  background:#f4f5f7;
-  color:#1f2937;
-  -webkit-font-smoothing:antialiased;
+margin:0;
+font-family:'Inter', sans-serif;
+background:#f4f5f7;
+color:#1f2937;
+-webkit-font-smoothing:antialiased;
 }
 
 .wrapper{
-  width:728px;
-  margin:0 auto;
-  padding:15px 10px 20px 10px;
-  box-sizing:border-box;
-  display:flex;
-  gap:10px;
-  align-items:stretch;
+width:728px;
+margin:0 auto;
+padding:15px 10px 20px 10px;
+box-sizing:border-box;
+display:flex;
+gap:10px;
+align-items:stretch;
 }
 
 /* LEFT PANEL */
 .left-panel{
-  width:50%;
-  background:#fff;
-  border-radius:8px;
-  padding:15px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  box-sizing:border-box;
+width:50%;
+background:#fff;
+border-radius:8px;
+padding:15px;
+box-shadow:0 2px 6px rgba(0,0,0,0.08);
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+box-sizing:border-box;
 }
 
 .left-title{
-  font-size:16px;
-  font-weight:600;
-  letter-spacing:-0.2px;
-  margin-bottom:14px;
+font-size:16px;
+font-weight:600;
+letter-spacing:-0.2px;
+margin-bottom:14px;
 }
 
 .step{
-  display:none;
-  flex-direction:column;
-  gap:12px;
+display:none;
+flex-direction:column;
+gap:12px;
 }
 
 .step.active{
-  display:flex;
+display:flex;
 }
 
 /* Шаг 3 — скроллинг */
 #step3{
-  max-height:400px;
-  overflow-y:auto;
-  padding-right:5px; /* чтобы скролл не заходил на контент */
+max-height:400px;
+overflow-y:auto;
+padding-right:5px; /* чтобы скролл не заходил на контент */
 }
 
 .step h3{
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:-0.1px;
-  margin:0 0 8px 0;
+font-size:13px;
+font-weight:600;
+letter-spacing:-0.1px;
+margin:0 0 8px 0;
 }
 
 .field-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:6px;
-  flex-direction:column;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:6px;
+flex-direction:column;
 }
 
 .field-row label{
-  font-size:12px;
-  font-weight:500;
-  color:#4b5563;
+font-size:12px;
+font-weight:500;
+color:#4b5563;
 }
 
 .field-row small{
-  font-size:10px;
-  color:#4b5563;
-  line-height:1.2;
-  display:block;
-  margin-top:2px;
+font-size:10px;
+color:#4b5563;
+line-height:1.2;
+display:block;
+margin-top:2px;
 }
 
 .field-row input{
-  width:150px; /* увеличено для длинных чисел */
-  padding:6px 8px;
-  font-size:12px;
-  border:1px solid #d1d5db;
-  border-radius:6px;
-  font-family:'Inter', sans-serif;
+width:150px; /* увеличено для длинных чисел */
+padding:6px 8px;
+font-size:12px;
+border:1px solid #d1d5db;
+border-radius:6px;
+font-family:'Inter', sans-serif;
 }
 
 .field-row input:focus{
-  outline:none;
-  border-color:#1976d2;
+outline:none;
+border-color:#1976d2;
 }
 
 .nav-buttons{
-  display:flex;
-  justify-content:space-between;
-  margin-top:12px;
+display:flex;
+justify-content:space-between;
+margin-top:12px;
 }
 
 button{
-  padding:7px 14px;
-  font-size:12px;
-  font-weight:600;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  transition:all 0.15s ease;
-  font-family:'Inter', sans-serif;
-  display:flex;
-  align-items:center;
-  gap:4px;
+padding:7px 14px;
+font-size:12px;
+font-weight:600;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:all 0.15s ease;
+font-family:'Inter', sans-serif;
+display:flex;
+align-items:center;
+gap:4px;
 }
 
 button.primary{
-  background:#1976d2;
-  color:#fff;
-  box-shadow:0 2px 6px rgba(25,118,210,0.25);
+background:#1976d2;
+color:#fff;
+box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
 button.primary:hover{
-  background:#1565c0;
-  box-shadow:0 4px 10px rgba(25,118,210,0.35);
-  transform:translateY(-1px);
+background:#1565c0;
+box-shadow:0 4px 10px rgba(25,118,210,0.35);
+transform:translateY(-1px);
 }
 
 button.primary:active{
-  transform:translateY(0);
-  box-shadow:0 2px 6px rgba(25,118,210,0.25);
+transform:translateY(0);
+box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
 button.secondary{
-  background:#e5e7eb;
-  color:#374151;
+background:#e5e7eb;
+color:#374151;
 }
 
 button.secondary:hover{
-  background:#d1d5db;
+background:#d1d5db;
 }
 
 button.secondary:active{
-  background:#cbd5e1;
+background:#cbd5e1;
 }
 
 /* Добавим стрелки на кнопки */
 button.primary::after{
-  content:'→';
+content:'→';
 }
 button.secondary::before{
-  content:'←';
+content:'←';
 }
 
 /* RIGHT PANEL */
 .right-panel{
-  width:50%;
-  display:flex;
-  flex-direction:column;
-  box-sizing:border-box;
+width:50%;
+display:flex;
+flex-direction:column;
+box-sizing:border-box;
 }
 
 .right-top{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+flex:1;
+display:flex;
+flex-direction:column;
+gap:15px;
 }
 
 .result-card{
-  background:#fff;
-  border-radius:8px;
-  padding:15px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  min-height:150px;
+background:#fff;
+border-radius:8px;
+padding:15px;
+box-shadow:0 2px 6px rgba(0,0,0,0.08);
+min-height:150px;
 }
 
 .result-card .title{
-  font-size:16px;
-  font-weight:600;
-  letter-spacing:-0.2px;
+font-size:16px;
+font-weight:600;
+letter-spacing:-0.2px;
 }
 
 .result-main{
-  font-size:36px;
-  font-weight:800;
-  margin-top:10px;
-  color:#2e7d32;
-  letter-spacing:-0.5px;
+font-size:36px;
+font-weight:800;
+margin-top:10px;
+color:#2e7d32;
+letter-spacing:-0.5px;
 }
 
 .range-block{
-  margin-top:20px;
-  font-size:12px;
+margin-top:20px;
+font-size:12px;
 }
 
 .range-line{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-bottom:4px;
+display:flex;
+align-items:center;
+gap:6px;
+margin-bottom:4px;
 }
 
 .range-fill{
-  height:100%;
-  border-radius:6px;
+height:100%;
+border-radius:6px;
 }
 
 .dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
+width:8px;
+height:8px;
+border-radius:50%;
 }
 
 .dot.lower{ background:#1565c0; }
 .dot.upper{ background:#c62828; }
 
 .range-bar{
-  position:relative;
-  height:16px; /* чуть выше для удобства */
-  background:#e5e7eb;
-  border-radius:6px;
-  overflow:hidden;
-  margin-top:6px;
+position:relative;
+height:16px; /* чуть выше для удобства */
+background:#e5e7eb;
+border-radius:6px;
+overflow:hidden;
+margin-top:6px;
 }
 
 .marker{
-  position:absolute;
-  top:50%;
-  transform:translate(-50%, -50%);
-  width:14px;
-  height:14px;
-  background:#fff;
-  border-radius:50%;
-  border:2px solid currentColor;
+position:absolute;
+top:50%;
+transform:translate(-50%, -50%);
+width:14px;
+height:14px;
+background:#fff;
+border-radius:50%;
+border:2px solid currentColor;
 }
 
 .marker.lower{ background:#1565c0; border-color:#1565c0; }
@@ -250,67 +250,67 @@ button.secondary::before{
 .marker.rec{ background:#2e7d32; border-color:#2e7d32; }
 
 .kpi-row{
-  display:flex;
-  gap:10px;
+display:flex;
+gap:10px;
 }
 
 .kpi{
-  flex:1;
-  background:#fff;
-  border-radius:8px;
-  padding:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.06);
-  display:flex;
-  flex-direction:column;
-  min-height:70px;
+flex:1;
+background:#fff;
+border-radius:8px;
+padding:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
+display:flex;
+flex-direction:column;
+min-height:70px;
 }
-  
+
 .kpi-title{
-  font-size:12px;
-  font-weight:500;
-  color:#4b5563;
-  min-height:28px;
+font-size:12px;
+font-weight:500;
+color:#4b5563;
+min-height:28px;
 }
 
 .kpi-value{
-  font-size:18px;
-  font-weight:700;
-  margin-top:auto;
-  letter-spacing:-0.2px;
+font-size:18px;
+font-weight:700;
+margin-top:auto;
+letter-spacing:-0.2px;
 }
-  /* Для шага 3 */
+/* Для шага 3 */
 #step3 {
-  max-height:400px;
-  overflow-y:auto;
-  padding-right:5px;
-  position:relative;
+max-height:400px;
+overflow-y:auto;
+padding-right:5px;
+position:relative;
 }
 
 /* Плавающая кнопка Готово */
 #step3 .nav-buttons {
-  position: sticky;
-  bottom: 0;
-  background: #fff;
-  padding-top: 10px;
-  padding-bottom: 5px;
+position: sticky;
+bottom: 0;
+background: #fff;
+padding-top: 10px;
+padding-bottom: 5px;
 }
 
 /* Стрелка вниз внизу шага */
 #step3::after {
-  content: '↓';
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 20px;
-  color: #1976d2;
-  animation: bounce 1.2s infinite;
-  pointer-events: none;
+content: '↓';
+position: absolute;
+bottom: 5px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 20px;
+color: #1976d2;
+animation: bounce 1.2s infinite;
+pointer-events: none;
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 6px); }
+0%, 100% { transform: translate(-50%, 0); }
+50% { transform: translate(-50%, 6px); }
 }
 </style>
 </head>
@@ -320,93 +320,97 @@ button.secondary::before{
 
 <!-- LEFT PANEL -->
 <div class="left-panel">
-  <div class="left-title">Исходные данные</div>
+<div class="left-title">Исходные данные</div>
 
-  <div id="step1" class="step active">
-    <h3>Финансовые показатели</h3>
-    <div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="text" inputmode="decimal" id="revenue"></div>
-    <div class="field-row"><label>Полная себестоимость без амортизации (тыс. руб.)</label><small>Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</small><input type="text" inputmode="decimal" id="cost"></div>
-    <div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="text" inputmode="decimal" id="depr"></div>
-    <div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="text" inputmode="decimal" id="taxPercent" step="0.01"></div>
-    <div class="nav-buttons">
-      <button class="secondary" disabled>Назад</button>
-      <button class="primary" onclick="nextStep(2)">Вперед</button>
-    </div>
-  </div>
+<div id="step1" class="step active">
+<h3>Финансовые показатели</h3>
+<div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="number" id="revenue"></div>
+<div class="field-row"><label>Полная себестоимость без амортизации (тыс. руб.)</label><small>Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</small><input type="number" id="cost"></div>
+<div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="number" id="depr"></div>
+<div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="number" id="taxPercent" step="0.01"></div>
+<div class="nav-buttons">
+<button class="secondary" disabled>Назад</button>
+<button class="primary" onclick="nextStep(2)">Вперед</button>
+</div>
+</div>
 
-  <div id="step2" class="step">
-    <h3>Балансовые драйверы</h3>
-    <div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="text" inputmode="decimal" id="faStart"></div>
-    <div class="field-row"><label>Внеоборотные активы на конец периода (тыс. руб.)</label><input type="text" inputmode="decimal" id="faEnd"></div>
-    <div class="field-row"><label>Рабочий капитал на начало периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="text" inputmode="decimal" id="wcStart"></div>
-    <div class="field-row"><label>Рабочий капитал на конец периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="text" inputmode="decimal" id="wcEnd"></div>
-    <div class="field-row"><label>Прогнозный остаток денежных средств на дату выплаты дивидендов (тыс. руб.)</label><input type="text" inputmode="decimal" id="cash"></div>
-    <div class="nav-buttons">
-      <button class="secondary" onclick="nextStep(1)">Назад</button>
-      <button class="primary" onclick="nextStep(3)">Вперед</button>
-    </div>
-  </div>
+<div id="step2" class="step">
+<h3>Балансовые драйверы</h3>
+<div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="number" id="faStart"></div>
+<div class="field-row"><label>Внеоборотные активы на конец периода (тыс. руб.)</label><input type="number" id="faEnd"></div>
+<div class="field-row"><label>Рабочий капитал на начало периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcStart"></div>
+<div class="field-row"><label>Рабочий капитал на конец периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcEnd"></div>
+<div class="field-row"><label>Прогнозный остаток денежных средств на дату выплаты дивидендов (тыс. руб.)</label><input type="number" id="cash"></div>
+<div class="nav-buttons">
+<button class="secondary" onclick="nextStep(1)">Назад</button>
+<button class="primary" onclick="nextStep(3)">Вперед</button>
+</div>
+</div>
 
-  <div id="step3" class="step">
-    <h3>Дополнительно введите данные для расчета резервов для поддержания и развития бизнеса</h3>
-    <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</small><input type="text" inputmode="decimal" id="liqFloor"></div>
-    <div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="text" inputmode="decimal" id="invPlan"></div>
-    <div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="text" inputmode="decimal" id="invPercent" step="0.01"></div>
-    <div class="field-row"><label>Величина резерва на погашение кредитов (% от FCF)</label><small>По экспертной оценке:<br>- минимум 10%, если долговая нагрузка умеренная (Долг/EBITDA < 2), ставки по кредитам низкие и нет ковенантов, требующих быстрого снижения долга;<br>
-- максимум 25%, если долговая нагрузка существенна (Долг/EBITDA > 3–4), ставки высокие или банки требуют снижать отношение долга к прибыли</small><input type="text" inputmode="decimal" id="debtPercent" step="0.01"></div>
-    <div class="field-row"><label>Дивиденды по привилегированным акциям (тыс. руб.)</label><input type="text" inputmode="decimal" id="prefDividends"></div>
-    <div class="field-row"><label>Резерв на покрытие налоговых/судебных рисков (тыс. руб.)</label><small>По незавершенным налоговым проверкам: 20–50% от максимального прогноза доначислений, по текущим судебным спорам в качестве ответчика: 100%  от суммы иска</small><input type="text" inputmode="decimal" id="taxRiskReserve"></div>
-    <div class="field-row"><label>Минимальный размер дивидендов (% от ЧП)</label><small>Нижняя граница в процентах от чистой прибыли, на выплату которой согласны владельцы</small><input type="text" inputmode="decimal" id="minDividendPercent" step="0.01"></div>
-    <div class="field-row"><label>Коэффициент распределения свободного денежного потока (%)</label><small>Какую часть из доступного свободного денежного потока допустимо направить на дивиденды:<br>-до 25% -  риск дефолта, высокий долг, ковенанты,
+<div id="step3" class="step">
+<h3>Дополнительно введите данные для расчета резервов для поддержания и развития бизнеса</h3>
+<div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</small><input type="number" id="liqFloor"></div>
+<div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="number" id="invPlan"></div>
+<div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="number" id="invPercent" step="0.01"></div>
+<div class="field-row"><label>Величина резерва на погашение кредитов (% от FCF)</label><small>По экспертной оценке:<br>- минимум 10%, если долговая нагрузка умеренная (Долг/EBITDA < 2), ставки по кредитам низкие и нет ковенантов, требующих быстрого снижения долга;<br>
+
+- максимум 25%, если долговая нагрузка существенна (Долг/EBITDA > 3–4), ставки высокие или банки требуют снижать отношение долга к прибыли</small><input type="number" id="debtPercent" step="0.01"></div>
+<div class="field-row"><label>Дивиденды по привилегированным акциям (тыс. руб.)</label><input type="number" id="prefDividends"></div>
+<div class="field-row"><label>Резерв на покрытие налоговых/судебных рисков (тыс. руб.)</label><small>По незавершенным налоговым проверкам: 20–50% от максимального прогноза доначислений, по текущим судебным спорам в качестве ответчика: 100% от суммы иска</small><input type="number" id="taxRiskReserve"></div>
+<div class="field-row"><label>Минимальный размер дивидендов (% от ЧП)</label><small>Нижняя граница в процентах от чистой прибыли, на выплату которой согласны владельцы</small><input type="number" id="minDividendPercent" step="0.01"></div>
+<div class="field-row"><label>Коэффициент распределения свободного денежного потока (%)</label><small>Какую часть из доступного свободного денежного потока допустимо направить на дивиденды:<br>-до 25% - риск дефолта, высокий долг, ковенанты,
 <br>-40–60% - стабильный бизнес без крупных проектов,
 <br>-25–50% - растущий, прибыльный бизнес,
-<br>-до 75% - избыток ликвидности</small><input type="text" inputmode="decimal" id="kCoef" step="0.01"></div>
-    <div class="nav-buttons">
-      <button class="secondary" onclick="nextStep(2)">Назад</button>
-      <button class="primary">Готово</button>
-    </div>
-  </div>
+<br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01"></div>
+<div class="nav-buttons">
+<button class="secondary" onclick="nextStep(2)">Назад</button>
+<button class="primary">Готово</button>
+</div>
+</div>
 </div>
 
 <!-- RIGHT PANEL -->
 <div class="right-panel">
-  <div class="right-top">
-    <div class="result-card">
-      <div class="title">Рекомендуемый размер дивидендов</div>
-      <div id="recDividendVal" class="result-main">0</div>
+<div class="right-top">
+<div class="result-card">
+<div class="title">Рекомендуемый размер дивидендов</div>
+<div id="recDividendVal" class="result-main">0</div>
 
-      <div class="range-block">
-        <div class="range-line">
-          <div class="dot lower"></div>
-          <div>Нижняя граница: <span id="lowerVal">0</span></div>
-        </div>
-        <div class="range-line">
-          <div class="dot upper"></div>
-          <div>Верхняя граница: <span id="upperVal">0</span></div>
-        </div>
-        <div class="range-bar">
-          <div id="lowerMarker" class="marker lower"></div>
-          <div id="recMarker" class="marker rec"></div>
-          <div id="upperMarker" class="marker upper"></div>
-        </div>
-      </div>
+```
+  <div class="range-block">
+    <div class="range-line">
+      <div class="dot lower"></div>
+      <div>Нижняя граница: <span id="lowerVal">0</span></div>
     </div>
-
-    <div class="kpi-row">
-      <div class="kpi">
-        <div class="kpi-title">Чистая прибыль</div>
-        <div id="netProfitVal" class="kpi-value">0</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-title">FCF</div>
-        <div id="fcfVal" class="kpi-value">0</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-title">Доступный FCF</div>
-        <div id="fcfAvailVal" class="kpi-value">0</div>
-      </div>
+    <div class="range-line">
+      <div class="dot upper"></div>
+      <div>Верхняя граница: <span id="upperVal">0</span></div>
+    </div>
+    <div class="range-bar">
+      <div id="lowerMarker" class="marker lower"></div>
+      <div id="recMarker" class="marker rec"></div>
+      <div id="upperMarker" class="marker upper"></div>
     </div>
   </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-title">Чистая прибыль</div>
+    <div id="netProfitVal" class="kpi-value">0</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-title">FCF</div>
+    <div id="fcfVal" class="kpi-value">0</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-title">Доступный FCF</div>
+    <div id="fcfAvailVal" class="kpi-value">0</div>
+  </div>
+</div>
+```
+
+</div>
 </div>
 
 </div>
@@ -414,70 +418,56 @@ button.secondary::before{
 <script>
 // Код расчетов **не изменялся**
 function nextStep(n){
-  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
-  document.getElementById("step"+n).classList.add("active");
+document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+document.getElementById("step"+n).classList.add("active");
 }
 
-function get(id){
-  let val = parseFloat(document.getElementById(id).value);
-  if (isNaN(val) || val < 0) return 0;
-  return val;
-}
+function get(id){ return parseFloat(document.getElementById(id).value)||0; }
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
-  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
-  const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
-  const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
-  const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
+const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
+const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
+const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
+const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
+const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
 
-  const profitBeforeTax = revenue - cost - depr;
-  const tax = profitBeforeTax * taxPercent;
-  const netProfit = profitBeforeTax - tax;
+const profitBeforeTax = revenue - cost - depr;
+const tax = profitBeforeTax * taxPercent;
+const netProfit = profitBeforeTax - tax;
 
-  const deltaWC = wcEnd - wcStart;
-  const capex = faEnd - faStart;
-  const fcf = netProfit + depr - deltaWC - capex;
+const deltaWC = wcEnd - wcStart;
+const capex = faEnd - faStart;
+const fcf = netProfit + depr - deltaWC - capex;
 
-  const liquidityReserve = Math.max(0, liqFloor - cash);
-  const mandatoryInvestments = invPlan * invPercent;
-  const debtLoad = debtPercent * fcf;
-  const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
+const liquidityReserve = Math.max(0, liqFloor - cash);
+const mandatoryInvestments = invPlan * invPercent;
+const debtLoad = debtPercent * fcf;
+const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
 
-  const fcfAvailable = fcf - totalReserves;
-  const lowerBound = netProfit * minDividendPercent;
-  const upperBound = fcfAvailable;
-  const compDividend = fcfAvailable * kCoef;
-  const recDividend = Math.max(compDividend, lowerBound);
+const fcfAvailable = fcf - totalReserves;
+const lowerBound = netProfit * minDividendPercent;
+const upperBound = fcfAvailable;
+const compDividend = fcfAvailable * kCoef;
+const recDividend = Math.max(compDividend, lowerBound);
 
-  document.getElementById("netProfitVal").innerText=format(netProfit);
-  document.getElementById("fcfVal").innerText=format(fcf);
-  document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
-  document.getElementById("recDividendVal").innerText=format(recDividend);
-  document.getElementById("lowerVal").innerText=format(lowerBound);
-  document.getElementById("upperVal").innerText=format(upperBound);
+document.getElementById("netProfitVal").innerText=format(netProfit);
+document.getElementById("fcfVal").innerText=format(fcf);
+document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
+document.getElementById("recDividendVal").innerText=format(recDividend);
+document.getElementById("lowerVal").innerText=format(lowerBound);
+document.getElementById("upperVal").innerText=format(upperBound);
 
-  const safeUpper = upperBound || 1;
-  document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100) + "%";
-  document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100) + "%";
-  document.getElementById("upperMarker").style.left = "auto";
-  document.getElementById("upperMarker").style.right = "2%";
+const safeUpper = upperBound || 1;
+document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100) + "%";
+document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100) + "%";
+document.getElementById("upperMarker").style.left = "auto";
+document.getElementById("upperMarker").style.right = "2%";
 }
 
-document.querySelectorAll(".left-panel input").forEach(input => {
-  input.addEventListener("input", function() {
-    let val = this.value;
-    val = val.replace(/[^0-9.]/g, '');
-    const dots = val.match(/\./g);
-    if (dots && dots.length > 1) val = val.slice(0, val.lastIndexOf('.'));
-    let num = parseFloat(val);
-    if (isNaN(num) || num < 0) this.value = '';
-    else this.value = num;
-    
-    updateDashboard(); // вызываем после очистки
-  });
+document.querySelectorAll("input").forEach(el=>{
+el.addEventListener("input",updateDashboard);
 });
 </script>
 
