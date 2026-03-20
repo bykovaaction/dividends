@@ -438,42 +438,45 @@ function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); 
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
-const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
-const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
-const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
-const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
+  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
+  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
+  const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
+  const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
+  const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
 
-const profitBeforeTax = revenue - cost - depr;
-const tax = profitBeforeTax * taxPercent;
-const netProfit = profitBeforeTax - tax;
+  const profitBeforeTax = revenue - cost - depr;
+  const tax = profitBeforeTax * taxPercent;
+  const netProfit = profitBeforeTax - tax;
 
-const deltaWC = wcEnd - wcStart;
-const capex = faEnd - faStart;
-const fcf = netProfit + depr - deltaWC - capex;
+  const deltaWC = wcEnd - wcStart;
+  const capex = faEnd - faStart;
+  const fcf = netProfit + depr - deltaWC - capex;
 
-const liquidityReserve = Math.max(0, liqFloor - cash);
-const mandatoryInvestments = invPlan * invPercent;
-const debtLoad = debtPercent * fcf;
-const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
+  const liquidityReserve = Math.max(0, liqFloor - cash);
+  const mandatoryInvestments = invPlan * invPercent;
+  const debtLoad = debtPercent * fcf;
+  const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
 
-const fcfAvailable = fcf - totalReserves;
-const lowerBound = netProfit * minDividendPercent;
-const upperBound = fcfAvailable;
-const compDividend = fcfAvailable * kCoef;
-const recDividend = Math.max(compDividend, lowerBound);
+  const fcfAvailable = fcf - totalReserves;
+  const lowerBound = netProfit * minDividendPercent;
+  const upperBound = fcfAvailable;
+  const compDividend = fcfAvailable * kCoef;
+  const recDividend = Math.max(compDividend, lowerBound);
 
-document.getElementById("netProfitVal").innerText=format(netProfit);
-document.getElementById("fcfVal").innerText=format(fcf);
-document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
-document.getElementById("recDividendVal").innerText=format(recDividend);
-document.getElementById("lowerVal").innerText=format(lowerBound);
-document.getElementById("upperVal").innerText=format(upperBound);
+  document.getElementById("netProfitVal").innerText=format(netProfit);
+  document.getElementById("fcfVal").innerText=format(fcf);
+  document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
+  document.getElementById("recDividendVal").innerText=format(recDividend);
+  document.getElementById("lowerVal").innerText=format(lowerBound);
+  document.getElementById("upperVal").innerText=format(upperBound);
 
-const safeUpper = upperBound || 1;
-document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
-document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
-document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
+  const safeUpper = upperBound || 1;
+  document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
+  document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
+  document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
+
+  // ✅ Вызов прогресс-бара в конце функции
+  updateProgress();
 }
 
 // Обновление при вводе
@@ -551,6 +554,21 @@ XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
 }
 
 document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
+
+// Новая функция для прогресс-бара
+function updateProgress(){
+  const inputs = document.querySelectorAll(".left-panel input");
+  const total = inputs.length;
+  let filled = 0;
+  inputs.forEach(i => {
+    if(i.value && i.value.trim() !== "") filled++;
+  });
+  const percent = Math.round((filled/total)*100);
+  document.getElementById("progressFill").style.width = percent + "%";
+
+  // Показать "Готово!" при 100%
+  document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
+}
 </script>
 
 </body>
