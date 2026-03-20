@@ -469,14 +469,11 @@ document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
     if (e.key === '-' || e.key.toLowerCase() === 'e') e.preventDefault();
   });
 
-  // Корректируем вставку или ввод
+  // Очистка поля при отрицательном вводе
   input.addEventListener("input", function() {
     let num = parseFloat(this.value);
     if (isNaN(num) || num < 0) {
-      this.value = ''; // очищаем поле, если введено отрицательное
-    } else {
-      // Чтобы при вставке числа с минусом визуально стало положительное
-      this.value = num;
+      this.value = ''; // поле остаётся пустым
     }
   });
 });
