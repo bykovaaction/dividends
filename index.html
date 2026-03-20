@@ -515,6 +515,17 @@ const wsInputs = XLSX.utils.aoa_to_sheet([
 ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
 ]);
 
+  // Автоподбор ширины для wsInputs
+const colWidthsInputs = [];
+const wsInputsRows = XLSX.utils.sheet_to_json(wsInputs, {header:1});
+wsInputsRows.forEach((row, rIdx) => {
+  row.forEach((val, cIdx) => {
+    const l = val ? val.toString().length : 10;
+    colWidthsInputs[cIdx] = Math.max(colWidthsInputs[cIdx] || 10, l + 2); // +2 для отступа
+  });
+});
+wsInputs['!cols'] = colWidthsInputs;
+
 XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
 return wb;
 }
@@ -550,6 +561,19 @@ const wsCalc = XLSX.utils.aoa_to_sheet([
 ["Остаток в бизнесе", {f: "B15-B19"}] // B20 ✅
 
 ]);
+
+// Автоподбор ширины для wsCalc
+const colWidthsCalc = [];
+const wsCalcRows = XLSX.utils.sheet_to_json(wsCalc, {header:1});
+wsCalcRows.forEach((row, rIdx) => {
+  row.forEach((val, cIdx) => {
+    let l = 10;
+    if(typeof val === "object" && val.f) l = val.f.length; // формула
+    else if(val) l = val.toString().length;
+    colWidthsCalc[cIdx] = Math.max(colWidthsCalc[cIdx] || 10, l + 2);
+  });
+});
+wsCalc['!cols'] = colWidthsCalc;
 
 XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
