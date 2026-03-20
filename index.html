@@ -418,8 +418,7 @@ function nextStep(n){
 
 function get(id){
   let val = parseFloat(document.getElementById(id).value);
-  if (isNaN(val) || val < 0) val = 0; // любое отрицательное число считается 0
-  return val;
+  return Math.max(0, isNaN(val) ? 0 : val);
 }
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
@@ -466,17 +465,6 @@ function updateDashboard(){
 
 document.querySelectorAll("input").forEach(el=>{
   el.addEventListener("input",updateDashboard);
-});
-  // Ограничение: только числа >= 0
-document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
-  input.addEventListener("input", function() {
-    let num = parseFloat(this.value);
-    if (isNaN(num) || num < 0) {
-      this.value = ''; // визуально пустое поле
-    } else {
-      this.value = num;
-    }
-  });
 });
 </script>
 
