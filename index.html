@@ -466,14 +466,17 @@ function updateDashboard(){
   document.getElementById("upperMarker").style.right = "2%";
 }
 
-document.querySelectorAll("input").forEach(el=>{
-  el.addEventListener("input",updateDashboard);
-});
-  document.querySelectorAll(".left-panel input").forEach(input => {
+document.querySelectorAll(".left-panel input").forEach(input => {
   input.addEventListener("input", function() {
-    let val = this.value.replace(/[^0-9.]/g, '');
-    if ((val.match(/\./g)||[]).length > 1) val = val.slice(0,-1);
-    this.value = val;
+    let val = this.value;
+    val = val.replace(/[^0-9.]/g, '');
+    const dots = val.match(/\./g);
+    if (dots && dots.length > 1) val = val.slice(0, val.lastIndexOf('.'));
+    let num = parseFloat(val);
+    if (isNaN(num) || num < 0) this.value = '';
+    else this.value = num;
+    
+    updateDashboard(); // вызываем после очистки
   });
 });
 </script>
