@@ -6,7 +6,6 @@
 <title>Расчет компромиссных дивидендов</title>
 
 <style>
-/* Стили оставляем без изменений */
 body{
   margin:0;
   font-family:'Inter', sans-serif;
@@ -16,7 +15,7 @@ body{
 }
 
 .wrapper{
-  width:734px;
+  width:728px; /* изменено с 734px на 728px */
   margin:0 auto;
   padding:20px 15px 30px 15px;
   box-sizing:border-box;
@@ -25,6 +24,7 @@ body{
   align-items:stretch;
 }
 
+/* LEFT PANEL */
 .left-panel{
   width:50%;
   background:#fff;
@@ -144,6 +144,7 @@ button.secondary:active{
   background:#cbd5e1;
 }
 
+/* RIGHT PANEL */
 .right-panel{
   width:50%;
   display:flex;
@@ -298,7 +299,6 @@ button.secondary:active{
 
   <div id="step3" class="step">
     <h3>Дополнительные данные для расчета резервов и дивидендов</h3>
-    <!-- Норматив резерва ликвидности перемещен на первое место -->
     <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период</small><input type="number" id="liqFloor"></div>
     <div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="number" id="invPlan"></div>
     <div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="number" id="invPercent" step="0.01"></div>
@@ -358,7 +358,7 @@ button.secondary:active{
 </div>
 
 <script>
-// Код расчетов оставлен **без изменений**
+// Код расчетов **не изменялся**
 function nextStep(n){
   document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
   document.getElementById("step"+n).classList.add("active");
