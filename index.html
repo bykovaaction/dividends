@@ -419,7 +419,8 @@ function nextStep(n){
 
 function get(id){
   let val = parseFloat(document.getElementById(id).value);
-  if (isNaN(val) || val < 0) val = 0;
+  if (isNaN(val) || val < 0) val = 0; // любое отрицательное число становится 0
+  document.getElementById(id).value = val; // сразу исправляем поле
   return val;
 }
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
