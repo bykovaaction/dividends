@@ -139,10 +139,10 @@ box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
 button.primary:disabled {
-  background:#1976d2;
-  opacity:0.5;
-  cursor:not-allowed;
-  box-shadow:none;
+background:#1976d2;
+opacity:0.5;
+cursor:not-allowed;
+box-shadow:none;
 }
 
 button.primary:hover{
@@ -445,45 +445,45 @@ function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); 
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
-  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
-  const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
-  const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
-  const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
+const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
+const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
+const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
+const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
+const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
 
-  const profitBeforeTax = revenue - cost - depr;
-  const tax = profitBeforeTax * taxPercent;
-  const netProfit = profitBeforeTax - tax;
+const profitBeforeTax = revenue - cost - depr;
+const tax = profitBeforeTax * taxPercent;
+const netProfit = profitBeforeTax - tax;
 
-  const deltaWC = wcEnd - wcStart;
-  const capex = faEnd - faStart;
-  const fcf = netProfit + depr - deltaWC - capex;
+const deltaWC = wcEnd - wcStart;
+const capex = faEnd - faStart;
+const fcf = netProfit + depr - deltaWC - capex;
 
-  const liquidityReserve = Math.max(0, liqFloor - cash);
-  const mandatoryInvestments = invPlan * invPercent;
-  const debtLoad = debtPercent * fcf;
-  const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
+const liquidityReserve = Math.max(0, liqFloor - cash);
+const mandatoryInvestments = invPlan * invPercent;
+const debtLoad = debtPercent * fcf;
+const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
 
-  const fcfAvailable = fcf - totalReserves;
-  const lowerBound = netProfit * minDividendPercent;
-  const upperBound = fcfAvailable;
-  const compDividend = fcfAvailable * kCoef;
-  const recDividend = Math.max(compDividend, lowerBound);
+const fcfAvailable = fcf - totalReserves;
+const lowerBound = netProfit * minDividendPercent;
+const upperBound = fcfAvailable;
+const compDividend = fcfAvailable * kCoef;
+const recDividend = Math.max(compDividend, lowerBound);
 
-  document.getElementById("netProfitVal").innerText=format(netProfit);
-  document.getElementById("fcfVal").innerText=format(fcf);
-  document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
-  document.getElementById("recDividendVal").innerText=format(recDividend);
-  document.getElementById("lowerVal").innerText=format(lowerBound);
-  document.getElementById("upperVal").innerText=format(upperBound);
+document.getElementById("netProfitVal").innerText=format(netProfit);
+document.getElementById("fcfVal").innerText=format(fcf);
+document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
+document.getElementById("recDividendVal").innerText=format(recDividend);
+document.getElementById("lowerVal").innerText=format(lowerBound);
+document.getElementById("upperVal").innerText=format(upperBound);
 
-  const safeUpper = upperBound || 1;
-  document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
-  document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
-  document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
+const safeUpper = upperBound || 1;
+document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
+document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
+document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
 
-  // ✅ Вызов прогресс-бара в конце функции
-  updateProgress();
+// ✅ Вызов прогресс-бара в конце функции
+updateProgress();
 }
 
 // Обновление при вводе
@@ -514,17 +514,6 @@ const wsInputs = XLSX.utils.aoa_to_sheet([
 ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100],
 ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
 ]);
-
-  // Автоподбор ширины для wsInputs
-const colWidthsInputs = [];
-const wsInputsRows = XLSX.utils.sheet_to_json(wsInputs, {header:1});
-wsInputsRows.forEach((row, rIdx) => {
-  row.forEach((val, cIdx) => {
-    const l = val ? val.toString().length : 10;
-    colWidthsInputs[cIdx] = Math.max(colWidthsInputs[cIdx] || 10, l + 2); // +2 для отступа
-  });
-});
-wsInputs['!cols'] = colWidthsInputs;
 
 XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
 return wb;
@@ -562,19 +551,6 @@ const wsCalc = XLSX.utils.aoa_to_sheet([
 
 ]);
 
-// Автоподбор ширины для wsCalc
-const colWidthsCalc = [];
-const wsCalcRows = XLSX.utils.sheet_to_json(wsCalc, {header:1});
-wsCalcRows.forEach((row, rIdx) => {
-  row.forEach((val, cIdx) => {
-    let l = 10;
-    if(typeof val === "object" && val.f) l = val.f.length; // формула
-    else if(val) l = val.toString().length;
-    colWidthsCalc[cIdx] = Math.max(colWidthsCalc[cIdx] || 10, l + 2);
-  });
-});
-wsCalc['!cols'] = colWidthsCalc;
-
 XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
 
@@ -588,29 +564,30 @@ document.getElementById("downloadBtn").addEventListener("click", downloadExcelFu
 
 // Новая функция для прогресс-бара
 function updateProgress(){
-  const inputs = document.querySelectorAll(".left-panel input");
-  const total = inputs.length;
-  let filled = 0;
-  inputs.forEach(i => {
-    if(i.value && i.value.trim() !== "") filled++;
-  });
-  const percent = Math.round((filled/total)*100);
-  document.getElementById("progressFill").style.width = percent + "%";
+const inputs = document.querySelectorAll(".left-panel input");
+const total = inputs.length;
+let filled = 0;
+inputs.forEach(i => {
+if(i.value && i.value.trim() !== "") filled++;
+});
+const percent = Math.round((filled/total)*100);
+document.getElementById("progressFill").style.width = percent + "%";
 
-  const downloadBtn = document.getElementById("downloadBtn");
-  
-  // Показать "Готово!" при 100%
-  if(percent === 100){
-    document.getElementById("progressDone").style.display = "block";
-    downloadBtn.disabled = false;           // ✅ разблокируем кнопку
-    downloadBtn.style.opacity = 1;          // можно добавить визуальный эффект
-    downloadBtn.style.cursor = "pointer";  
-  } else {
-    document.getElementById("progressDone").style.display = "none";
-    downloadBtn.disabled = true;            // 🔒 блокируем
-    downloadBtn.style.opacity = 0.5;        // визуально полублок
-    downloadBtn.style.cursor = "not-allowed";
-  }
+const downloadBtn = document.getElementById("downloadBtn");
+
+// Показать "Готово!" при 100%
+if(percent === 100){
+document.getElementById("progressDone").style.display = "block";
+downloadBtn.disabled = false;           // ✅ разблокируем кнопку
+downloadBtn.style.opacity = 1;          // можно добавить визуальный эффект
+downloadBtn.style.cursor = "pointer";
+
+} else {
+document.getElementById("progressDone").style.display = "none";
+downloadBtn.disabled = true;            // 🔒 блокируем
+downloadBtn.style.opacity = 0.5;        // визуально полублок
+downloadBtn.style.cursor = "not-allowed";
+}
 }
 </script>
 
