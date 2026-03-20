@@ -410,18 +410,19 @@ button.secondary::before{
 </div>
 
 <script>
-// Код расчетов **не изменялся**
 function nextStep(n){
   document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
   document.getElementById("step"+n).classList.add("active");
 }
 
-function get(id){
-  let val = parseFloat(document.getElementById(id).value);
-  return Math.max(0, isNaN(val) ? 0 : val);
-}
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
+
+// Функция для безопасного получения значения
+function get(id){
+  const val = parseFloat(document.getElementById(id).value);
+  return (isNaN(val) || val < 0) ? 0 : val; // пустое поле или отрицательное = 0
+}
 
 function updateDashboard(){
   const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
@@ -463,28 +464,21 @@ function updateDashboard(){
   document.getElementById("upperMarker").style.right = "2%";
 }
 
-// Заблокировать ввод минуса и e, очищать поле, если число отрицательное
+// Блокировка ввода минуса и e, очистка поля при отрицательном числе
 document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
-  
-  input.addEventListener("keydown", function(e) {
-    if (e.key === '-' || e.key.toLowerCase() === 'e') {
-      e.preventDefault(); // блокируем ввод минуса и e
-    }
+  input.addEventListener("keydown", e => {
+    if (e.key === '-' || e.key.toLowerCase() === 'e') e.preventDefault();
   });
 
-  input.addEventListener("input", function() {
-    const val = parseFloat(this.value);
-    if (isNaN(val) || val < 0) {
-      this.value = ''; // оставляем поле пустым
-    }
+  input.addEventListener("input", () => {
+    const val = parseFloat(input.value);
+    if (isNaN(val) || val < 0) input.value = ''; // оставляем поле пустым
+    updateDashboard();
   });
 });
 
-// Функция для расчетов
-function get(id){
-  const val = parseFloat(document.getElementById(id).value);
-  return isNaN(val) ? 0 : val; // пустое поле = 0
-}
+// Инициализация
+updateDashboard();
 </script>
 
 </body>
