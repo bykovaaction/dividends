@@ -485,10 +485,6 @@ function createExcelInputs() {
   const wb = XLSX.utils.book_new();
   
   const wsInputs = XLSX.utils.aoa_to_sheet([
-// Жирный заголовок
-if (wsInputs['A1']) {
-  wsInputs['A1'].s = { font: { bold: true } };
-}
   ["Исходные данные"], // ← новый заголовок
   ["Параметр","Значение"],
   ["Выручка (тыс. руб.)", get("revenue")],
@@ -516,19 +512,6 @@ if (wsInputs['A1']) {
 
 function createCalculationsSheet(wb) {
   const wsCalc = XLSX.utils.aoa_to_sheet([
-
-      // --- ДЕЛАЕМ ЖИРНЫЕ ЗАГОЛОВКИ БЛОКОВ ---
-const boldRows = [0, 9, 18]; 
-// 0 = "Расчет FCF"
-// 9 = "Расчет резервов"
-// 18 = "Расчет дивидендов"
-
-boldRows.forEach(r => {
-  const cell = XLSX.utils.encode_cell({ r: r, c: 0 });
-  if (wsCalc[cell]) {
-    wsCalc[cell].s = { font: { bold: true } };
-  }
-});
 
     // ===== БЛОК 1 =====
     ["Расчет FCF, тыс. руб."],
