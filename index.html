@@ -419,7 +419,7 @@ function nextStep(n){
 
 function get(id){
   let val = parseFloat(document.getElementById(id).value);
-  if (isNaN(val) || val < 0) val = 0; // любое отрицательное число становится 0
+  if (isNaN(val) || val < 0) val = 0; // любое отрицательное число считается 0
   return val;
 }
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
@@ -471,34 +471,12 @@ document.querySelectorAll("input").forEach(el=>{
   // Ограничение: только числа >= 0
 document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
   input.addEventListener("input", function() {
-    // Убираем все символы кроме цифр и точки
-    let val = this.value.replace(/[^0-9.]/g, '');
-    
     // Преобразуем в число
-    let num = parseFloat(val);
-    
-    // Если отрицательное, обнуляем
-    if (!isNaN(num)) {
-      num = Math.max(0, num);
-      this.value = num;
-    } else {
-      this.value = '';
-    }
-  });
-});
-  document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
-  input.addEventListener("input", function() {
-    // Убираем все кроме цифр и точки
-    let val = this.value.replace(/[^0-9.]/g, '');
-    
-    // Преобразуем в число
-    let num = parseFloat(val);
-    
-    // Если отрицательное или NaN, ставим пустое поле
+    let num = parseFloat(this.value);
     if (isNaN(num) || num < 0) {
-      this.value = '';
+      this.value = ''; // визуально пустое поле
     } else {
-      this.value = num;
+      this.value = num; // положительное число
     }
   });
 });
