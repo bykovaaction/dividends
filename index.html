@@ -4,7 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Расчет компромиссных дивидендов</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
 <style>
 body{
@@ -371,7 +371,7 @@ pointer-events: none;
 <br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01" placeholder="%"></div>
 <div class="nav-buttons">
   <button class="secondary" onclick="nextStep(2)">Назад</button>
-  <button class="primary" id="downloadBtn">Скачать</button>
+  <button class="primary" id="downloadBtn">Скачать Excel</button>
 </div>
 </div>
 </div>
@@ -504,6 +504,7 @@ function updateProgress(){
   // Показать надпись "Готово!", если заполнено всё
   document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
 }
+    /*
 function downloadExcel() {
   // Список полей, которые хотим сохранить
   const fields = [
@@ -547,6 +548,80 @@ function downloadExcel() {
 }
 
 document.getElementById("downloadBtn").addEventListener("click", downloadExcel);
+*/
+
+    // --- Шаг 3.1: Создание листа исходных данных ---
+function createExcelInputs() {
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet([
+    ["Исходные данные"],
+    ["Параметр","Значение"],
+    ["Выручка", get("revenue")],
+    ["Полная себестоимость без амортизации", get("cost")],
+    ["Амортизация", get("depr")],
+    ["Эффективная ставка налога на прибыль", get("taxPercent")/100], // %
+    ["Внеоборотные активы на начало периода", get("faStart")],
+    ["Внеоборотные активы на конец периода", get("faEnd")],
+    ["Рабочий капитал на начало периода", get("wcStart")],
+    ["Рабочий капитал на конец периода", get("wcEnd")],
+    ["Прогнозный остаток денежных средств на дату выплаты дивидендов", get("cash")],
+    ["Норматив резерва ликвидности", get("liqFloor")],
+    ["Плановые инвестиции за счет собственных средств", get("invPlan")],
+    ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100], // %
+    ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100], // %
+    ["Дивиденды по привилегированным акциям", get("prefDividends")],
+    ["Резерв на покрытие налоговых/судебных рисков", get("taxRiskReserve")],
+    ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100], // %
+    ["Коэффициент распределения свободного денежного потока", get("kCoef")/100] // %
+  ]);
+
+  // Формат процентов
+  const percentCells = ["B6","B14","B15","B18","B19"];
+  percentCells.forEach(cell => {
+    if(ws[cell]) ws[cell].z = '0.00%';
+  });
+
+  XLSX.utils.book_append_sheet(wb, ws, "Исходные данные");
+  return {wb, ws};
+}
+
+// --- Шаг 3.2: Добавление промежуточных расчетов ---
+function addIntermediateCalculations(ws) {
+  // Расчет FCF
+  ws['B23'] = { f: 'B3-B4-B5' };        // Прибыль до налогообложения
+  ws['B24'] = { f: 'B23*B6' };          // Налог на прибыль
+  ws['B25'] = { f: 'B23-B24' };         // Чистая прибыль
+  ws['B26'] = { f: 'B5' };              // Амортизация
+  ws['B27'] = { f: 'B10-B9' };          // ΔWC
+  ws['B28'] = { f: 'B8-B7' };           // Инвестиции (CAPEX)
+  ws['B29'] = { f: 'B25+B26-B27-B28' };// FCF
+
+  // Резервы
+  ws['B33'] = { f: 'MAX(0,B12-B11)' };   // Резерв ликвидности
+  ws['B34'] = { f: 'B13*B14' };          // Обязательные инвестиции
+  ws['B35'] = { f: 'B29*B15' };          // Долговая нагрузка
+  ws['B36'] = { f: 'B16' };              // Дивиденды по привилегированным акциям
+  ws['B37'] = { f: 'B17' };              // Резерв на налоговые/судебные риски
+  ws['B38'] = { f: 'B33+B34+B35+B36+B37' }; // ИТОГО резервы
+
+  // Сумма дивидендов
+  ws['B42'] = { f: 'B29-B38' };          // FCF доступный
+  ws['B43'] = { f: 'B25*B18' };          // Нижняя граница
+  ws['B44'] = { f: 'B42' };              // Верхняя граница
+  ws['B45'] = { f: 'MAX(B43,B42*B19)' };// Компромиссная сумма
+  ws['B46'] = { f: 'B45' };              // Рекомендуемая сумма дивидендов
+  ws['B47'] = { f: 'B42-B46' };          // Остаток в бизнесе
+}
+
+// --- Шаг 3.3: Скачивание Excel ---
+function downloadExcelFull() {
+  const {wb, ws} = createExcelInputs();
+  addIntermediateCalculations(ws);
+  XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
+}
+
+// Привязка кнопки
+document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
 </script>
 
 </body>
