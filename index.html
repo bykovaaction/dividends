@@ -103,8 +103,8 @@ font-family:'Inter', sans-serif;
 
 .field-row input::-webkit-outer-spin-button,
 .field-row input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+-webkit-appearance: none;
+margin: 0;
 }
 
 .field-row input:focus{
@@ -335,7 +335,7 @@ pointer-events: none;
 <div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="number" id="depr"></div>
 <div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="number" id="taxPercent" step="0.01" placeholder="%"></div>
 <div class="nav-buttons">
-  <button class="primary" onclick="nextStep(2)" style="margin-left:auto;">Вперед</button>
+<button class="primary" onclick="nextStep(2)" style="margin-left:auto;">Вперед</button>
 </div>
 </div>
 
@@ -368,8 +368,8 @@ pointer-events: none;
 <br>-25–50% - растущий, прибыльный бизнес,
 <br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01" placeholder="%"></div>
 <div class="nav-buttons">
-  <button class="secondary" onclick="nextStep(2)">Назад</button>
-  <button class="primary" id="downloadBtn">Скачать Excel</button>
+<button class="secondary" onclick="nextStep(2)">Назад</button>
+<button class="primary" id="downloadBtn">Скачать Excel</button>
 </div>
 </div>
 </div>
@@ -378,47 +378,47 @@ pointer-events: none;
 <div class="right-panel">
 <div class="right-top">
 <div id="progressWrapper" style="margin-bottom:10px;">
-  <div style="font-size:12px; margin-bottom:4px;">Прогресс заполнения формы:</div>
-  <div id="progressOuter" style="width:100%; height:10px; background:#e5e7eb; border-radius:5px;">
-    <div id="progressFill" style="width:0%; height:100%; background:#1976d2; border-radius:5px;"></div>
-  </div>
+<div style="font-size:12px; margin-bottom:4px;">Прогресс заполнения формы:</div>
+<div id="progressOuter" style="width:100%; height:10px; background:#e5e7eb; border-radius:5px;">
+<div id="progressFill" style="width:0%; height:100%; background:#1976d2; border-radius:5px;"></div>
+</div>
 </div>
 <div id="progressDone" style="text-align:center; font-size:12px; color:#2e7d32; margin-top:4px; display:none;">
-  Готово!
+Готово!
 </div>
 <div class="result-card">
 <div class="title">Рекомендуемый размер дивидендов</div>
 <div id="recDividendVal" class="result-main">0</div>
-  <div class="range-block">
-    <div class="range-line">
-      <div class="dot lower"></div>
-      <div>Нижняя граница: <span id="lowerVal">0</span></div>
-    </div>
-    <div class="range-line">
-      <div class="dot upper"></div>
-      <div>Верхняя граница: <span id="upperVal">0</span></div>
-    </div>
-    <div class="range-bar">
-      <div id="lowerMarker" class="marker lower"></div>
-      <div id="recMarker" class="marker rec"></div>
-      <div id="upperMarker" class="marker upper"></div>
-    </div>
-  </div>
+<div class="range-block">
+<div class="range-line">
+<div class="dot lower"></div>
+<div>Нижняя граница: <span id="lowerVal">0</span></div>
+</div>
+<div class="range-line">
+<div class="dot upper"></div>
+<div>Верхняя граница: <span id="upperVal">0</span></div>
+</div>
+<div class="range-bar">
+<div id="lowerMarker" class="marker lower"></div>
+<div id="recMarker" class="marker rec"></div>
+<div id="upperMarker" class="marker upper"></div>
+</div>
+</div>
 </div>
 
 <div class="kpi-row">
-  <div class="kpi">
-    <div class="kpi-title">Чистая прибыль</div>
-    <div id="netProfitVal" class="kpi-value">0</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-title">FCF</div>
-    <div id="fcfVal" class="kpi-value">0</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-title">Доступный FCF</div>
-    <div id="fcfAvailVal" class="kpi-value">0</div>
-  </div>
+<div class="kpi">
+<div class="kpi-title">Чистая прибыль</div>
+<div id="netProfitVal" class="kpi-value">0</div>
+</div>
+<div class="kpi">
+<div class="kpi-title">FCF</div>
+<div id="fcfVal" class="kpi-value">0</div>
+</div>
+<div class="kpi">
+<div class="kpi-title">Доступный FCF</div>
+<div id="fcfAvailVal" class="kpi-value">0</div>
+</div>
 </div>
 
 </div>
@@ -480,102 +480,80 @@ document.getElementById("upperMarker").style.left = clampPercent(upperBound/safe
 document.querySelectorAll("input").forEach(i=>i.addEventListener("input", updateDashboard));
 updateDashboard();
 
-// --- Создание листа с исходными данными ---
+// --- Шаг 3: Скачать Excel ---
 function createExcelInputs() {
-  const wb = XLSX.utils.book_new();
-  
-  const wsInputs = XLSX.utils.aoa_to_sheet([
-    ["Исходные данные"],
-    ["Параметр","Значение"],
-    ["Выручка (тыс. руб.)", get("revenue")],
-    ["Полная себестоимость без амортизации (тыс. руб.)", get("cost")],
-    ["Амортизация (тыс. руб.)", get("depr")],
-    ["Эффективная ставка налога на прибыль (%)", get("taxPercent")],
-    ["Внеоборотные активы на начало периода (тыс. руб.)", get("faStart")],
-    ["Внеоборотные активы на конец периода (тыс. руб.)", get("faEnd")],
-    ["Рабочий капитал на начало периода (тыс. руб.)", get("wcStart")],
-    ["Рабочий капитал на конец периода (тыс. руб.)", get("wcEnd")],
-    ["Прогнозный остаток денежных средств (тыс. руб.)", get("cash")],
-    ["Норматив резерва ликвидности (тыс. руб.)", get("liqFloor")],
-    ["Плановые инвестиции за счет собственных средств (тыс. руб.)", get("invPlan")],
-    ["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")],
-    ["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")],
-    ["Дивиденды по привилегированным акциям (тыс. руб.)", get("prefDividends")],
-    ["Резерв на покрытие налоговых/судебных рисков (тыс. руб.)", get("taxRiskReserve")],
-    ["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")],
-    ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")]
-  ]);
+const wb = XLSX.utils.book_new();
 
-  XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
-  return wb;
+const wsInputs = XLSX.utils.aoa_to_sheet([
+["Параметр","Значение"],
+["Выручка (тыс. руб.)", get("revenue")],
+["Полная себестоимость без амортизации (тыс. руб.)", get("cost")],
+["Амортизация (тыс. руб.)", get("depr")],
+["Эффективная ставка налога на прибыль (%)", get("taxPercent")/100],
+["Внеоборотные активы на начало периода (тыс. руб.)", get("faStart")],
+["Внеоборотные активы на конец периода (тыс. руб.)", get("faEnd")],
+["Рабочий капитал на начало периода (тыс. руб.)", get("wcStart")],
+["Рабочий капитал на конец периода (тыс. руб.)", get("wcEnd")],
+["Прогнозный остаток денежных средств (тыс. руб.)", get("cash")],
+["Норматив резерва ликвидности (тыс. руб.)", get("liqFloor")],
+["Плановые инвестиции за счет собственных средств (тыс. руб.)", get("invPlan")],
+["Доля обязательных инвестиций (% от CAPEX)", get("invPercent")/100],
+["Величина резерва на погашение кредитов (% от FCF)", get("debtPercent")/100],
+["Дивиденды по привилегированным акциям (тыс. руб.)", get("prefDividends")],
+["Резерв на покрытие налоговых/судебных рисков (тыс. руб.)", get("taxRiskReserve")],
+["Минимальный размер дивидендов (% от ЧП)", get("minDividendPercent")/100],
+["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
+]);
+
+XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
+return wb;
 }
 
-// --- Создание листа с расчетами ---
 function createCalculationsSheet(wb) {
-  const wsCalc = XLSX.utils.aoa_to_sheet([
+const wsCalc = XLSX.utils.aoa_to_sheet([
+["Показатель","Значение"],
 
-    // ===== БЛОК 1 =====
-    ["Расчет FCF, тыс. руб."],
-    ["Показатель","Значение"],
-    ["1. Прибыль до налогообложения", {f: "B3-B4-B5"}],
-    ["2. Налог на прибыль", {f: "B7*B6"}],
-    ["3. Чистая прибыль (ЧП)", {f: "B7-B8"}],
-    ["4. Амортизация (DP)", {f: "B5"}],
-    ["5. Изменение рабочего капитала (ΔWC)", {f: "B10-B9"}],
-    ["6. Инвестиции (CAPEX)", {f: "B8-B7"}],
-    ["7. СВОБОДНЫЙ ДЕНЕЖНЫЙ ПОТОК (FCF)", {f: "B9+B11-B12-B13"}],
+```
+["Прибыль до налогообложения", {f: "'Исходные данные'!B2-'Исходные данные'!B3-'Исходные данные'!B4"}], // B2
+["Налог на прибыль", {f: "B2*'Исходные данные'!B5"}], // B3
+["Чистая прибыль", {f: "B2-B3"}], // B4
+["Амортизация", {f: "'Исходные данные'!B4"}], // B5
+["ΔWC", {f: "'Исходные данные'!B9-'Исходные данные'!B8"}], // B6
+["CAPEX", {f: "'Исходные данные'!B7-'Исходные данные'!B6"}], // B7
+["FCF", {f: "B4+B5-B6-B7"}], // B8
 
-    [],
+["Резерв ликвидности", {f: "MAX(0,'Исходные данные'!B11-'Исходные данные'!B10)"}], // B9
+["Обязательные инвестиции", {f: "'Исходные данные'!B12*'Исходные данные'!B13"}], // B10
+["Долговая нагрузка", {f: "B8*'Исходные данные'!B14"}], // B11
+["Дивиденды по привилегированным акциям", {f: "'Исходные данные'!B15"}], // B12
+["Резерв на налоговые/судебные риски", {f: "'Исходные данные'!B16"}], // B13
+["Итого резервы", {f: "B9+B10+B11+B12+B13"}], // B14
 
-    // ===== БЛОК 2 =====
-    ["Расчет резервов, тыс. руб."],
-    ["Показатель","Значение"],
-    ["1. Резерв ликвидности", {f: "MAX(0,B12-B11)"}],
-    ["2. Обязательные инвестиции", {f: "B13*B14"}],
-    ["3. Долговая нагрузка", {f: "B7*B15"}],
-    ["4. Дивиденды по привилегированным акциям, тыс. руб.", {f: "B16"}],
-    ["5. Резерв на покрытие налоговых/судебных рисков, тыс. руб.", {f: "B17"}],
-    ["ИТОГО резервы", {f: "B12+B13+B14+B16+B17"}],
+// 🔥 ИСПРАВЛЕННЫЙ БЛОК
+["FCF доступный", {f: "B8-B14"}], // B15 ✅
 
-    [],
+["Нижняя граница", {f: "ROUND(B4*'Исходные данные'!B17,1)"}], // B16 ✅
+["Верхняя граница", {f: "B15"}], // B17 ✅
 
-    // ===== БЛОК 3 =====
-    ["Расчет суммы дивидендов, тыс. руб."],
-    ["Показатель","Значение"],
-    ["1. FCF доступный", {f: "B7-B18"}],
-    ["2. Нижняя граница", {f: "ROUND(B4*B18,1)"}],
-    ["3. Верхняя граница", {f: "B19"}],
-    ["4. Компромиссная сумма дивидендов", {f: "ROUND(B19*B19,1)"}],
-    ["5. Рекомендуемая сумма дивидендов", {f: "IF(B20<B18,B18,B20)"}],
-    ["6. Остаток в бизнесе", {f: "B19-B21"}]
-  ]);
+["Компромиссная сумма", {f: "ROUND(B15*'Исходные данные'!B18,1)"}], // B18 ✅
 
-  XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
+["Рекомендуемый размер дивидендов", {f: "IF(B18<B16,B16,B18)"}], // B19 ✅
+
+["Остаток в бизнесе", {f: "B15-B19"}] // B20 ✅
+```
+
+]);
+
+XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
 
-// --- Скачать Excel ---
 function downloadExcelFull() {
-  const wb = createExcelInputs();
-  createCalculationsSheet(wb);
-
-  // автоширина для всех листов
-  wb.SheetNames.forEach(name => autoWidth(wb.Sheets[name]));
-
-  XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
+const wb = createExcelInputs();
+createCalculationsSheet(wb);
+XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
 }
 
 document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
-
-function autoWidth(ws) {
-  const cols = [];
-  Object.keys(ws).forEach(cell => {
-    if(cell[0] === '!') return;
-    const col = cell.match(/[A-Z]+/)[0];
-    const value = ws[cell].v ? ws[cell].v.toString() : "";
-    cols[col] = Math.max(cols[col] || 10, value.length + 2);
-  });
-  ws['!cols'] = Object.keys(cols).map(c => ({ wch: cols[c] }));
-}
 </script>
 
 </body>
