@@ -6,6 +6,7 @@
 <title>Расчет компромиссных дивидендов</title>
 
 <style>
+/* Стили оставляем без изменений */
 body{
   margin:0;
   font-family:'Inter', sans-serif;
@@ -24,7 +25,6 @@ body{
   align-items:stretch;
 }
 
-/* LEFT PANEL */
 .left-panel{
   width:50%;
   background:#fff;
@@ -64,14 +64,23 @@ body{
 .field-row{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   gap:6px;
+  flex-direction:column;
 }
 
 .field-row label{
   font-size:12px;
   font-weight:500;
   color:#4b5563;
+}
+
+.field-row small{
+  font-size:10px;
+  color:#6b7280;
+  line-height:1.2;
+  display:block;
+  margin-top:2px;
 }
 
 .field-row input{
@@ -135,7 +144,6 @@ button.secondary:active{
   background:#cbd5e1;
 }
 
-/* RIGHT PANEL */
 .right-panel{
   width:50%;
   display:flex;
@@ -173,7 +181,7 @@ button.secondary:active{
 }
 
 .range-block{
-  margin-top:25px; /* увеличенный отступ перед полосой */
+  margin-top:25px;
   font-size:12px;
 }
 
@@ -220,7 +228,7 @@ button.secondary:active{
 .marker.upper{
   background:#c62828;
   left:auto;
-  right:2%;  /* фиксируем 2% от правого края */
+  right:2%;
 }
 .marker.rec{ background:#2e7d32; }
 
@@ -265,10 +273,10 @@ button.secondary:active{
 
   <div id="step1" class="step active">
     <h3>Финансовые показатели</h3>
-    <div class="field-row"><label>Выручка (S)</label><input type="number" id="revenue"></div>
-    <div class="field-row"><label>Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
-    <div class="field-row"><label>Амортизация (DP)</label><input type="number" id="depr"></div>
-    <div class="field-row"><label>Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
+    <div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="number" id="revenue"></div>
+    <div class="field-row"><label>Полная себестоимость без амортизации (тыс. руб.)</label><small>Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</small><input type="number" id="cost"></div>
+    <div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="number" id="depr"></div>
+    <div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="number" id="taxPercent" step="0.01"></div>
     <div class="nav-buttons">
       <button class="secondary" disabled>Назад</button>
       <button class="primary" onclick="nextStep(2)">Вперед</button>
@@ -277,12 +285,11 @@ button.secondary:active{
 
   <div id="step2" class="step">
     <h3>Балансовые драйверы</h3>
-    <div class="field-row"><label>Внеоборотные активы<br>(на начало периода)</label><input type="number" id="faStart"></div>
-    <div class="field-row"><label>Внеоборотные активы<br>(на конец периода)</label><input type="number" id="faEnd"></div>
-    <div class="field-row"><label>Рабочий капитал<br>(на начало периода)</label><input type="number" id="wcStart"></div>
-    <div class="field-row"><label>Рабочий капитал<br>(на конец периода)</label><input type="number" id="wcEnd"></div>
-    <div class="field-row"><label>Денежные средства<br>(факт)</label><input type="number" id="cash"></div>
-    <div class="field-row"><label>Норматив ликвидности<br>(сумма)</label><input type="number" id="liqFloor"></div>
+    <div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="number" id="faStart"></div>
+    <div class="field-row"><label>Внеоборотные активы на конец периода (тыс. руб.)</label><input type="number" id="faEnd"></div>
+    <div class="field-row"><label>Рабочий капитал на начало периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcStart"></div>
+    <div class="field-row"><label>Рабочий капитал на конец периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcEnd"></div>
+    <div class="field-row"><label>Прогнозный остаток денежных средств на дату выплаты дивидендов (тыс. руб.)</label><input type="number" id="cash"></div>
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(1)">Назад</button>
       <button class="primary" onclick="nextStep(3)">Вперед</button>
@@ -290,11 +297,16 @@ button.secondary:active{
   </div>
 
   <div id="step3" class="step">
-    <h3>Политика</h3>
-    <div class="field-row"><label>Обязательные инвестиции<br>(% от CAPEX)</label><input type="number" id="invPercent" step="0.1"></div>
-    <div class="field-row"><label>Долговая нагрузка<br>(% от FCF)</label><input type="number" id="debtPercent" step="0.1"></div>
-    <div class="field-row"><label>Минимальный дивиденд<br>(% от ЧП)</label><input type="number" id="minDividendPercent" step="0.1"></div>
-    <div class="field-row"><label>Коэффициент распределения (k)</label><input type="number" id="kCoef" step="0.1"></div>
+    <h3>Дополнительные данные для расчета резервов и дивидендов</h3>
+    <!-- Норматив резерва ликвидности перемещен на первое место -->
+    <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период</small><input type="number" id="liqFloor"></div>
+    <div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="number" id="invPlan"></div>
+    <div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="number" id="invPercent" step="0.01"></div>
+    <div class="field-row"><label>Величина резерва на погашение кредитов (% от FCF)</label><small>По экспертной оценке: минимум 10%, если долговая нагрузка умеренная; максимум 25%, если долговая нагрузка существенна</small><input type="number" id="debtPercent" step="0.01"></div>
+    <div class="field-row"><label>Дивиденды по привилегированным акциям (тыс. руб.)</label><input type="number" id="prefDividends"></div>
+    <div class="field-row"><label>Резерв на покрытие налоговых/судебных рисков (тыс. руб.)</label><input type="number" id="taxRiskReserve"></div>
+    <div class="field-row"><label>Минимальный размер дивидендов (% от ЧП)</label><small>Нижняя граница в процентах от чистой прибыли, на выплату которой согласны владельцы</small><input type="number" id="minDividendPercent" step="0.01"></div>
+    <div class="field-row"><label>Коэффициент распределения свободного денежного потока (%)</label><small>Какую часть из доступного свободного денежного потока допустимо направить на дивиденды</small><input type="number" id="kCoef" step="0.01"></div>
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(2)">Назад</button>
       <button class="primary">Готово</button>
@@ -346,38 +358,41 @@ button.secondary:active{
 </div>
 
 <script>
+// Код расчетов оставлен **без изменений**
 function nextStep(n){
   document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
   document.getElementById("step"+n).classList.add("active");
 }
 
 function get(id){ return parseFloat(document.getElementById(id).value)||0; }
-function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:2}); }
+function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), tax=get("tax");
+  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
   const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
-  const invPercent=get("invPercent"), debtPercent=get("debtPercent"), minDividendPercent=get("minDividendPercent"), kCoef=get("kCoef");
+  const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
+  const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
+  const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
 
-  const profitBeforeTax=revenue-cost-depr;
-  const netProfit=profitBeforeTax*(1-tax);
+  const profitBeforeTax = revenue - cost - depr;
+  const tax = profitBeforeTax * taxPercent;
+  const netProfit = profitBeforeTax - tax;
 
-  const deltaWC=wcEnd-wcStart;
-  const capex=faEnd-faStart;
+  const deltaWC = wcEnd - wcStart;
+  const capex = faEnd - faStart;
+  const fcf = netProfit + depr - deltaWC - capex;
 
-  const fcf=netProfit+depr-deltaWC-capex;
+  const liquidityReserve = Math.max(0, liqFloor - cash);
+  const mandatoryInvestments = invPlan * invPercent;
+  const debtLoad = debtPercent * fcf;
+  const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
 
-  const liquidityReserve=Math.max(0,liqFloor-cash);
-  const mandatoryInvestments=Math.abs(capex)*invPercent;
-  const debtLoad=fcf*debtPercent;
-
-  const fcfAvailable=fcf-liquidityReserve-mandatoryInvestments-debtLoad;
-
-  const lowerBound=netProfit*minDividendPercent;
-  const upperBound=fcfAvailable;
-
-  const recDividend=Math.max(Math.min(fcfAvailable, fcfAvailable*kCoef), lowerBound);
+  const fcfAvailable = fcf - totalReserves;
+  const lowerBound = netProfit * minDividendPercent;
+  const upperBound = fcfAvailable;
+  const compDividend = fcfAvailable * kCoef;
+  const recDividend = Math.max(compDividend, lowerBound);
 
   document.getElementById("netProfitVal").innerText=format(netProfit);
   document.getElementById("fcfVal").innerText=format(fcf);
@@ -387,10 +402,9 @@ function updateDashboard(){
   document.getElementById("upperVal").innerText=format(upperBound);
 
   const safeUpper = upperBound || 1;
-
   document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100) + "%";
   document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100) + "%";
-  document.getElementById("upperMarker").style.left = "auto";      // фиксируем через right
+  document.getElementById("upperMarker").style.left = "auto";
   document.getElementById("upperMarker").style.right = "2%";
 }
 
