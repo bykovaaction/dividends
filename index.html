@@ -6,20 +6,13 @@
 <title>Расчет компромиссных дивидендов</title>
 
 <style>
-body {
 body{
-margin:0;
-  font-family:"Roboto", sans-serif;
+  margin:0;
   font-family:'Inter', sans-serif;
-background:#f4f5f7;
-  color:#333;
+  background:#f4f5f7;
   color:#1f2937;
   -webkit-font-smoothing:antialiased;
 }
-.container {
-  width:734px;
-  margin:auto;
-  padding:10px;
 
 .wrapper{
   width:728px;
@@ -38,15 +31,12 @@ background:#f4f5f7;
   border-radius:8px;
   padding:15px;
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
-display:flex;
-flex-direction:column;
-  gap:15px;
+  display:flex;
+  flex-direction:column;
   justify-content:flex-start;
-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
-/* KPI */
-.kpi-row {
 .left-title{
   font-size:16px;
   font-weight:600;
@@ -61,16 +51,8 @@ box-sizing:border-box;
 }
 
 .step.active{
-display:flex;
-  gap:8px;
+  display:flex;
 }
-.kpi-card {
-  flex:1;
-  background:#fff;
-  border-radius:8px;
-  padding:10px;
-  text-align:center;
-  box-shadow:0 2px 5px rgba(0,0,0,0.08);
 
 /* Шаг 3 — скроллинг */
 #step3{
@@ -78,15 +60,7 @@ display:flex;
   overflow-y:auto;
   padding-right:5px; /* чтобы скролл не заходил на контент */
 }
-.kpi-title { font-size:11px; color:#555; margin-bottom:4px; }
-.kpi-value { font-size:18px; font-weight:bold; }
 
-/* Dividend Card */
-.dividend-card {
-  background:#fff;
-  border-radius:8px;
-  padding:15px;
-  text-align:center;
 .step h3{
   font-size:13px;
   font-weight:600;
@@ -95,20 +69,12 @@ display:flex;
 }
 
 .field-row{
-display:flex;
+  display:flex;
   justify-content:space-between;
   align-items:flex-start;
   gap:6px;
-flex-direction:column;
-  align-items:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
-  position:relative;
+  flex-direction:column;
 }
-.div-title { font-size:16px; font-weight:bold; margin-bottom:8px; }
-.div-values { font-size:20px; font-weight:bold; margin:3px 0; }
-.div-subvalues {
-  font-size:11px; color:#555;
-  margin-bottom:6px;
 
 .field-row label{
   font-size:12px;
@@ -139,34 +105,10 @@ flex-direction:column;
 }
 
 .nav-buttons{
-display:flex;
-justify-content:space-between;
-  width:100%;
-  max-width:700px;
+  display:flex;
+  justify-content:space-between;
   margin-top:12px;
 }
-.div-bar {
-  position:relative;
-  height:20px;
-  background:#f0f2f5;
-  border-radius:5px;
-  margin-top:8px;
-  width:100%;
-  max-width:700px;
-}
-.div-marker, .div-lower, .div-upper {
-  position:absolute; top:0; width:5px; height:100%;
-}
-.div-lower { background:#64b5f6; }
-.div-upper { background:#1565c0; }
-.div-marker { background:#2e7d32; }
-.legend { display:flex; gap:8px; margin-top:6px; font-size:10px; color:#555; flex-wrap:wrap; }
-.legend span { display:flex; align-items:center; gap:3px; }
-.legend .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
-
-/* Main Panels */
-.input-panel {
-  width:100%;
 
 button{
   padding:7px 14px;
@@ -177,15 +119,11 @@ button{
   cursor:pointer;
   transition:all 0.15s ease;
   font-family:'Inter', sans-serif;
-display:flex;
-  flex-direction:column;
-  gap:10px;
+  display:flex;
   align-items:center;
   gap:4px;
 }
 
-/* Верхние колонки */
-.input-columns {
 button.primary{
   background:#1976d2;
   color:#fff;
@@ -227,24 +165,15 @@ button.secondary::before{
 /* RIGHT PANEL */
 .right-panel{
   width:50%;
-display:flex;
-  gap:10px;
-  width:100%;
+  display:flex;
   flex-direction:column;
   box-sizing:border-box;
 }
-/* Каждая колонка */
-.input-column {
 
 .right-top{
-flex:1;
-  background:#fff;
-  padding:8px;
-  border-radius:8px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.05);
-display:flex;
-flex-direction:column;
-  gap:6px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
   gap:15px;
 }
 
@@ -274,27 +203,18 @@ flex-direction:column;
   margin-top:20px;
   font-size:12px;
 }
-.input-column h3 { font-size:12px; margin-bottom:4px; }
-.field-row {
 
 .range-line{
-display:flex;
-  justify-content:space-between;
-align-items:center;
+  display:flex;
+  align-items:center;
   gap:6px;
   margin-bottom:4px;
 }
-.field-row label {
-  font-size:11px;
-  color:#555;
-  flex:0 0 180px; /* ширина блока для названия */
-  margin-right:5px;
 
 .range-fill{
   height:100%;
   border-radius:6px;
 }
-.field-row input {
 
 .dot{
   width:8px;
@@ -335,14 +255,7 @@ align-items:center;
 }
 
 .kpi{
-flex:1;
-  padding:4px 6px;
-  font-size:11px;
-  border:1px solid #ccc;
-  border-radius:3px;
-  width:140px; /* здесь задаётся длина поля ввода */
-  max-width:140px; /* фиксируем максимальную длину */
-  box-sizing:border-box;
+  flex:1;
   background:#fff;
   border-radius:8px;
   padding:12px;
@@ -351,10 +264,6 @@ flex:1;
   flex-direction:column;
   min-height:70px;
 }
-.field-row input:focus {
-  border-color:#1976d2;
-  outline:none;
-  box-shadow:0 0 3px rgba(25,118,210,0.2);
   
 .kpi-title{
   font-size:12px;
@@ -362,8 +271,6 @@ flex:1;
   color:#4b5563;
   min-height:28px;
 }
-.input-column.full-width {
-  flex:1 1 100%;
 
 .kpi-value{
   font-size:18px;
@@ -371,85 +278,16 @@ flex:1;
   margin-top:auto;
   letter-spacing:-0.2px;
 }
-.input-column.full-width .field-row {
-  gap:6px;
-/* Для шага 3 */
-#step3 {
-  max-height:400px;
-  overflow-y:auto;
-  padding-right:5px;
-  position:relative;
-}
-.policy-columns {
-  display: flex;
-  gap: 10px;
-
-/* Плавающая кнопка Готово */
-#step3 .nav-buttons {
-  position: sticky;
-  bottom: 0;
-  background: #fff;
-  padding-top: 10px;
-  padding-bottom: 5px;
-}
-
-/* Стрелка вниз внизу шага */
-#step3::after {
-  content: '↓';
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 20px;
-  color: #1976d2;
-  animation: bounce 1.2s infinite;
-  pointer-events: none;
-}
-.policy-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-@keyframes bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 6px); }
-}
 </style>
 </head>
 
 <body>
-<div class="container">
 <div class="wrapper">
 
-<!-- KPI -->
-<div class="kpi-row">
-  <div class="kpi-card"><div class="kpi-title">Чистая прибыль</div><div id="netProfitVal" class="kpi-value">0</div></div>
-  <div class="kpi-card"><div class="kpi-title">FCF</div><div id="fcfVal" class="kpi-value">0</div></div>
-  <div class="kpi-card"><div class="kpi-title">Доступный FCF</div><div id="fcfAvailVal" class="kpi-value">0</div></div>
-</div>
 <!-- LEFT PANEL -->
 <div class="left-panel">
   <div class="left-title">Исходные данные</div>
 
-<!-- Dividend Card -->
-<div class="dividend-card" id="dividendCard">
-  <div class="div-title">Рекомендуемые дивиденды</div>
-  <div class="div-subvalues">
-    <div>Нижняя граница: <span id="lowerVal">0</span></div>
-    <div>Верхняя граница: <span id="upperVal">0</span></div>
-  </div>
-  <div class="div-values" id="recDividendVal">0</div>
-  <div class="div-subvalues" id="divWarning"></div>
-  <div class="div-bar" id="divBar">
-    <div class="div-lower" id="lowerMarker"></div>
-    <div class="div-marker" id="recMarker"></div>
-    <div class="div-upper" id="upperMarker"></div>
-  </div>
-  <div class="legend">
-    <span><span class="dot" style="background:#64b5f6"></span>Нижняя граница</span>
-    <span><span class="dot" style="background:#2e7d32"></span>Рекомендуемые дивиденды</span>
-    <span><span class="dot" style="background:#1565c0"></span>Верхняя граница</span>
   <div id="step1" class="step active">
     <h3>Финансовые показатели</h3>
     <div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="number" id="revenue"></div>
@@ -460,24 +298,8 @@ flex:1;
       <button class="secondary" disabled>Назад</button>
       <button class="primary" onclick="nextStep(2)">Вперед</button>
     </div>
-</div>
-</div>
-  
-<!-- Исходные данные -->
-<div style="text-align:center; font-size:14px; font-weight:bold; margin:10px 0;">
-  Исходные данные
-</div>
+  </div>
 
-<!-- Main Panels -->
-<div class="input-panel">
-  <div class="input-columns">
-    <!-- Финансовые показатели -->
-    <div class="input-column">
-      <h3>Финансовые показатели</h3>
-      <div class="field-row"><label for="revenue">Выручка (S)</label><input type="number" id="revenue"></div>
-      <div class="field-row"><label for="cost">Себестоимость без амортизации (C)</label><input type="number" id="cost"></div>
-      <div class="field-row"><label for="depr">Амортизация (DP)</label><input type="number" id="depr"></div>
-      <div class="field-row"><label for="tax">Эффективная ставка налога (T)</label><input type="number" id="tax"></div>
   <div id="step2" class="step">
     <h3>Балансовые драйверы</h3>
     <div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="number" id="faStart"></div>
@@ -488,18 +310,9 @@ flex:1;
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(1)">Назад</button>
       <button class="primary" onclick="nextStep(3)">Вперед</button>
-</div>
+    </div>
   </div>
 
-    <!-- Балансовые драйверы -->
-    <div class="input-column">
-      <h3>Балансовые драйверы</h3>
-      <div class="field-row"><label for="faStart">Внеоборотные активы<br>(на начало периода)</label><input type="number" id="faStart"></div>
-      <div class="field-row"><label for="faEnd">Внеоборотные активы<br>(на конец периода)</label><input type="number" id="faEnd"></div>
-      <div class="field-row"><label for="wcStart">Рабочий капитал<br>(на начало периода)</label><input type="number" id="wcStart"></div>
-      <div class="field-row"><label for="wcEnd">Рабочий капитал<br>(на конец периода)</label><input type="number" id="wcEnd"></div>
-      <div class="field-row"><label for="cash">Денежные средства (факт)</label><input type="number" id="cash"></div>
-      <div class="field-row"><label for="liqFloor">Норматив ликвидности (сумма)</label><input type="number" id="liqFloor"></div>
   <div id="step3" class="step">
     <h3>Дополнительно введите данные для расчета резервов для поддержания и развития бизнеса</h3>
     <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</small><input type="number" id="liqFloor"></div>
@@ -517,22 +330,10 @@ flex:1;
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(2)">Назад</button>
       <button class="primary">Готово</button>
-</div>
-</div>
+    </div>
+  </div>
 </div>
 
-  <!-- Политика -->
-<div class="input-column full-width">
-  <h3>Политика</h3>
-  <div class="policy-columns">
-    <div class="policy-column">
-      <div class="field-row">
-        <label for="invPercent">Обязательные инвестиции<br>(% от CAPEX)</label>
-        <input type="number" id="invPercent" step="0.1">
-      </div>
-      <div class="field-row">
-        <label for="debtPercent">Долговая нагрузка (% от FCF)</label>
-        <input type="number" id="debtPercent" step="0.1">
 <!-- RIGHT PANEL -->
 <div class="right-panel">
   <div class="right-top">
@@ -554,12 +355,8 @@ flex:1;
           <div id="recMarker" class="marker rec"></div>
           <div id="upperMarker" class="marker upper"></div>
         </div>
-</div>
-</div>
-    <div class="policy-column">
-      <div class="field-row">
-        <label for="minDividendPercent">Минимальный дивиденд<br>(% от ЧП)</label>
-        <input type="number" id="minDividendPercent" step="0.1">
+      </div>
+    </div>
 
     <div class="kpi-row">
       <div class="kpi">
@@ -569,23 +366,18 @@ flex:1;
       <div class="kpi">
         <div class="kpi-title">FCF</div>
         <div id="fcfVal" class="kpi-value">0</div>
-</div>
-      <div class="field-row">
-        <label for="kCoef">Коэффициент распределения (k)</label>
-        <input type="number" id="kCoef" step="0.1">
+      </div>
       <div class="kpi">
         <div class="kpi-title">Доступный FCF</div>
         <div id="fcfAvailVal" class="kpi-value">0</div>
-</div>
-</div>
-</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>
 
 <script>
-function formatNum(num){ 
-  return num.toLocaleString('ru-RU',{maximumFractionDigits:2}); 
 // Код расчетов **не изменялся**
 function nextStep(n){
   document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
@@ -597,87 +389,28 @@ function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); 
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
 function updateDashboard(){
-  const get=id=>parseFloat(document.getElementById(id).value)||0;
-
-  // Финансовые показатели
-  const revenue=get("revenue"),
-        cost=get("cost"),
-        depr=get("depr"),
-        tax=get("tax");
-
-  // Балансовые драйверы
-  const faStart=get("faStart"),
-        faEnd=get("faEnd"),
-        wcStart=get("wcStart"),
-        wcEnd=get("wcEnd"),
-        cash=get("cash"),
-        liqFloor=get("liqFloor");
-
-  // Политика
-  const invPercent=get("invPercent"),
-        debtPercent=get("debtPercent"),
-        minDividendPercent=get("minDividendPercent"),
-        kCoef=get("kCoef");
-
-  // Расчеты
   const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
   const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
   const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
   const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
   const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
 
-const profitBeforeTax = revenue - cost - depr;
-  const netProfit = profitBeforeTax*(1-tax);
+  const profitBeforeTax = revenue - cost - depr;
   const tax = profitBeforeTax * taxPercent;
   const netProfit = profitBeforeTax - tax;
 
-const deltaWC = wcEnd - wcStart;
-const capex = faEnd - faStart;
-const fcf = netProfit + depr - deltaWC - capex;
+  const deltaWC = wcEnd - wcStart;
+  const capex = faEnd - faStart;
+  const fcf = netProfit + depr - deltaWC - capex;
 
-const liquidityReserve = Math.max(0, liqFloor - cash);
-  const mandatoryInvestments = Math.abs(capex)*invPercent;
-  const debtLoad = fcf*debtPercent;
-  const fcfAvailable = fcf - liquidityReserve - mandatoryInvestments - debtLoad;
-  const lowerBound = netProfit*minDividendPercent;
+  const liquidityReserve = Math.max(0, liqFloor - cash);
   const mandatoryInvestments = invPlan * invPercent;
   const debtLoad = debtPercent * fcf;
   const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
 
   const fcfAvailable = fcf - totalReserves;
   const lowerBound = netProfit * minDividendPercent;
-const upperBound = fcfAvailable;
-  const recDividend = Math.max(Math.min(fcfAvailable, fcfAvailable*kCoef), lowerBound);
-
-  // Обновление цифр в дашборде
-  document.getElementById("netProfitVal").innerText = formatNum(netProfit);
-  document.getElementById("fcfVal").innerText = formatNum(fcf);
-  document.getElementById("fcfAvailVal").innerText = formatNum(fcfAvailable);
-  document.getElementById("recDividendVal").innerText = formatNum(recDividend);
-  document.getElementById("lowerVal").innerText = formatNum(lowerBound);
-  document.getElementById("upperVal").innerText = formatNum(upperBound);
-
-  // Предупреждение, если дивиденд вне границ
-  let warningText="";
-  let color="#2e7d32";
-  if(recDividend<lowerBound || recDividend>upperBound) { 
-    color="#c62828"; 
-    warningText="Дивиденд вне границ"; 
-  }
-  document.getElementById("dividendCard").style.borderColor=color;
-  document.getElementById("divWarning").innerText=warningText;
-
-  // === Визуализация маркеров на баре ===
-  const bar = document.getElementById("divBar");
-  const safeUpper = upperBound || 1; // защита от деления на 0
-
-  document.getElementById("lowerMarker").style.left = `${(lowerBound / safeUpper) * 100}%`;
-  document.getElementById("recMarker").style.left   = `${(recDividend / safeUpper) * 100}%`;
-  document.getElementById("upperMarker").style.left = `100%`;
-}
-
-// Привязка обновления к каждому input
-document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateDashboard));
+  const upperBound = fcfAvailable;
   const compDividend = fcfAvailable * kCoef;
   const recDividend = Math.max(compDividend, lowerBound);
 
