@@ -4,6 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Расчет компромиссных дивидендов</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
 body{
@@ -369,8 +370,8 @@ pointer-events: none;
 <br>-25–50% - растущий, прибыльный бизнес,
 <br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01" placeholder="%"></div>
 <div class="nav-buttons">
-<button class="secondary" onclick="nextStep(2)">Назад</button>
-<button class="primary">Готово</button>
+  <button class="secondary" onclick="nextStep(2)">Назад</button>
+  <button class="primary" id="downloadBtn">Скачать</button>
 </div>
 </div>
 </div>
@@ -503,6 +504,49 @@ function updateProgress(){
   // Показать надпись "Готово!", если заполнено всё
   document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
 }
+function downloadExcel() {
+  // Список полей, которые хотим сохранить
+  const fields = [
+    {id:"revenue", name:"Выручка (тыс. руб.)"},
+    {id:"cost", name:"Полная себестоимость без амортизации (тыс. руб.)"},
+    {id:"depr", name:"Амортизация (тыс. руб.)"},
+    {id:"taxPercent", name:"Эффективная ставка налога на прибыль (%)"},
+    {id:"faStart", name:"Внеоборотные активы на начало периода (тыс. руб.)"},
+    {id:"faEnd", name:"Внеоборотные активы на конец периода (тыс. руб.)"},
+    {id:"wcStart", name:"Рабочий капитал на начало периода (тыс. руб.)"},
+    {id:"wcEnd", name:"Рабочий капитал на конец периода (тыс. руб.)"},
+    {id:"cash", name:"Прогнозный остаток денежных средств (тыс. руб.)"},
+    {id:"liqFloor", name:"Норматив резерва ликвидности (тыс. руб.)"},
+    {id:"invPlan", name:"Плановые инвестиции (тыс. руб.)"},
+    {id:"invPercent", name:"Доля обязательных инвестиций (%)"},
+    {id:"debtPercent", name:"Величина резерва на погашение кредитов (%)"},
+    {id:"prefDividends", name:"Дивиденды по привилегированным акциям (тыс. руб.)"},
+    {id:"taxRiskReserve", name:"Резерв на покрытие налоговых/судебных рисков (тыс. руб.)"},
+    {id:"minDividendPercent", name:"Минимальный размер дивидендов (%)"},
+    {id:"kCoef", name:"Коэффициент распределения свободного денежного потока (%)"},
+    {id:"netProfitVal", name:"Чистая прибыль"},
+    {id:"fcfVal", name:"FCF"},
+    {id:"fcfAvailVal", name:"Доступный FCF"},
+    {id:"recDividendVal", name:"Рекомендуемый размер дивидендов"},
+    {id:"lowerVal", name:"Нижняя граница"},
+    {id:"upperVal", name:"Верхняя граница"}
+  ];
+
+  const data = fields.map(f => ({
+    "Показатель": f.name,
+    "Значение": document.getElementById(f.id).value || document.getElementById(f.id).innerText || 0
+  }));
+
+  // Создаем лист и книгу
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Расчеты");
+
+  // Генерируем файл и инициируем скачивание
+  XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
+}
+
+document.getElementById("downloadBtn").addEventListener("click", downloadExcel);
 </script>
 
 </body>
