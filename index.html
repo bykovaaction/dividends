@@ -378,6 +378,12 @@ pointer-events: none;
 <!-- RIGHT PANEL -->
 <div class="right-panel">
 <div class="right-top">
+<div id="progressWrapper" style="margin-bottom:10px;">
+  <div style="font-size:12px; margin-bottom:4px;">Прогресс заполнения формы:</div>
+  <div id="progressOuter" style="width:100%; height:10px; background:#e5e7eb; border-radius:5px;">
+    <div id="progressFill" style="width:0%; height:100%; background:#1976d2; border-radius:5px;"></div>
+  </div>
+</div>
 <div class="result-card">
 <div class="title">Рекомендуемый размер дивидендов</div>
 <div id="recDividendVal" class="result-main">0</div>
@@ -470,8 +476,27 @@ document.getElementById("upperMarker").style.right = "2%";
 }
 
 document.querySelectorAll("input").forEach(el=>{
-el.addEventListener("input",updateDashboard);
+  el.addEventListener("input",()=>{
+    updateDashboard();
+    updateProgress();
+  });
 });
+function updateProgress(){
+  const fields = [
+    "revenue","cost","depr","taxPercent",
+    "faStart","faEnd","wcStart","wcEnd","cash",
+    "liqFloor","invPlan","invPercent","debtPercent",
+    "prefDividends","taxRiskReserve","minDividendPercent","kCoef"
+  ];
+  
+  let filled = 0;
+  fields.forEach(id => {
+    if(document.getElementById(id).value.trim() !== "") filled++;
+  });
+  
+  const percent = Math.round((filled / fields.length) * 100);
+  document.getElementById("progressFill").style.width = percent + "%";
+}
 </script>
 
 </body>
