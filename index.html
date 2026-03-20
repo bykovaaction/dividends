@@ -324,10 +324,10 @@ button.secondary::before{
 
   <div id="step1" class="step active">
     <h3>Финансовые показатели</h3>
-    <div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="number" id="revenue" min="0"></div>
-    <div class="field-row"><label>Полная себестоимость без амортизации (тыс. руб.)</label><small>Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</small><input type="number" id="cost" min="0"></div>
-    <div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="number" id="depr" min="0"></div>
-    <div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="number" id="taxPercent" step="0.01" min="0"></div>
+    <div class="field-row"><label>Выручка (тыс. руб.)</label><small>Фактическая выручка за отчетный период без НДС</small><input type="number" id="revenue"></div>
+    <div class="field-row"><label>Полная себестоимость без амортизации (тыс. руб.)</label><small>Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</small><input type="number" id="cost"></div>
+    <div class="field-row"><label>Амортизация (тыс. руб.)</label><small>Амортизация, списанная на себестоимость за отчетный период</small><input type="number" id="depr"></div>
+    <div class="field-row"><label>Эффективная ставка налога на прибыль (%)</label><small>Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</small><input type="number" id="taxPercent" step="0.01"></div>
     <div class="nav-buttons">
       <button class="primary" onclick="nextStep(2)">Вперед</button>
     </div>
@@ -335,11 +335,11 @@ button.secondary::before{
 
   <div id="step2" class="step">
     <h3>Балансовые драйверы</h3>
-    <div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="number" id="faStart" min="0"></div>
-    <div class="field-row"><label>Внеоборотные активы на конец периода (тыс. руб.)</label><input type="number" id="faEnd" min="0"></div>
-    <div class="field-row"><label>Рабочий капитал на начало периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcStart" min="0"></div>
-    <div class="field-row"><label>Рабочий капитал на конец периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcEnd" min="0"></div>
-    <div class="field-row"><label>Прогнозный остаток денежных средств на дату выплаты дивидендов (тыс. руб.)</label><input type="number" id="cash" min="0"></div>
+    <div class="field-row"><label>Внеоборотные активы на начало периода (тыс. руб.)</label><input type="number" id="faStart"></div>
+    <div class="field-row"><label>Внеоборотные активы на конец периода (тыс. руб.)</label><input type="number" id="faEnd"></div>
+    <div class="field-row"><label>Рабочий капитал на начало периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcStart"></div>
+    <div class="field-row"><label>Рабочий капитал на конец периода (тыс. руб.)</label><small>Оборотные активы без денежных средств минус краткосрочные обязательства без кредитов</small><input type="number" id="wcEnd"></div>
+    <div class="field-row"><label>Прогнозный остаток денежных средств на дату выплаты дивидендов (тыс. руб.)</label><input type="number" id="cash"></div>
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(1)">Назад</button>
       <button class="primary" onclick="nextStep(3)">Вперед</button>
@@ -348,18 +348,18 @@ button.secondary::before{
 
   <div id="step3" class="step">
     <h3>Дополнительно введите данные для расчета резервов для поддержания и развития бизнеса</h3>
-    <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</small><input type="number" id="liqFloor" min="0"></div>
-    <div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="number" id="invPlan" min="0"></div>
-    <div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="number" id="invPercent" step="0.01" min="0"></div>
+    <div class="field-row"><label>Норматив резерва ликвидности (тыс. руб.)</label><small>Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</small><input type="number" id="liqFloor"></div>
+    <div class="field-row"><label>Плановые инвестиции за счет собственных средств (тыс. руб.)</label><small>Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</small><input type="number" id="invPlan"></div>
+    <div class="field-row"><label>Доля обязательных инвестиций (% от CAPEX)</label><small>Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</small><input type="number" id="invPercent" step="0.01"></div>
     <div class="field-row"><label>Величина резерва на погашение кредитов (% от FCF)</label><small>По экспертной оценке:<br>- минимум 10%, если долговая нагрузка умеренная (Долг/EBITDA < 2), ставки по кредитам низкие и нет ковенантов, требующих быстрого снижения долга;<br>
-- максимум 25%, если долговая нагрузка существенна (Долг/EBITDA > 3–4), ставки высокие или банки требуют снижать отношение долга к прибыли</small><input type="number" id="debtPercent" step="0.01" min="0"></div>
-    <div class="field-row"><label>Дивиденды по привилегированным акциям (тыс. руб.)</label><input type="number" id="prefDividends" min="0"></div>
+- максимум 25%, если долговая нагрузка существенна (Долг/EBITDA > 3–4), ставки высокие или банки требуют снижать отношение долга к прибыли</small><input type="number" id="debtPercent" step="0.01"></div>
+    <div class="field-row"><label>Дивиденды по привилегированным акциям (тыс. руб.)</label><input type="number" id="prefDividends"></div>
     <div class="field-row"><label>Резерв на покрытие налоговых/судебных рисков (тыс. руб.)</label><small>По незавершенным налоговым проверкам: 20–50% от максимального прогноза доначислений, по текущим судебным спорам в качестве ответчика: 100%  от суммы иска</small><input type="number" id="taxRiskReserve" min="0"></div>
-    <div class="field-row"><label>Минимальный размер дивидендов (% от ЧП)</label><small>Нижняя граница в процентах от чистой прибыли, на выплату которой согласны владельцы</small><input type="number" id="minDividendPercent" step="0.01" min="0"></div>
+    <div class="field-row"><label>Минимальный размер дивидендов (% от ЧП)</label><small>Нижняя граница в процентах от чистой прибыли, на выплату которой согласны владельцы</small><input type="number" id="minDividendPercent" step="0.01"></div>
     <div class="field-row"><label>Коэффициент распределения свободного денежного потока (%)</label><small>Какую часть из доступного свободного денежного потока допустимо направить на дивиденды:<br>-до 25% -  риск дефолта, высокий долг, ковенанты,
 <br>-40–60% - стабильный бизнес без крупных проектов,
 <br>-25–50% - растущий, прибыльный бизнес,
-<br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01" min="0"></div>
+<br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01"></div>
     <div class="nav-buttons">
       <button class="secondary" onclick="nextStep(2)">Назад</button>
     </div>
@@ -466,22 +466,42 @@ function updateDashboard(){
   document.getElementById("upperMarker").style.left = "auto";
   document.getElementById("upperMarker").style.right = "2%";
 }
-
-// Блокировка минуса и e, очистка поля при отрицательном числе
 document.querySelectorAll(".left-panel input[type='number']").forEach(input => {
+
+  // Блокировка минуса и e
   input.addEventListener("keydown", e => {
     if (e.key === '-' || e.key.toLowerCase() === 'e') e.preventDefault();
   });
 
-  input.addEventListener("input", () => {
-    const val = parseFloat(input.value);
-    if (!isNaN(val) && val < 0) input.value = ''; // поле очищается при отрицательном
+input.addEventListener("input", () => {
+  let val = input.value;
+
+  // если есть минус где угодно — очищаем
+  if (val.includes('-')) {
+    input.value = '';
     updateDashboard();
-  });
+    return;
+  }
+
+  // если число отрицательное (на всякий случай)
+  let num = parseFloat(val);
+  if (!isNaN(num) && num < 0) {
+    input.value = '';
+  }
+
+  updateDashboard();
 });
 
-// Инициализация панели
-updateDashboard();
+  // На случай вставки через Ctrl+V
+  input.addEventListener("paste", e => {
+    setTimeout(() => {
+      let val = parseFloat(input.value);
+      if (!isNaN(val) && val < 0) input.value = '';
+      updateDashboard();
+    }, 0);
+  });
+
+});
 </script>
 
 </body>
