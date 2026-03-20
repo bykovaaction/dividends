@@ -417,7 +417,11 @@ function nextStep(n){
   document.getElementById("step"+n).classList.add("active");
 }
 
-function get(id){ return parseFloat(document.getElementById(id).value)||0; }
+function get(id){
+  let val = parseFloat(document.getElementById(id).value);
+  if (isNaN(val) || val < 0) val = 0;
+  return val;
+}
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
