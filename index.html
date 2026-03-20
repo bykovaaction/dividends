@@ -138,6 +138,13 @@ color:#fff;
 box-shadow:0 2px 6px rgba(25,118,210,0.25);
 }
 
+button.primary:disabled {
+  background:#1976d2;
+  opacity:0.5;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
 button.primary:hover{
 background:#1565c0;
 box-shadow:0 4px 10px rgba(25,118,210,0.35);
@@ -369,7 +376,7 @@ pointer-events: none;
 <br>-до 75% - избыток ликвидности</small><input type="number" id="kCoef" step="0.01" placeholder="%"></div>
 <div class="nav-buttons">
 <button class="secondary" onclick="nextStep(2)">Назад</button>
-<button class="primary" id="downloadBtn">Скачать Excel</button>
+<button class="primary" id="downloadBtn" disabled>Скачать Excel</button>
 </div>
 </div>
 </div>
@@ -566,8 +573,20 @@ function updateProgress(){
   const percent = Math.round((filled/total)*100);
   document.getElementById("progressFill").style.width = percent + "%";
 
+  const downloadBtn = document.getElementById("downloadBtn");
+  
   // Показать "Готово!" при 100%
-  document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
+  if(percent === 100){
+    document.getElementById("progressDone").style.display = "block";
+    downloadBtn.disabled = false;           // ✅ разблокируем кнопку
+    downloadBtn.style.opacity = 1;          // можно добавить визуальный эффект
+    downloadBtn.style.cursor = "pointer";  
+  } else {
+    document.getElementById("progressDone").style.display = "none";
+    downloadBtn.disabled = true;            // 🔒 блокируем
+    downloadBtn.style.opacity = 0.5;        // визуально полублок
+    downloadBtn.style.cursor = "not-allowed";
+  }
 }
 </script>
 
