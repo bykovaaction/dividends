@@ -384,6 +384,9 @@ pointer-events: none;
     <div id="progressFill" style="width:0%; height:100%; background:#1976d2; border-radius:5px;"></div>
   </div>
 </div>
+<div id="progressDone" style="text-align:center; font-size:12px; color:#2e7d32; margin-top:4px; display:none;">
+  Готово!
+</div>
 <div class="result-card">
 <div class="title">Рекомендуемый размер дивидендов</div>
 <div id="recDividendVal" class="result-main">0</div>
@@ -496,6 +499,9 @@ function updateProgress(){
   
   const percent = Math.round((filled / fields.length) * 100);
   document.getElementById("progressFill").style.width = percent + "%";
+  
+  // Показать надпись "Готово!", если заполнено всё
+  document.getElementById("progressDone").style.display = (percent === 100) ? "block" : "none";
 }
 </script>
 
