@@ -307,11 +307,17 @@ button.primary.download{
   width:14px;
   height:14px;
   border-radius:50%;
+  position:absolute;
   top:50%;
   transform:translate(-50%, -50%);
-  position:absolute;
+  border:2px solid currentColor;
+  background-color: currentColor;  /* ЗАЛИВКА */
   box-shadow:0 1px 4px rgba(0,0,0,0.15);
 }
+
+.marker.lower { color:#6c63ff; left:2%; }   /* фиолетовый */
+.marker.upper { color:#ff6f61; right:2%; }  /* красный */
+
 .marker.rec {
   width:16px;
   height:16px;
