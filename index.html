@@ -350,6 +350,14 @@ pointer-events: none;
 0%, 100% { transform: translate(-50%, 0); }
 50% { transform: translate(-50%, 6px); }
 }
+.input-error {
+  border-color: #c62828;
+  background-color: #fdecea;
+}
+.input-error {
+  border-color: #c62828;
+  background-color: #fdecea;
+}
 </style>
 </head>
 
@@ -511,9 +519,18 @@ document.getElementById("upperMarker").style.left = clampPercent(upperBound/safe
 updateProgress();
 }
 
-// Обновление при вводе
-document.querySelectorAll("input").forEach(i=>i.addEventListener("input", updateDashboard));
+// Сначала выполняем старую логику
+document.querySelectorAll("input").forEach(i => i.addEventListener("input", updateDashboard));
 updateDashboard();
+
+// Потом добавляем новый блок для проверки ошибок
+document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("input", () => {
+    if(input.id.includes("Percent")) validateInput(input, 0, 100);
+    else validateInput(input, 0);
+    updateDashboard(); // обновляем расчеты после проверки
+  });
+});
 
 function createExcelInputs() {
   const wb = XLSX.utils.book_new();
