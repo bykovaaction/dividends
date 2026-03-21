@@ -467,74 +467,124 @@ pointer-events: none;
 </div>
 
 <script>
-// Код расчетов **не изменялся**
+// ==================== Основные функции расчетов ====================
 function nextStep(n){
-document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
-document.getElementById("step"+n).classList.add("active");
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.getElementById("step"+n).classList.add("active");
 }
 
 function get(id){ return parseFloat(document.getElementById(id).value)||0; }
 function format(n){ return n.toLocaleString("ru-RU",{maximumFractionDigits:1}); }
 function clampPercent(p){ return Math.min(98, Math.max(2, p)); }
 
-function updateDashboard(){
-const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
-const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd"), cash=get("cash"), liqFloor=get("liqFloor");
-const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
-const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
-const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
-
-const profitBeforeTax = revenue - cost - depr;
-const tax = profitBeforeTax * taxPercent;
-const netProfit = profitBeforeTax - tax;
-
-const deltaWC = wcEnd - wcStart;
-const capex = faEnd - faStart;
-const fcf = netProfit + depr - deltaWC - capex;
-
-const liquidityReserve = Math.max(0, liqFloor - cash);
-const mandatoryInvestments = invPlan * invPercent;
-const debtLoad = debtPercent * fcf;
-const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
-
-const fcfAvailable = fcf - totalReserves;
-const lowerBound = netProfit * minDividendPercent;
-const upperBound = fcfAvailable;
-const compDividend = fcfAvailable * kCoef;
-const recDividend = Math.max(compDividend, lowerBound);
-
-document.getElementById("netProfitVal").innerText=format(netProfit);
-document.getElementById("fcfVal").innerText=format(fcf);
-document.getElementById("fcfAvailVal").innerText=format(fcfAvailable);
-document.getElementById("recDividendVal").innerText=format(recDividend);
-document.getElementById("lowerVal").innerText=format(lowerBound);
-document.getElementById("upperVal").innerText=format(upperBound);
-
-const safeUpper = upperBound || 1;
-document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
-document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
-document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
-
-// ✅ Вызов прогресс-бара в конце функции
-updateProgress();
+// ==================== Проверка и подсветка ошибок ====================
+function showWarning(input, message){
+  let warning = input.parentElement.querySelector(".warning");
+  if(!warning){
+    warning = document.createElement("small");
+    warning.className = "warning";
+    warning.style.color = "#c62828";
+    warning.style.display = "block";
+    warning.style.marginTop = "2px";
+    input.parentElement.appendChild(warning);
+  }
+  warning.innerText = message;
+  input.style.borderColor = "#c62828";
 }
 
-// Сначала выполняем старую логику
-document.querySelectorAll("input").forEach(i => i.addEventListener("input", updateDashboard));
-updateDashboard();
+function clearWarning(input){
+  const warning = input.parentElement.querySelector(".warning");
+  if(warning) warning.remove();
+  input.style.borderColor = "#d1d5db";
+}
 
-// Потом добавляем новый блок для проверки ошибок
-document.querySelectorAll("input").forEach(input => {
-  input.addEventListener("input", () => {
-    if(input.id.includes("Percent")) validateInput(input, 0, 100);
-    else validateInput(input, 0);
-    updateDashboard(); // обновляем расчеты после проверки
+function validateInput(input){
+  const val = parseFloat(input.value);
+  if(isNaN(val)) return clearWarning(input);
+
+  if(val < 0){
+    showWarning(input, `Поле "${input.previousElementSibling.innerText}" не может быть отрицательным!`);
+  } else if(input.id.includes("Percent") && val > 100){
+    showWarning(input, `Поле "${input.previousElementSibling.innerText}" не может быть больше 100!`);
+  } else {
+    clearWarning(input);
+  }
+}
+
+// ==================== Обновление дашборда ====================
+function updateDashboard(){
+  const revenue=get("revenue"), cost=get("cost"), depr=get("depr"), taxPercent=get("taxPercent")/100;
+  const faStart=get("faStart"), faEnd=get("faEnd"), wcStart=get("wcStart"), wcEnd=get("wcEnd");
+  const cash=get("cash"), liqFloor=get("liqFloor");
+  const invPlan=get("invPlan"), invPercent=get("invPercent")/100, debtPercent=get("debtPercent")/100;
+  const prefDividends=get("prefDividends"), taxRiskReserve=get("taxRiskReserve");
+  const minDividendPercent=get("minDividendPercent")/100, kCoef=get("kCoef")/100;
+
+  const profitBeforeTax = revenue - cost - depr;
+  const tax = profitBeforeTax * taxPercent;
+  const netProfit = profitBeforeTax - tax;
+
+  const deltaWC = wcEnd - wcStart;
+  const capex = faEnd - faStart;
+  const fcf = netProfit + depr - deltaWC - capex;
+
+  const liquidityReserve = Math.max(0, liqFloor - cash);
+  const mandatoryInvestments = invPlan * invPercent;
+  const debtLoad = debtPercent * fcf;
+  const totalReserves = liquidityReserve + mandatoryInvestments + debtLoad + prefDividends + taxRiskReserve;
+
+  const fcfAvailable = fcf - totalReserves;
+  const lowerBound = netProfit * minDividendPercent;
+  const upperBound = fcfAvailable;
+  const compDividend = fcfAvailable * kCoef;
+  const recDividend = Math.max(compDividend, lowerBound);
+
+  document.getElementById("netProfitVal").innerText = format(netProfit);
+  document.getElementById("fcfVal").innerText = format(fcf);
+  document.getElementById("fcfAvailVal").innerText = format(fcfAvailable);
+  document.getElementById("recDividendVal").innerText = format(recDividend);
+  document.getElementById("lowerVal").innerText = format(lowerBound);
+  document.getElementById("upperVal").innerText = format(upperBound);
+
+  const safeUpper = upperBound || 1;
+  document.getElementById("lowerMarker").style.left = clampPercent(lowerBound/safeUpper*100)+"%";
+  document.getElementById("recMarker").style.left = clampPercent(recDividend/safeUpper*100)+"%";
+  document.getElementById("upperMarker").style.left = clampPercent(upperBound/safeUpper*100)+"%";
+
+  updateProgress();
+}
+
+// ==================== Прогресс-бар ====================
+function updateProgress(){
+  const inputs = document.querySelectorAll(".left-panel input");
+  const total = inputs.length;
+  let filled = 0;
+
+  inputs.forEach(i=>{
+    const val = parseFloat(i.value);
+    if(i.value && i.value.trim() !== "" && !isNaN(val) && val >= 0) filled++;
   });
-});
 
+  const percent = Math.round((filled/total)*100);
+  document.getElementById("progressFill").style.width = percent + "%";
+
+  const downloadBtn = document.getElementById("downloadBtn");
+  if(percent === 100){
+    document.getElementById("progressDone").style.display = "block";
+    downloadBtn.disabled = false;
+    downloadBtn.style.opacity = 1;
+    downloadBtn.style.cursor = "pointer";
+  } else {
+    document.getElementById("progressDone").style.display = "none";
+    downloadBtn.disabled = true;
+    downloadBtn.style.opacity = 0.5;
+    downloadBtn.style.cursor = "not-allowed";
+  }
+}
+
+// ==================== Excel ====================
 function createExcelInputs() {
   const wb = XLSX.utils.book_new();
-
   const wsInputs = XLSX.utils.aoa_to_sheet([
     ["ИСХОДНЫЕ ДАННЫЕ"],
     ["Параметр","Значение"],
@@ -557,19 +607,13 @@ function createExcelInputs() {
     ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
   ]);
 
-  // фиксированная ширина колонок
-  wsInputs['!cols'] = [
-    { wpx: 343 }, // колонка A
-    { wpx: 120 }  // колонка B
-  ];
-
+  wsInputs['!cols'] = [{ wpx: 343 }, { wpx: 120 }];
   XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
   return wb;
 }
 
 function createCalculationsSheet(wb) {
   const wsCalc = XLSX.utils.aoa_to_sheet([
-    // Блок FCF
     ["РАСЧЕТ FCF, тыс. руб."],
     ["Прибыль до налогообложения", {f: "'Исходные данные'!B3-'Исходные данные'!B4-'Исходные данные'!B5"}],
     ["Налог на прибыль", {f: "B2*'Исходные данные'!B6"}],
@@ -578,11 +622,7 @@ function createCalculationsSheet(wb) {
     ["Изменение рабочего капитала (ΔWC)", {f: "'Исходные данные'!B10-'Исходные данные'!B9"}],
     ["Инвестиции (CAPEX)", {f: "'Исходные данные'!B8-'Исходные данные'!B7"}],
     ["СВОБОДНЫЙ ДЕНЕЖНЫЙ ПОТОК (FCF)", {f: "B4+B5-B6-B7"}],
-
-    // Пустая строка для визуального разделения
-    [null, null],
-
-    // Блок резервов
+    [null,null],
     ["РАСЧЕТ РЕЗЕРВОВ, тыс. руб."],
     ["Резерв ликвидности", {f: "MAX(0,'Исходные данные'!B12-'Исходные данные'!B11)"}],
     ["Обязательные инвестиции", {f: "'Исходные данные'!B13*'Исходные данные'!B14"}],
@@ -590,10 +630,7 @@ function createCalculationsSheet(wb) {
     ["Дивиденды по привилегированным акциям", {f: "'Исходные данные'!B16"}],
     ["Резерв на налоговые/судебные риски", {f: "'Исходные данные'!B17"}],
     ["ИТОГО РЕЗЕРВЫ", {f: "B11+B12+B13+B14+B15"}],
-
-    [null, null],
-
-    // Блок расчета дивидендов
+    [null,null],
     ["РАСЧЕТ СУММЫ ДИВИДЕНДОВ, тыс. руб."],
     ["FCF доступный", {f: "B8-B16"}],
     ["Нижняя граница", {f: "ROUND(B4*'Исходные данные'!B18,1)"}],
@@ -603,50 +640,26 @@ function createCalculationsSheet(wb) {
     ["Остаток в бизнесе", {f: "B19-B23"}]
   ]);
 
-  // фиксированная ширина колонок
-  wsCalc['!cols'] = [
-    { wpx: 253 }, // колонка A
-    { wpx: 120 }  // колонка B
-  ];
-
+  wsCalc['!cols'] = [{ wpx: 253 }, { wpx: 120 }];
   XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
 
-function downloadExcelFull() {
+function downloadExcelFull(){
   const wb = createExcelInputs();
   createCalculationsSheet(wb);
   XLSX.writeFile(wb, "Расчеты_дивидендов.xlsx");
 }
 
-document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
-
-// Новая функция для прогресс-бара
-function updateProgress(){
-const inputs = document.querySelectorAll(".left-panel input");
-const total = inputs.length;
-let filled = 0;
-inputs.forEach(i => {
-if(i.value && i.value.trim() !== "") filled++;
+// ==================== Инициализация ====================
+document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("input", ()=>{
+    validateInput(input);
+    updateDashboard();
+  });
 });
-const percent = Math.round((filled/total)*100);
-document.getElementById("progressFill").style.width = percent + "%";
 
-const downloadBtn = document.getElementById("downloadBtn");
-
-// Показать "Готово!" при 100%
-if(percent === 100){
-document.getElementById("progressDone").style.display = "block";
-downloadBtn.disabled = false;           // ✅ разблокируем кнопку
-downloadBtn.style.opacity = 1;          // можно добавить визуальный эффект
-downloadBtn.style.cursor = "pointer";
-
-} else {
-document.getElementById("progressDone").style.display = "none";
-downloadBtn.disabled = true;            // 🔒 блокируем
-downloadBtn.style.opacity = 0.5;        // визуально полублок
-downloadBtn.style.cursor = "not-allowed";
-}
-}
+document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
+updateDashboard();
 </script>
 
 </body>
