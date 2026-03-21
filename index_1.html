@@ -276,6 +276,10 @@ button.primary.download{
   border-radius: 6px;
   overflow: hidden;
   margin-top: 6px;
+
+  /* внутренние поля, чтобы кружки не упирались */
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .range-bar::after {
@@ -286,8 +290,8 @@ button.primary.download{
   height: 100%;
   width: 100%;
   background: linear-gradient(90deg, #0071e3 0%, #34c759 100%);
-  opacity: 0.1; /* чуть мягче для премиального эффекта */
-  border-radius: 6px; /* чтобы градиент повторял скругление бара */
+  opacity: 0.1;
+  border-radius: 6px; /* повторяем скругление */
   pointer-events: none;
 }
 
