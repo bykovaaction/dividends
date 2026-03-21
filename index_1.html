@@ -10,41 +10,43 @@
 body{
 margin:0;
 font-family:'Inter', sans-serif;
-background:linear-gradient(180deg,#f8fafc 0%, #eef2f7 100%);
-color:#0f172a;
+background:#f5f5f7;
+color:#1d1d1f;
 -webkit-font-smoothing:antialiased;
 }
 
+/* контейнер */
 .wrapper{
 width:728px;
 margin:0 auto;
-padding:24px 14px;
+padding:20px 12px;
 display:flex;
-gap:18px;
+gap:16px;
 }
 
-/* PREMIUM CARD */
+/* карточки */
 .card{
-background:#ffffff;
-border-radius:18px;
-border:1px solid rgba(15,23,42,0.05);
-box-shadow:
-0 10px 30px rgba(15,23,42,0.08),
-0 2px 6px rgba(15,23,42,0.04);
+background:rgba(255,255,255,0.85);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-radius:16px;
+border:1px solid rgba(0,0,0,0.05);
+box-shadow:0 6px 20px rgba(0,0,0,0.06);
 }
 
-/* LEFT */
+/* левая панель */
 .left-panel{
 width:50%;
-padding:20px;
+padding:18px;
 display:flex;
 flex-direction:column;
 }
 
 .left-title{
-font-size:18px;
-font-weight:700;
-margin-bottom:18px;
+font-size:17px;
+font-weight:600;
+margin-bottom:16px;
+letter-spacing:-0.2px;
 }
 
 .step{
@@ -52,53 +54,56 @@ display:none;
 flex-direction:column;
 gap:14px;
 }
-.step.active{ display:flex; }
+.step.active{display:flex;}
 
 #step3{
 max-height:400px;
 overflow-y:auto;
+padding-right:6px;
 }
 
+/* заголовки */
 .step h3{
 font-size:13px;
-color:#64748b;
+color:#6e6e73;
+margin-bottom:6px;
 }
 
-/* INPUT */
+/* поля */
 .field-row{
 display:flex;
 flex-direction:column;
-gap:5px;
+gap:4px;
 }
 
 .field-row label{
 font-size:12px;
-color:#64748b;
+color:#6e6e73;
 }
 
 .field-row small{
 font-size:10px;
-color:#94a3b8;
+color:#8e8e93;
 }
 
+/* input apple */
 .field-row input{
 width:100%;
-padding:11px 12px;
-border-radius:12px;
-border:1px solid #e2e8f0;
-background:#f8fafc;
+padding:10px 12px;
+border-radius:10px;
+border:1px solid rgba(0,0,0,0.08);
+background:#fff;
 font-size:13px;
 transition:all .15s ease;
 }
 
 .field-row input:focus{
 outline:none;
-border-color:#6366f1;
-background:#fff;
-box-shadow:0 0 0 3px rgba(99,102,241,0.15);
+border-color:#0071e3;
+box-shadow:0 0 0 3px rgba(0,113,227,0.15);
 }
 
-/* BUTTONS */
+/* кнопки */
 .nav-buttons{
 display:flex;
 justify-content:space-between;
@@ -106,25 +111,23 @@ margin-top:14px;
 }
 
 button{
-padding:10px 16px;
+padding:9px 16px;
 font-size:13px;
 font-weight:600;
-border-radius:12px;
+border-radius:10px;
 border:none;
 cursor:pointer;
 transition:.15s;
 }
 
-/* PRIMARY */
+/* primary */
 button.primary{
-background:linear-gradient(135deg,#6366f1,#4f46e5);
+background:#0071e3;
 color:#fff;
-box-shadow:0 6px 14px rgba(79,70,229,0.25);
 }
 
 button.primary:hover{
-transform:translateY(-1px);
-box-shadow:0 10px 20px rgba(79,70,229,0.3);
+background:#0063cc;
 }
 
 button.primary:active{
@@ -134,22 +137,30 @@ transform:scale(0.97);
 button.primary:disabled{
 opacity:.5;
 cursor:not-allowed;
-box-shadow:none;
 }
 
-/* SECONDARY */
+/* secondary */
 button.secondary{
-background:#f1f5f9;
-color:#0f172a;
+background:#f2f2f7;
+color:#1d1d1f;
 }
 
-/* DOWNLOAD */
+button.secondary:hover{
+background:#e5e5ea;
+}
+
+/* download */
 button.primary.download{
-background:linear-gradient(135deg,#22c55e,#16a34a);
-box-shadow:0 6px 14px rgba(34,197,94,0.25);
+background:#34c759;
+}
+button.primary.download:hover{
+background:#2fb350;
+}
+button.primary.download::after{
+content:'';
 }
 
-/* RIGHT */
+/* правая панель */
 .right-panel{
 width:50%;
 display:flex;
@@ -157,40 +168,25 @@ flex-direction:column;
 gap:16px;
 }
 
-/* RESULT */
+/* карточка результата */
 .result-card{
-padding:20px;
-position:relative;
-overflow:hidden;
-}
-
-/* subtle gradient glow */
-.result-card::before{
-content:'';
-position:absolute;
-top:-40%;
-left:-20%;
-width:140%;
-height:140%;
-background:radial-gradient(circle, rgba(99,102,241,0.15), transparent 60%);
-pointer-events:none;
+padding:18px;
 }
 
 .result-card .title{
 font-size:14px;
-color:#64748b;
+color:#6e6e73;
 }
 
 .result-main{
 font-size:42px;
-font-weight:800;
+font-weight:700;
 margin-top:10px;
-background:linear-gradient(135deg,#22c55e,#16a34a);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+color:#34c759;
+letter-spacing:-0.5px;
 }
 
-/* RANGE */
+/* диапазон */
 .range-block{
 margin-top:18px;
 font-size:12px;
@@ -201,7 +197,7 @@ display:flex;
 align-items:center;
 gap:6px;
 margin-bottom:6px;
-color:#64748b;
+color:#6e6e73;
 }
 
 .dot{
@@ -210,13 +206,13 @@ height:6px;
 border-radius:50%;
 }
 
-.dot.lower{ background:#6366f1; }
-.dot.upper{ background:#ef4444; }
+.dot.lower{background:#0071e3;}
+.dot.upper{background:#ff3b30;}
 
 .range-bar{
 position:relative;
 height:8px;
-background:#e2e8f0;
+background:#e5e5ea;
 border-radius:6px;
 margin-top:8px;
 }
@@ -232,9 +228,9 @@ border-radius:50%;
 border:2px solid currentColor;
 }
 
-.marker.lower{ border-color:#6366f1; }
-.marker.upper{ border-color:#ef4444; }
-.marker.rec{ border-color:#22c55e; }
+.marker.lower{border-color:#0071e3;}
+.marker.upper{border-color:#ff3b30;}
+.marker.rec{border-color:#34c759;}
 
 /* KPI */
 .kpi-row{
@@ -249,31 +245,48 @@ padding:14px;
 
 .kpi-title{
 font-size:12px;
-color:#64748b;
+color:#6e6e73;
 }
 
 .kpi-value{
-font-size:20px;
-font-weight:700;
+font-size:18px;
+font-weight:600;
 margin-top:auto;
 }
 
-/* PROGRESS */
+/* прогресс */
 #progressOuter{
 height:6px;
-background:#e2e8f0;
+background:#e5e5ea;
 border-radius:4px;
 }
 
 #progressFill{
-background:linear-gradient(90deg,#6366f1,#4f46e5);
+background:#0071e3;
 border-radius:4px;
 }
 
-/* ERROR */
-.input-error {
-border-color:#ef4444;
-background:#fef2f2;
+/* ошибки */
+.input-error{
+border-color:#ff3b30;
+background:#fff1f0;
+}
+
+/* стрелка */
+#step3::after{
+content:'↓';
+position:absolute;
+bottom:6px;
+left:50%;
+transform:translateX(-50%);
+font-size:18px;
+color:#0071e3;
+animation:bounce 1.2s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translate(-50%,0);}
+50%{transform:translate(-50%,6px);}
 }
 </style>
 </head>
@@ -282,6 +295,7 @@ background:#fef2f2;
 
 <div class="wrapper">
 
+<!-- добавили card -->
 <div class="left-panel card">
 <div class="left-title">Исходные данные</div>
 
@@ -335,13 +349,13 @@ background:#fef2f2;
 <div class="right-panel">
 
 <div id="progressWrapper">
-<div style="font-size:12px; margin-bottom:4px; color:#64748b;">Прогресс заполнения формы:</div>
+<div style="font-size:12px; margin-bottom:4px; color:#6e6e73;">Прогресс заполнения формы:</div>
 <div id="progressOuter">
 <div id="progressFill" style="width:0%; height:100%;"></div>
 </div>
 </div>
 
-<div id="progressDone" style="text-align:center; font-size:12px; color:#22c55e; display:none;">
+<div id="progressDone" style="text-align:center; font-size:12px; color:#34c759; display:none;">
 Готово!
 </div>
 
