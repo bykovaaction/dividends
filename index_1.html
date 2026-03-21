@@ -30,6 +30,12 @@ backdrop-filter: blur(20px);
 border-radius:16px;
 border:1px solid rgba(0,0,0,0.06);
 box-shadow:0 6px 20px rgba(0,0,0,0.06);
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 30px rgba(0,0,0,0.08);
 }
 
 /* левая панель */
@@ -50,8 +56,15 @@ margin-bottom:16px;
 display:none;
 flex-direction:column;
 gap:14px;
+opacity:0;
+transform:translateY(10px);
+transition:.25s;
 }
-.step.active{display:flex;}
+.step.active{
+display:flex;
+opacity:1;
+transform:translateY(0);
+}
 
 #step3{
 max-height:400px;
@@ -83,6 +96,17 @@ box-sizing:border-box;
 padding:11px 12px;
 border-radius:10px;
 border:1px solid rgba(0,0,0,0.1);
+transition:.2s;
+}
+
+.field-row input:hover{
+border-color:#0071e3;
+}
+
+.field-row input:focus{
+outline:none;
+border-color:#0071e3;
+box-shadow:0 0 0 3px rgba(0,113,227,0.15);
 }
 
 /* убрать стрелки */
@@ -92,12 +116,6 @@ input[type=number]::-webkit-outer-spin-button{
 margin:0;
 }
 input[type=number]{ -moz-appearance:textfield; }
-
-.field-row input:focus{
-outline:none;
-border-color:#0071e3;
-box-shadow:0 0 0 3px rgba(0,113,227,0.15);
-}
 
 /* кнопки */
 .nav-buttons{
@@ -112,11 +130,31 @@ border-radius:10px;
 border:none;
 cursor:pointer;
 font-weight:600;
+transition:.15s;
 }
 
-button.primary{ background:#0071e3; color:#fff; }
-button.secondary{ background:#f2f2f7; }
-button.primary.download{ background:#34c759; }
+button.primary{
+background:#0071e3;
+color:#fff;
+}
+
+button.primary:hover{
+transform:translateY(-1px);
+box-shadow:0 8px 18px rgba(0,113,227,0.3);
+}
+
+button.primary:active{
+transform:scale(0.96);
+}
+
+button.secondary{
+background:#f2f2f7;
+}
+
+button.primary.download{
+background:linear-gradient(135deg,#34c759,#28a745);
+box-shadow:0 6px 14px rgba(52,199,89,0.25);
+}
 
 /* правая панель */
 .right-panel{
@@ -129,12 +167,29 @@ gap:16px;
 /* результат */
 .result-card{
 padding:18px;
+position:relative;
+overflow:hidden;
+}
+
+/* glow эффект */
+.result-card::before{
+content:'';
+position:absolute;
+top:-40%;
+left:-20%;
+width:140%;
+height:140%;
+background:radial-gradient(circle, rgba(0,113,227,0.15), transparent 60%);
+pointer-events:none;
 }
 
 .result-main{
-font-size:42px;
-font-weight:700;
-color:#34c759;
+font-size:44px;
+font-weight:800;
+margin-top:10px;
+background:linear-gradient(135deg,#34c759,#28a745);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 /* RANGE */
@@ -160,14 +215,34 @@ border-radius:50%;
 .dot.lower{ background:#0071e3; }
 .dot.upper{ background:#ff3b30; }
 
+/* ЖИВОЙ БАР */
 .range-bar{
 position:relative;
-height:10px;
+height:12px;
 background:#e5e5ea;
-border-radius:6px;
+border-radius:8px;
 margin-top:8px;
+overflow:hidden;
+transition:.3s;
 }
 
+.range-bar:hover{
+background:#dcdce0;
+}
+
+/* fill внутри бара */
+.range-bar::after{
+content:'';
+position:absolute;
+left:0;
+top:0;
+height:100%;
+width:100%;
+background:linear-gradient(90deg,#0071e3,#34c759);
+opacity:.15;
+}
+
+/* маркеры */
 .marker{
 position:absolute;
 top:50%;
@@ -177,6 +252,11 @@ height:14px;
 background:#fff;
 border-radius:50%;
 border:2px solid currentColor;
+transition:.2s;
+}
+
+.range-bar:hover .marker{
+transform:translate(-50%, -50%) scale(1.1);
 }
 
 .marker.lower{ border-color:#0071e3; }
@@ -192,6 +272,12 @@ gap:12px;
 .kpi{
 flex:1;
 padding:14px;
+transition:.2s;
+}
+
+.kpi:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
 .kpi-title{
@@ -199,9 +285,15 @@ font-size:12px;
 color:#6e6e73;
 }
 
-/* === УТОЛЩЕННЫЙ ПРОГРЕСС === */
+.kpi-value{
+font-size:20px;
+font-weight:700;
+margin-top:auto;
+}
+
+/* прогресс */
 #progressOuter{
-height:12px; /* было 6px */
+height:12px;
 background:#e5e5ea;
 border-radius:8px;
 overflow:hidden;
@@ -209,15 +301,22 @@ overflow:hidden;
 
 #progressFill{
 height:100%;
-background:#0071e3;
+background:linear-gradient(90deg,#0071e3,#34c759);
 border-radius:8px;
 transition:width .3s ease;
 }
 
-/* текст "готово" */
+/* готово */
 #progressDone{
 font-size:13px;
 font-weight:500;
+color:#34c759;
+}
+
+/* ошибки */
+.input-error{
+border-color:#ff3b30;
+background:#fff1f0;
 }
 </style>
 </head>
@@ -285,7 +384,7 @@ font-weight:500;
 </div>
 </div>
 
-<div id="progressDone" style="text-align:center; color:#34c759; display:none;">
+<div id="progressDone" style="text-align:center; display:none;">
 Готово!
 </div>
 
@@ -315,15 +414,15 @@ font-weight:500;
 <div class="kpi-row">
 <div class="kpi card">
 <div class="kpi-title">Чистая прибыль</div>
-<div id="netProfitVal">0</div>
+<div id="netProfitVal" class="kpi-value">0</div>
 </div>
 <div class="kpi card">
 <div class="kpi-title">FCF</div>
-<div id="fcfVal">0</div>
+<div id="fcfVal" class="kpi-value">0</div>
 </div>
 <div class="kpi card">
 <div class="kpi-title">Доступный FCF</div>
-<div id="fcfAvailVal">0</div>
+<div id="fcfAvailVal" class="kpi-value">0</div>
 </div>
 </div>
 
