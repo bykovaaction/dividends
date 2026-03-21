@@ -515,6 +515,12 @@ const wsInputs = XLSX.utils.aoa_to_sheet([
 ["Коэффициент распределения свободного денежного потока (%)", get("kCoef")/100]
 ]);
 
+  // фиксированная ширина колонок
+  wsInputs['!cols'] = [
+  { wpx: 343 }, // колонка A
+  { wpx: 120 }  // колонка B (можешь оставить авто/любую)
+];
+
 XLSX.utils.book_append_sheet(wb, wsInputs, "Исходные данные");
 return wb;
 }
@@ -550,6 +556,12 @@ const wsCalc = XLSX.utils.aoa_to_sheet([
 ["Остаток в бизнесе", {f: "B15-B19"}] // B20 ✅
 
 ]);
+
+// фиксированная ширина колонок
+wsCalc['!cols'] = [
+  { wpx: 253 }, // колонка A
+  { wpx: 120 }  // колонка B
+];
 
 XLSX.utils.book_append_sheet(wb, wsCalc, "Расчеты");
 }
