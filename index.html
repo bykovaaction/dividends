@@ -498,14 +498,32 @@ function clearWarning(input){
   input.style.borderColor = "#d1d5db";
 }
 
+// ==================== Получение названия основного показателя ====================
+function getInputLabel(input){
+  let label = document.querySelector(`label[for="${input.id}"]`);
+  if(label) return label.innerText;
+
+  if(input.parentElement){
+    const possibleLabel = input.parentElement.querySelector("label, span");
+    if(possibleLabel) return possibleLabel.innerText;
+  }
+
+  return input.previousElementSibling ? input.previousElementSibling.innerText : input.id;
+}
+
 function validateInput(input){
   const val = parseFloat(input.value);
-  if(isNaN(val)) return clearWarning(input);
+  const fieldName = getInputLabel(input);
+
+  if(isNaN(val)){
+    clearWarning(input);
+    return;
+  }
 
   if(val < 0){
-    showWarning(input, `Поле "${input.previousElementSibling.innerText}" не может быть отрицательным!`);
+    showWarning(input, `Поле "${fieldName}" не может быть отрицательным!`);
   } else if(input.id.includes("Percent") && val > 100){
-    showWarning(input, `Поле "${input.previousElementSibling.innerText}" не может быть больше 100!`);
+    showWarning(input, `Поле "${fieldName}" не может быть больше 100!`);
   } else {
     clearWarning(input);
   }
@@ -661,6 +679,6 @@ document.querySelectorAll("input").forEach(input => {
 document.getElementById("downloadBtn").addEventListener("click", downloadExcelFull);
 updateDashboard();
 </script>
-
+  
 </body>
 </html>
