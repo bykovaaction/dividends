@@ -271,38 +271,28 @@ button.primary.download{
 /* RANGE-BAR */
 .range-bar {
   position: relative;
-  height:20px;               /* потолще, визуально солиднее */
-  background:#e5e7eb;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:10px;
+  height: 16px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 6px;
 }
 
-.range-bar::after{
-  content:'';
-  position:absolute;
-  left:0;
-  top:0;
-  height:100%;
-  width:100%;
-  background:linear-gradient(90deg,#0071e3,#34c759);
-  opacity:.15;
+.range-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #0071e3 0%, #34c759 100%);
+  opacity: 0.1; /* чуть мягче для премиального эффекта */
+  border-radius: 6px; /* чтобы градиент повторял скругление бара */
+  pointer-events: none;
 }
 
+/* ================= Markers ================= */
 .marker {
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  position:absolute;
-  top:50%;
-  border:2px solid currentColor;
-  background-color: currentColor;  /* заливка */
-  box-shadow:0 1px 4px rgba(0,0,0,0.15);
-}
-
-.range-bar:hover .marker{
-  transform:translate(-50%, -50%) scale(1.1);
-marker {
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -312,30 +302,32 @@ marker {
   border: 2px solid currentColor;
   background-color: currentColor;  /* заливка */
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  z-index: 2; /* чтобы всегда поверх бара */
+  z-index: 2; /* поверх полосы */
+  transition: transform 0.15s ease;
 }
 
+/* Hover эффект: лёгкое увеличение */
 .range-bar:hover .marker {
   transform: translate(-50%, -50%) scale(1.1);
 }
 
-/* нижний маркер — фиолетовый */
+/* Нижний маркер — фиолетовый */
 .marker.lower {
   color: #6c63ff;
-  left: 0%; /* начало полосы */
+  left: 0%; /* полностью внутри бара */
 }
 
-/* верхний маркер — красный */
+/* Верхний маркер — красный */
 .marker.upper {
   color: #ff6f61;
   left: 100%; /* конец полосы */
-  transform: translate(-50%, -50%); /* центрируем по вертикали и горизонтали */
+  transform: translate(-50%, -50%); /* центрирование по вертикали */
 }
 
-/* рекомендованный маркер — зелёный */
+/* Рекомендованный маркер — зелёный */
 .marker.rec {
   color: #2e7d32;
-  /* позиция назначается через JS */
+  /* позиция задаётся через JS */
 }
 
 /* KPI */
