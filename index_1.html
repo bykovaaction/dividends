@@ -66,29 +66,38 @@ body{
   transform:translateY(0);
 }
 
-#step3{
+#step3 {
+  position: relative;           /* важно для ::after */
   max-height:400px;
   overflow-y:auto;
-  position:relative;
   padding-right:5px;
+  padding-bottom:30px;          /* добавим место снизу, чтобы стрелка не пряталась */
 }
 
-/* стрелка вниз */
-#step3::after{
-  content:'↓';
-  position:absolute;
-  bottom:5px;
+#step3::after {
+  content: '↓';
+  position: absolute;
+  bottom:10px;                  /* чуть выше, чтобы видно было */
   left:50%;
-  transform:translateX(-50%);
-  font-size:22px;
-  color:#6b5ee3; /* фиолетовая */
-  animation:bounce 1.2s infinite;
-  pointer-events:none;
+  transform: translateX(-50%);
+  font-size:20px;
+  color:#8a2be2;                /* фиолетовый, как кнопки */
+  animation: bounce 1.2s infinite;
+  pointer-events: none;
+  z-index:10;                   /* поверх контента */
 }
 
-@keyframes bounce{
-  0%,100%{transform:translate(-50%,0);}
-  50%{transform:translate(-50%,6px);}
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+}
+
+.step h3 {
+  font-size:13px;
+  font-weight:500;
+  margin-bottom:4px;
+  line-height:1.2;
+  color:#1d1d1f;
 }
 
 /* поля */
@@ -233,23 +242,30 @@ button.primary.download{
   color:#6e6e73;
 }
 
-.dot{
-  width:6px;
-  height:6px;
+/* Заполненные кружки */
+.dot {
+  width:12px;
+  height:12px;
   border-radius:50%;
+  background:#fff;
+  border:2px solid transparent;
+  box-shadow:0 1px 4px rgba(0,0,0,0.15); /* мягкая тень */
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.dot.lower{ background:#0071e3; }
-.dot.upper{ background:#ff3b30; }
+.dot.lower{ background:#6c63ff; border-color:#6c63ff; }   /* фиолетовый */
+.dot.upper{ background:#ff6f61; border-color:#ff6f61; }   /* красный */
 
 /* RANGE-BAR */
-.range-bar{
-  position:relative;
-  height:12px; /* потолще */
-  background:#e5e5ea;
-  border-radius:8px;
-  margin-top:8px;
+.range-bar {
+  position: relative;
+  height:20px;               /* потолще, визуально солиднее */
+  background:#e5e7eb;
+  border-radius:10px;
   overflow:hidden;
+  margin-top:10px;
 }
 
 .range-bar::after{
@@ -279,9 +295,26 @@ button.primary.download{
   transform:translate(-50%, -50%) scale(1.1);
 }
 
-.marker.lower{ border-color:#0071e3; }
-.marker.upper{ border-color:#ff3b30; }
-.marker.rec{ border-color:#34c759; }
+.marker.lower, .marker.upper {
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  position:absolute;
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
+}
+.marker.rec {
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#2e7d32;       /* зеленый */
+  border:2px solid #2e7d32;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  top:50%;
+  transform:translate(-50%, -50%);
+  position:absolute;
+}
 
 /* KPI */
 .kpi-row{
