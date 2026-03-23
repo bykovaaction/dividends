@@ -572,20 +572,20 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="step-title">Финансовые показатели</div>
 
       <div class="field-row">
-        <label>Выручка (тыс. руб.) <span class="hint-icon">?<span class="hint-text">Фактическая выручка за отчетный период без НДС</span></span></label>
-        <input type="number" id="revenue" placeholder="0" min="0">
+        <label>Выручка<span class="hint-icon">?<span class="hint-text">Фактическая выручка за отчетный период без НДС</span></span></label>
+        <input type="number" id="revenue" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-row">
-        <label>Полная себестоимость без амортизации (тыс. руб.) <span class="hint-icon">?<span class="hint-text">Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</span></span></label>
-        <input type="number" id="cost" placeholder="0" min="0">
+        <label>Полная себестоимость без амортизации<span class="hint-icon">?<span class="hint-text">Себестоимость продаж без амортизации плюс коммерческие и управленческие расходы за отчетный период</span></span></label>
+        <input type="number" id="cost" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-grid">
         <div class="field-row">
-          <label>Амортизация<br>(тыс. руб.)<span class="hint-icon">?<span class="hint-text">Амортизация, списанная на себестоимость за отчетный период</span></span></label>
-          <input type="number" id="depr" placeholder="0" min="0">
+          <label>Амортизация<br><span class="hint-icon">?<span class="hint-text">Амортизация, списанная на себестоимость за отчетный период</span></span></label>
+          <input type="number" id="depr" placeholder="тыс. руб." min="0">
         </div>
         <div class="field-row">
-          <label>Эффективная ставка налога на прибыль (%) <span class="hint-icon">?<span class="hint-text">Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</span></span></label>
+          <label>Эффективная ставка налога на прибыль<span class="hint-icon">?<span class="hint-text">Отношение суммы начисленного налога на прибыль к налогооблагаемой прибыли из декларации по налогу на прибыль</span></span></label>
           <input type="number" id="taxPercent" placeholder="%" min="0" max="100" step="0.01">
         </div>
       </div>
@@ -621,8 +621,8 @@ input[type=number] { -moz-appearance: textfield; }
         </div>
       </div>
       <div class="field-row">
-        <label>Прогнозный остаток денежные средств на дату выплаты дивидендов (тыс. руб.) <span class="hint-icon">?<span class="hint-text">Прогнозный остаток ДС на дату выплаты дивидендов</span></span></label>
-        <input type="number" id="cash" placeholder="0" min="0">
+        <label>Прогнозный остаток денежные средств на дату выплаты дивидендов<span class="hint-icon">?<span class="hint-text">Прогнозный остаток ДС на дату выплаты дивидендов</span></span></label>
+        <input type="number" id="cash" placeholder="тыс. руб." min="0">
       </div>
 
       <div class="nav-buttons">
@@ -637,42 +637,42 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="step-title">Резервы и параметры распределения</div>
 
       <div class="field-row">
-        <label>Норматив резерва ликвидности (тыс. руб.) <span class="hint-icon">?<span class="hint-text">Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</span></span></label>
-        <input type="number" id="liqFloor" placeholder="0" min="0">
+        <label>Норматив резерва ликвидности<span class="hint-icon">?<span class="hint-text">Средняя сумма текущих платежей за 30 дней или 5-10% от выручки за период. Чем стабильнее бизнес, тем резерв ниже</span></span></label>
+        <input type="number" id="liqFloor" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-row">
-        <label>Плановые инвестиции за счет собственных средств (тыс. руб.)<span class="hint-icon">?<span class="hint-text">Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</span></span></label>
-        <input type="number" id="invPlan" placeholder="0" min="0">
+        <label>Плановые инвестиции за счет собственных средств<span class="hint-icon">?<span class="hint-text">Из бюджета инвестиций на период, в котором планируется выплатить дивиденды</span></span></label>
+        <input type="number" id="invPlan" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-row">
         <label>Доля обязательных инвестиций (% от CAPEX) <span class="hint-icon">?<span class="hint-text">Какую часть из плановых инвестиций за счет собственных средств нельзя отложить на потом</span></span></label>
-        <input type="number" id="invPercent" placeholder="%" min="0" max="100" step="0.01">
+        <input type="number" id="invPercent" placeholder="%" min="0" max="100">
       </div>
       <div class="field-row">
         <label>Величина резерва на погашение кредитов (% от FCF) <span class="hint-icon">?<span class="hint-text">По экспертной оценке:
 <br>- минимум 10%, если долговая нагрузка умеренная (Долг/EBITDA < 2), ставки по кредитам низкие и нет ковенантов, требующих быстрого снижения долга;
 <br>- максимум 25%, если долговая нагрузка существенна (Долг/EBITDA > 3–4), ставки высокие или банки требуют снижать отношение долга к прибыли</span></span></label>
-        <input type="number" id="debtPercent" placeholder="%" min="0" max="100" step="0.01">
+        <input type="number" id="debtPercent" placeholder="%" min="0" max="100">
       </div>
       <div class="field-row">
-        <label>Дивиденды по привилегированным акциям (тыс. руб.)</label>
-        <input type="number" id="prefDividends" placeholder="0" min="0">
+        <label>Дивиденды по привилегированным акциям</label>
+        <input type="number" id="prefDividends" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-row">
-        <label>Резерв на покрытие налоговых/судебных рисков (тыс. руб.) <span class="hint-icon">?<span class="hint-text">По незавершенным налоговым проверкам: 20–50% от максимального прогноза доначислений, по текущим судебным спорам в качестве ответчика: 100%  от суммы иска</span></span></label>
-        <input type="number" id="taxRiskReserve" placeholder="0" min="0">
+        <label>Резерв на покрытие налоговых/судебных рисков<span class="hint-icon">?<span class="hint-text">По незавершенным налоговым проверкам: 20–50% от максимального прогноза доначислений, по текущим судебным спорам в качестве ответчика: 100%  от суммы иска</span></span></label>
+        <input type="number" id="taxRiskReserve" placeholder="тыс. руб." min="0">
       </div>
       <div class="field-row">
         <label>Минимальный размер дивидендов (% от ЧП) <span class="hint-icon">?<span class="hint-text">Нижняя граница в процентах от чистой прибыли,  на выплату которой согласны владельцы</span></span></label>
         <input type="number" id="minDividendPercent" placeholder="%" min="0" max="100" step="0.01">
       </div>
       <div class="field-row">
-        <label>Коэффициент распределения свободного денежного потока (%) <span class="hint-icon">?<span class="hint-text">Какую часть из доступного свободного денежного потока допустимо направить на дивиденды:
+        <label>Коэффициент распределения свободного денежного потока<span class="hint-icon">?<span class="hint-text">Какую часть из доступного свободного денежного потока допустимо направить на дивиденды:
 <br>до 25% -  риск дефолта, высокий долг, ковенанты,
 <br>40–60% - стабильный бизнес без крупных проектов,
 <br>25–50% - растущий, прибыльный бизнес,
 <br>до 75% - избыток ликвидности</span></span></label>
-        <input type="number" id="kCoef" placeholder="%" min="0" max="100" step="0.01">
+        <input type="number" id="kCoef" placeholder="%" min="0" max="100">
       </div>
 
       <div class="nav-buttons">
