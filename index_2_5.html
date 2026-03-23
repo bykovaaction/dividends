@@ -763,7 +763,7 @@ input[type=number] { -moz-appearance: textfield; }
 const $ = id => document.getElementById(id);
 const fmt = n => {
   if (n === null || n === undefined || isNaN(n)) return '—';
-  return n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return n.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 };
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const pct = v => clamp(v, 0, 100);
