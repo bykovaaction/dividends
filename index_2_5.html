@@ -955,13 +955,11 @@ function updateProgress() {
   const btn = $('downloadBtn');
   btn.disabled = !mandatoryFilled;
 
-  // Mark tab3 as done when all step3 mandatory fields are filled
+   // Mark tab3 as done when all step3 mandatory fields are filled
   const step3Mandatory = STEP3_FIELDS.filter(id => !optional.has(id));
   const step3Done = step3Mandatory.every(id => filled(id));
   const tab3 = $('tab3');
-  if (!tab3.classList.contains('active')) {
-    tab3.classList.toggle('done', step3Done);
-  }
+  tab3.classList.toggle('done', step3Done);
 }
 
 // ── Clear form ────────────────────────────────────────────────────
